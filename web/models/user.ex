@@ -20,7 +20,7 @@ defmodule Offerdate.User do
 	def changeset(model, params \\ :invalid) do
 		model
 		|> cast(params, @allowed_fields)
-		|> validate_required([:email, :password])
+		|> validate_required([:email, :password, :first_name])
 		|> validate_format(:email, ~r/@/)
 		|> unique_constraint(:email)
 		|> validate_length(:password, min: 8)
@@ -40,7 +40,7 @@ defmodule Offerdate.User do
 			user.first_name && user.last_name -> 
 				user.first_name <> " " <> user.last_name
 			user.first_name -> user.first_name
-			true -> ""
+			true -> "User"
 		end
 	end
 end
