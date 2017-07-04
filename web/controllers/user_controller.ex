@@ -2,6 +2,7 @@ defmodule Offerdate.UserController do
   use Offerdate.Web, :controller
   plug :authenticate when action in [:index, :show]
   alias Offerdate.User
+  alias Offerdate.Auth
 
 
   defp authenticate(conn, _opts) do
@@ -35,6 +36,7 @@ defmodule Offerdate.UserController do
   	case Repo.insert(changeset) do
   		{:ok, user} -> 
   			conn
+  			|> Auth.login(user)
   			|> put_flash(:info, "#{user.first_name <> " " <> user.last_name} created!")
   			|> redirect(to: user_path(conn, :index))
   		{:error, changeset} -> 
