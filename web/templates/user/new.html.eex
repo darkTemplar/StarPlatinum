@@ -30,4 +30,4 @@
 		<%= error_tag f, :phone %>
 	</div>
 	<%= submit "Submit", class: "btn btn-primary" %>
-	<% end %>
+<% end %>

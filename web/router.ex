@@ -18,6 +18,7 @@ defmodule Offerdate.Router do
     pipe_through :browser # Use the default browser stack
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create]
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
 
   end
 

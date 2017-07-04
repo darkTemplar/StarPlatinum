@@ -1,5 +1,6 @@
 defmodule Offerdate.Auth do
 	import Plug.Conn
+	import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 	alias Offerdate.User 
 
 	def init(opts) do
@@ -17,5 +18,18 @@ defmodule Offerdate.Auth do
 		|> assign(:current_user, user)
 		|> put_session(:user_id, user.id)
 		|> configure_session(renew: true)
+	end
+
+	def login_by_email(conn, email, password, opts) do
+		repo = Keyword.fetch!(opts, :repo)
+		user = repo.get_by(User, email: email)
+		cond do
+			user && checkpw(password, user.password_hash) -> {:ok, login(conn, user)}
+			user -> {:error, :unauthorized, conn}
+			true -> 
+				dummy_checkpw()
+				{:error, :not_found, conn}
+		end
+		
 	end
 end
