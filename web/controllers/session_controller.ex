@@ -20,4 +20,10 @@ defmodule Offerdate.SessionController do
 				|> render("new.html") 
 		end
 	end
+
+	def delete(conn, _) do
+		conn
+		|> Auth.logout
+		|> redirect(to: page_path(conn, :index))
+	end
 end
