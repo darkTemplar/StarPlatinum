@@ -36,6 +36,7 @@ defmodule Offerdate.Web do
 
       import Offerdate.Router.Helpers
       import Offerdate.Gettext
+      import Offerdate.Auth, only: [authenticate_user: 2]
     end
   end
 
@@ -58,6 +59,7 @@ defmodule Offerdate.Web do
   def router do
     quote do
       use Phoenix.Router
+      import Offerdate.Auth, only: [authenticate_user: 2]
     end
   end
 
