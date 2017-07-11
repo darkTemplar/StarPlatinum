@@ -8,7 +8,6 @@ defmodule Offerdate.Repo.Migrations.CreateMls do
 
 		timestamps()
   	end
-  	create unique_index(:mls, [:mls])
-  	create unique_index(:mls, [:listing_id])
+  	create unique_index(:mls, [:mls, :listing_id], name: :listing_mls_index)
   end
 end
