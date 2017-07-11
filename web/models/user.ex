@@ -11,8 +11,9 @@ defmodule Offerdate.User do
 		field :license_number, :string
 		field :phone, :string
 		field :user_type, :integer, default: 0
+		has_many :listings, Offerdate.Listing
 
-		timestamps
+		timestamps()
 	end
 
 	@allowed_fields ~w(email password first_name last_name license_number phone user_type)
