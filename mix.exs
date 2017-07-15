@@ -19,7 +19,7 @@ defmodule Offerdate.Mixfile do
   def application do
     [mod: {Offerdate, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :mariaex, :comeonin, :httpoison, :poison]]
+                    :phoenix_ecto, :mariaex, :comeonin, :httpoison, :poison, :exredis]]
   end
 
   # Specifies which paths to compile per environment.
@@ -34,6 +34,7 @@ defmodule Offerdate.Mixfile do
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.0"},
      {:mariaex, ">= 0.0.0"},
+     {:exredis, ">= 0.2.4"},
      {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
