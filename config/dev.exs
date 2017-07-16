@@ -41,3 +41,7 @@ config :offerdate, Offerdate.Repo,
   database: "star_platinum",
   hostname: "localhost",
   pool_size: 10
+
+# Bing API Services
+config :offerdate, Offerdate.Bing
+  maps_api_key: "Air2dQkNqDck-auUQQXKRleBoDP_JB2ynxgRhQVzql2s3bqKoPADfPtPpQ4V4KeL"
