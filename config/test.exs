@@ -18,5 +18,6 @@ config :offerdate, Offerdate.Repo,
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
-config :offerdate, Offerdate.Bing
+# Bing API Services
+config :offerdate, Offerdate.Bing,
   maps_api_key: "Air2dQkNqDck-auUQQXKRleBoDP_JB2ynxgRhQVzql2s3bqKoPADfPtPpQ4V4KeL"
