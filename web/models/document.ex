@@ -1,23 +1,27 @@
-defmodule Offerdate.PropertyImage do
+defmodule Offerdate.Document do
 	use Offerdate.Web, :model
 
-	schema "property_images" do
+	schema "documents" do
+		belongs_to :user, Offerdate.User
+		belongs_to :listing, Offerdate.Listing
+		field :type, :integer
 		field :url, :string
-		belongs_to :property, Offerdate.Property
+		field :description, :string
 		field :etag, :string
 		field :size, :float
 
 		timestamps()
 	end
 
-	@allowed_fields ~w()
+	@allowed_fields ~w(type description)
 
 	def changeset(model, params \\ :invalid) do
 		model
 		|> cast(params, @allowed_fields)
-		|> cast_assoc(:property, required: true)
+		|> cast_assoc(:user, required: true)
+		|> cast_assoc(:listing, required: true)
 		|> put_s3_link()
-		|> validate_required([:url, :etag, :size])
+		|> validate_required([:type, :url, :etag, :size])
 	end
 
 	defp put_s3_link(changeset) do
