@@ -23,6 +23,6 @@ defmodule Offerdate.Listing do
 		|> cast(params, @allowed_fields)
 		|> cast_assoc(:user, required: true)
 		|> cast_assoc(:property, required: true)
-		|> validate_required([:listing_price, :initial_expiry, :final_expiry, :bed, :bath, :area])
+		|> validate_required([:listing_price, :initial_expiry, :bed, :bath, :area])
 	end
 end
