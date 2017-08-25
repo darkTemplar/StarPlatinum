@@ -12,10 +12,12 @@ defmodule Offerdate.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :fetch_flash
   end
 
   scope "/", Offerdate do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :api # replace by browser if you want phoenix to display views for incoming requests
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
