@@ -22,6 +22,14 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :guardian, Guardian,
+  allowed_algos: ["ES512"],
+  secret_key: "2+0TlcEP3286M/svrILhZNGer7+URHjnm7awCMMbhV7DRSYCC+VccOk2FFX5NO8s",
+  issuer: "Offerdate",
+  verify_issuer: true,
+  ttl: { 30, :days },
+  serializer: Offerdate.GuardianSerializer
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

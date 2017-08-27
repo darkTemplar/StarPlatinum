@@ -1,3 +1,1 @@
-<div class="jumbotron">
-  <div id="elm-target"></div>
-</div>
+<div id="elm-target"></div>
