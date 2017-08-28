@@ -42,6 +42,44 @@ update msg model =
             (model, Cmd.none)
 
 -- view 
+
+fbLoginBtn: Html Msg
+fbLoginBtn = 
+    div [
+        class "fb-login-button", 
+        attribute "data-max-rows" "1", 
+        attribute "data-size" "large", 
+        attribute "data-button-type" "continue_with",
+        attribute "data-show-faces" "false",
+        attribute "data-auto-logout-link" "false",
+        attribute "data-use-continue-as" "true"] []
+
+googleLoginBtn: Html Msg
+googleLoginBtn = 
+    a[] [text "Continue with Google"]
+
+loginForm: Html Msg
+loginForm = 
+    Html.form [] [
+        div [class "form-row"] [
+            div [class "form-group col-md-3"] [
+                input [type_ "text", placeholder "First Name", class "form-control", id "firstName"] []
+            ],
+            div [class "form-group col-md-3"] [
+                input [type_ "text", placeholder "Last Name", class "form-control", id "lastName"] []
+            ]
+        ],
+        div [class "form-group"] [
+                input [type_ "text", placeholder "Email", class "form-control", id "email"] []
+            ],
+        div [class "form-group"] [
+                input [type_ "password", placeholder "Password", class "form-control", id "password"] []
+            ],
+        div [class "form-group"] [
+            button [type_ "button", class "btn btn-primary"] [text "Submit"]
+        ]
+    ]
+
 view: Model -> Html Msg
 view model = 
     div [class "modal-fade"][
@@ -53,18 +91,13 @@ view model =
                 div [class "modal-body"] [
                     div [class "container-fluid"] [
                         div [class "row"] [
-                            div [
-                            class "fb-login-button", 
-                            attribute "data-max-rows" "1", 
-                            attribute "data-size" "large", 
-                            attribute "data-button-type" "continue_with",
-                            attribute "data-show-faces" "false",
-                            attribute "data-auto-logout-link" "false",
-                            attribute "data-use-continue-as" "true"] []
+                            fbLoginBtn
                         ],
                         div [class "row"] [
-                            a[] [text "Continue with Google"]
-                        ]
+                            googleLoginBtn
+                        ],
+                        hr [] [],
+                        loginForm
                     ]
                 ],
                 div [class "modal-footer"] [
