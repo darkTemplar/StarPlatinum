@@ -1,36 +1,91 @@
 module Login exposing (..)
-import Html exposing (text, Html, form, div, h3, input)
-import Html.Events exposing (..)
+
+import Html exposing (..)
 import Html.Attributes exposing (..)
 
--- model
-type alias Model = {email: String, password: String}
+
+-- model 
+type alias Model = {
+    modalTitle: String,
+    email: String, 
+    password: String, 
+    error: Maybe String
+}
 
 initModel: Model
-initModel = {email = "", password = ""}
+initModel = {
+    modalTitle = "Sign Up",
+    email = "",
+    password = "",
+    error = Nothing}
+
+init: (Model, Cmd Msg)
+init = 
+    (initModel, Cmd.none)
 
 -- update
-type Msg = EmailInput String| PasswordInput String | Submit
+type Msg = EmailInput String
+    | PasswordInput String
+    | Error String
+    | Submit
 
-update: Msg -> Model -> Model
-update msg model = case msg of
-    EmailInput email -> {model | email = email}
-    PasswordInput password -> {model | password = password}
-    Submit -> model -- submit form to server here
+update: Msg -> Model -> (Model, Cmd Msg)
+update msg model = 
+    case msg of 
+        EmailInput email -> (
+            {model | email = email}, Cmd.none)
+        PasswordInput password -> 
+            ({model | password = password}, Cmd.none)
+        Error error -> 
+            ({model | error = Just error}, Cmd.none)
+        Submit -> 
+            (model, Cmd.none)
 
--- view
+-- view 
 view: Model -> Html Msg
-view model = div [] [
-    h3 [] [text "Login"],
-    Html.form [] [
-        input [type_ "text", onInput EmailInput, placeholder "email"] [],
-        input [type_ "password", onInput PasswordInput, placeholder "password"] [],
-        input [type_ "Submit"] [text "Login"]
+view model = 
+    div [class "modal-fade"][
+        div [class "modal-dialog"] [
+            div [class "modal-content"] [
+                div [class "modal-header"] [
+                    h5 [class "modal-title"] [text model.modalTitle]
+                ],
+                div [class "modal-body"] [
+                    div [class "container-fluid"] [
+                        div [class "row"] [
+                            div [
+                            class "fb-login-button", 
+                            attribute "data-max-rows" "1", 
+                            attribute "data-size" "large", 
+                            attribute "data-button-type" "continue_with",
+                            attribute "data-show-faces" "false",
+                            attribute "data-auto-logout-link" "false",
+                            attribute "data-use-continue-as" "true"] []
+                        ],
+                        div [class "row"] [
+                            a[] [text "Continue with Google"]
+                        ]
+                    ]
+                ],
+                div [class "modal-footer"] [
+                    span [] [text "Already have an account?"],
+                    a [href "#"] [text "Log In"]
+                ]
+            ]
         ]
-        ]
+    ]
 
 
 
-main : Program Never Model Msg
-main =
-    Html.beginnerProgram { model = initModel, update = update, view = view }
+
+
+
+
+
+
+
+
+
+
+
+

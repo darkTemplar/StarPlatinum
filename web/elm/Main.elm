@@ -2,38 +2,56 @@ port module Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
+import Navigation
+import Login
 
 -- model
-type alias Model =
-    { page : Page
+type alias 
+
+type alias Model = {
+    page : Page,
+    loginModel: Maybe Login.Model
     }
 
 
-type Page
-    = NotFound
+type Page = NotFound
+    | HomePage
+    | LoginPage
 
 
-initModel : Model
-initModel =
-    { page = NotFound }
-
-
-init : ( Model, Cmd Msg )
-init =
-    ( initModel, Cmd.none )
-
-
+init : Navigation.Location -> ( Model, Cmd Msg )
+init location = let
+    page = hashToPage location.hash
+    (loginModel, loginCmd) = Login.init
+    cmds = Cmd.batch [
+        Cmd.map loginCmd
+    ]
+    in
+    (loginModel, cmds)
+        
 
 -- update
 type Msg
     = Navigate Page
+    | ChangePage Page
+    | LoginPageMsg Login.Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Navigate page ->
+            ( model, newUrl <| pageToHash model.page)
+        ChangePage page ->
             ( { model | page = page }, Cmd.none )
+        LoginPageMsg msg -> 
+            let
+                (loginModel, loginCmd) = Login.update msg model.loginModel      
+            in
+                ({model | loginModel = loginModel}, Cmd.map LoginPageMsg loginCmd)
+                    
+            
 
 
 
@@ -48,6 +66,13 @@ view model =
                         [ h1 []
                             [ text "Sorry the page you are looking for was not found!" ]
                         ]
+                HomePage ->
+                    div [ class "main" ]
+                        [ h1 []
+                            [ text "Welcome to Offerdate!" ]
+                        ]        
+                LoginPage -> 
+                    Html.map LoginPageMsg (Login.view model.loginModel)
     in
         div [class "container"]
             [ pageHeader model
@@ -84,9 +109,32 @@ subscriptions model =
     Sub.none
 
 
+-- utility functions
+
+pageToHash: Page -> String
+pageToHash page = case page of
+    HomePage -> "#/"
+    LoginPage -> "#login"
+    NotFound -> "#notFound"
+
+hashToPage: String -> Page
+hashToPage hash = case hash of
+    "/#" -> HomePage
+    "" -> HomePage
+    "/#login" -> LoginPage
+    _ -> NotFound
+
+locationToMsg: Navigation.Location -> Msg
+locationToMsg location = 
+    location.hash
+    |> hashToPage
+    |> ChangePage    
+
+
+-- main 
 main : Program Never Model Msg
 main =
-    Html.program
+    Navigation.program locationToMsg
         { init = init
         , update = update
         , view = view
