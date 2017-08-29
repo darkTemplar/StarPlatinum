@@ -62,10 +62,10 @@ loginForm: Html Msg
 loginForm = 
     Html.form [] [
         div [class "form-row"] [
-            div [class "form-group col-md-3"] [
+            div [class "form-group col-md-6"] [
                 input [type_ "text", placeholder "First Name", class "form-control", id "firstName"] []
             ],
-            div [class "form-group col-md-3"] [
+            div [class "form-group col-md-6"] [
                 input [type_ "text", placeholder "Last Name", class "form-control", id "lastName"] []
             ]
         ],
@@ -76,8 +76,9 @@ loginForm =
                 input [type_ "password", placeholder "Password", class "form-control", id "password"] []
             ],
         div [class "form-group"] [
-            button [type_ "button", class "btn btn-primary"] [text "Submit"]
+            button [type_ "button", class "btn btn-primary btn-block"] [text "Continue"]
         ]
+        
     ]
 
 view: Model -> Html Msg
@@ -101,8 +102,10 @@ view model =
                     ]
                 ],
                 div [class "modal-footer"] [
-                    span [] [text "Already have an account?"],
-                    a [href "#"] [text "Log In"]
+                    div [class "footer-content"] [
+                        span [class "footer-text"] [text "Already have an account?"],
+                        a [href "#"] [text "Log In"]
+                    ]
                 ]
             ]
         ]

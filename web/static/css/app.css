@@ -1,1 +1,11 @@
 /* This file is for your main application css. */
+
+/* Login dialog */
+.modal-title, .footer-content {
+	margin: auto;
+}
+
+.footer-text {
+	margin-right: 10px;
+}
+

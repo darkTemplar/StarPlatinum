@@ -7,11 +7,10 @@ import Navigation
 import Login
 
 -- model
-type alias 
 
 type alias Model = {
     page : Page,
-    loginModel: Maybe Login.Model
+    loginModel: Login.Model
     }
 
 
@@ -21,14 +20,27 @@ type Page = NotFound
 
 
 init : Navigation.Location -> ( Model, Cmd Msg )
-init location = let
-    page = hashToPage location.hash
-    (loginModel, loginCmd) = Login.init
-    cmds = Cmd.batch [
-        Cmd.map loginCmd
-    ]
+init location = 
+    let
+        page = 
+            hashToPage location.hash
+
+        (loginModel, loginCmd) = 
+            Login.init
+
+        initModel = {
+            page = page,
+            loginModel = loginModel
+        }
+
+        cmds = 
+            Cmd.batch [
+                Cmd.map LoginPageMsg loginCmd
+            ]
+
     in
-    (loginModel, cmds)
+
+        (initModel, cmds)
         
 
 -- update
@@ -42,7 +54,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Navigate page ->
-            ( model, newUrl <| pageToHash model.page)
+            ( model, Navigation.newUrl <| pageToHash model.page)
         ChangePage page ->
             ( { model | page = page }, Cmd.none )
         LoginPageMsg msg -> 
@@ -114,14 +126,14 @@ subscriptions model =
 pageToHash: Page -> String
 pageToHash page = case page of
     HomePage -> "#/"
-    LoginPage -> "#login"
+    LoginPage -> "#/login"
     NotFound -> "#notFound"
 
 hashToPage: String -> Page
 hashToPage hash = case hash of
     "/#" -> HomePage
     "" -> HomePage
-    "/#login" -> LoginPage
+    "#/login" -> LoginPage
     _ -> NotFound
 
 locationToMsg: Navigation.Location -> Msg
