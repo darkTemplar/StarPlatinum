@@ -1,1 +1,9 @@
 <div id="elm-target"></div>
+<script>
+	const token = localStorage.getItem('token');
+	const flags = {token: token};
+	let app = Elm.Main.fullScreen(flags);
+	app.ports.saveToken.subscribe((token) => {
+		localStorage.setItem('token', token);
+	});
+</script>

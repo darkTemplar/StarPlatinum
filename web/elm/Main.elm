@@ -10,7 +10,9 @@ import Login
 
 type alias Model = {
     page : Page,
-    loginModel: Login.Model
+    loginModel: Login.Model,
+    token: Maybe String,
+    loggedIn: Bool
     }
 
 
@@ -19,8 +21,8 @@ type Page = NotFound
     | LoginPage
 
 
-init : Navigation.Location -> ( Model, Cmd Msg )
-init location = 
+init : Flags -> Navigation.Location -> ( Model, Cmd Msg )
+init flags location = 
     let
         page = 
             hashToPage location.hash
@@ -30,7 +32,9 @@ init location =
 
         initModel = {
             page = page,
-            loginModel = loginModel
+            loginModel = loginModel,
+            token = flags.token,
+            loggedIn = flags.token /= Nothing
         }
 
         cmds = 
@@ -59,9 +63,25 @@ update msg model =
             ( { model | page = page }, Cmd.none )
         LoginPageMsg msg -> 
             let
-                (loginModel, loginCmd) = Login.update msg model.loginModel      
+                (loginModel, loginCmd, token) = Login.update msg model.loginModel
+
+                loggedIn = token /= Nothing
+
+                saveTokenCmd =
+                    case token of
+                        Just jwt ->
+                            saveToken jwt
+                        Nothing ->
+                            Cmd.none
             in
-                ({model | loginModel = loginModel}, Cmd.map LoginPageMsg loginCmd)
+                ({model | loginModel = loginModel, 
+                    token = Just token, 
+                    loggedIn = loggedIn}, 
+                    Cmd.batch [
+                        Cmd.map LoginPageMsg loginCmd,
+                        saveTokenCmd
+                        ]
+                    )
                     
             
 
@@ -91,9 +111,17 @@ view model =
             , page
             ]
 
-
 pageHeader : Model -> Html Msg
-pageHeader model =
+pageHeader model = 
+    case model.loggedIn of
+        True -> 
+            userHeader model
+        False ->
+            visitorHeader model
+
+
+visitorHeader : Model -> Html Msg
+visitorHeader model =
     nav [class "navbar navbar-default navbar-fixed-top navbar-expand-sm justify-content-between"][
             div [class "navbar-header"] [
                 a [href "#", class "navbar-brand"] [
@@ -113,12 +141,37 @@ pageHeader model =
             ]
     ]
 
+userHeader : Model -> Html Msg
+userHeader model =
+    nav [class "navbar navbar-default navbar-fixed-top navbar-expand-sm justify-content-between"][
+            div [class "navbar-header"] [
+                a [href "#", class "navbar-brand"] [
+                    img [src "", alt "Offerdate"][]
+                ]
+            ],
+            div [class "navbar-collapse"] [
+                div [class "nav navbar-nav mr-auto"] [
+                    a [href "#", class "nav-item nav-link"] [text "Listings"],
+                    a [href "#", class "nav-item nav-link"] [text "Watching"],
+                    a [href "#", class "nav-item nav-link"] [text "Notifcations"]
+                ],
+                Html.form [class "form-inline"] [
+                -- replace with profile pic and context menu
+                    button [type_ "submit", class "btn btn-default mr-sm-2"] [text "Log Out"],
+                ]
+            ]
+    ]
+
 
 
 -- subscriptions
-subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    let
+        loginSub =
+            Login.subscriptions model.loginModel
+    in
+        Sub.batch [Sub.map LoginMsg loginSub]
+                
 
 
 -- utility functions
@@ -144,11 +197,18 @@ locationToMsg location =
 
 
 -- main 
-main : Program Never Model Msg
+
+type alias Flags = {
+    token: Maybe String
+}
+
+main : Program Flags Model Msg
 main =
-    Navigation.program locationToMsg
+    Navigation.programWithFlags locationToMsg
         { init = init
         , update = update
         , view = view
         , subscriptions = subscriptions
         }
+
+port saveToken: String -> Cmd Msg
