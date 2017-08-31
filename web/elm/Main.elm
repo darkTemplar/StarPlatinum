@@ -52,6 +52,7 @@ type Msg
     = Navigate Page
     | ChangePage Page
     | LoginPageMsg Login.Msg
+    | Logout
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -82,7 +83,12 @@ update msg model =
                         saveTokenCmd
                         ]
                     )
-                    
+        Logout ->
+            ({model| 
+                token = Nothing,
+                loggedIn = False},
+            deleteToken ()
+                )             
             
 
 
@@ -212,3 +218,5 @@ main =
         }
 
 port saveToken: String -> Cmd Msg
+
+port deleteToken: () -> Cmd Msg
