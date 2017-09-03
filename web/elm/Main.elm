@@ -19,6 +19,7 @@ type alias Model = {
 type Page = NotFound
     | HomePage
     | LoginPage
+    | SignupPage
 
 
 init : Flags -> Navigation.Location -> ( Model, Cmd Msg )
@@ -76,7 +77,7 @@ update msg model =
                             Cmd.none
             in
                 ({model | loginModel = loginModel, 
-                    token = Just token, 
+                    token = token, 
                     loggedIn = loggedIn}, 
                     Cmd.batch [
                         Cmd.map LoginPageMsg loginCmd,
@@ -110,6 +111,14 @@ view model =
                             [ text "Welcome to Offerdate!" ]
                         ]        
                 LoginPage -> 
+                    let
+                        loginModel = Login.updateModalText True model.loginModel
+                            
+                    in
+                            
+                        Html.map LoginPageMsg (Login.view loginModel)
+
+                SignupPage -> 
                     Html.map LoginPageMsg (Login.view model.loginModel)
     in
         div [class "container"]
@@ -162,11 +171,11 @@ userHeader model =
                     a [href "#", class "nav-item nav-link"] [text "Notifcations"]
                 ],
                 Html.form [class "form-inline"] [
-                -- replace with profile pic and context menu
-                    button [type_ "submit", class "btn btn-default mr-sm-2"] [text "Log Out"],
+                    -- replace with profile pic and context menu
+                    button [type_ "submit", class "btn btn-default mr-sm-2"] [text "Log Out"]
                 ]
             ]
-    ]
+        ]
 
 
 
@@ -176,7 +185,7 @@ subscriptions model =
         loginSub =
             Login.subscriptions model.loginModel
     in
-        Sub.batch [Sub.map LoginMsg loginSub]
+        Sub.batch [Sub.map LoginPageMsg loginSub]
                 
 
 
@@ -186,6 +195,7 @@ pageToHash: Page -> String
 pageToHash page = case page of
     HomePage -> "#/"
     LoginPage -> "#/login"
+    SignupPage -> "#/signup"
     NotFound -> "#notFound"
 
 hashToPage: String -> Page
@@ -193,6 +203,7 @@ hashToPage hash = case hash of
     "/#" -> HomePage
     "" -> HomePage
     "#/login" -> LoginPage
+    "#/signup" -> SignupPage
     _ -> NotFound
 
 locationToMsg: Navigation.Location -> Msg
@@ -217,6 +228,6 @@ main =
         , subscriptions = subscriptions
         }
 
-port saveToken: String -> Cmd Msg
+port saveToken: String -> Cmd msg
 
-port deleteToken: () -> Cmd Msg
+port deleteToken: () -> Cmd msg
