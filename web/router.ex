@@ -16,11 +16,27 @@ defmodule Offerdate.Router do
     plug :fetch_flash
   end
 
+  pipeline :api_auth do
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
+  end
+
+
+  scope "/api", JwtExample do
+    pipe_through [ :api, :api_auth ]
+    get "/data", DataController, :index
+  end
+
+  scope "/sessions", Offerdate do
+    pipe_through :api
+    post "/", SessionController, :create
+  end
+
   scope "/", Offerdate do
-    pipe_through :api # replace by browser if you want phoenix to display views for incoming requests
+    pipe_through [:api, :api_auth] # replace by browser if you want phoenix to display views for incoming requests
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create]
-    resources "/sessions", SessionController, only: [:new, :create, :delete]
+    #resources "/sessions", SessionController, only: [:new, :create, :delete]
 
   end
 
