@@ -4,13 +4,16 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Navigation
-import Login
+
+import Auth.Types
+import Auth.State
+import Auth.View
 
 -- model
 
 type alias Model = {
     page : Page,
-    loginModel: Login.Model,
+    loginModel: Auth.Types.Model,
     token: Maybe String,
     loggedIn: Bool
     }
@@ -29,7 +32,7 @@ init flags location =
             hashToPage location.hash
 
         (loginModel, loginCmd) = 
-            Login.init
+            Auth.State.init
 
         initModel = {
             page = page,
@@ -52,7 +55,7 @@ init flags location =
 type Msg
     = Navigate Page
     | ChangePage Page
-    | LoginPageMsg Login.Msg
+    | LoginPageMsg Auth.Types.Msg
     | Logout
 
 
@@ -65,7 +68,7 @@ update msg model =
             ( { model | page = page }, Cmd.none )
         LoginPageMsg msg -> 
             let
-                (loginModel, loginCmd, token) = Login.update msg model.loginModel
+                (loginModel, loginCmd, token) = Auth.State.update msg model.loginModel
 
                 loggedIn = token /= Nothing
 
@@ -111,15 +114,10 @@ view model =
                             [ text "Welcome to Offerdate!" ]
                         ]        
                 LoginPage -> 
-                    let
-                        loginModel = Login.updateModalText True model.loginModel
-                            
-                    in
-                            
-                        Html.map LoginPageMsg (Login.view loginModel)
+                    Html.map LoginPageMsg (Auth.View.root True model.loginModel)
 
                 SignupPage -> 
-                    Html.map LoginPageMsg (Login.view model.loginModel)
+                    Html.map LoginPageMsg (Auth.View.root False model.loginModel)
     in
         div [class "container"]
             [ pageHeader model
@@ -183,7 +181,7 @@ userHeader model =
 subscriptions model =
     let
         loginSub =
-            Login.subscriptions model.loginModel
+            Auth.State.subscriptions model.loginModel
     in
         Sub.batch [Sub.map LoginPageMsg loginSub]
                 
