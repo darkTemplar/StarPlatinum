@@ -22,5 +22,19 @@ import "phoenix_html"
 import Elm from './main';
 const elmDiv = document.querySelector('#elm-target');
 if (elmDiv) {
-  Elm.Main.embed(elmDiv);
+  	
+
+	const TOKEN_KEY = 'token';
+	const token = localStorage.getItem(TOKEN_KEY);
+	const flags = {token: token};
+	let app = Elm.Main.embed(elmDiv, flags);
+	//let app = Elm.Main.fullScreen(flags);
+	app.ports.saveToken.subscribe((token) => {
+		localStorage.setItem(TOKEN_KEY, token);
+	});
+
+	app.ports.deleteToken.subscribe(() => {
+		localStorage.removeItem(TOKEN_KEY);
+	});
 }
+
