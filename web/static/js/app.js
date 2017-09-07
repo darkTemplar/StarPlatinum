@@ -28,7 +28,6 @@ if (elmDiv) {
 	const token = localStorage.getItem(TOKEN_KEY);
 	const flags = {token: token};
 	let app = Elm.Main.embed(elmDiv, flags);
-	//let app = Elm.Main.fullScreen(flags);
 	app.ports.saveToken.subscribe((token) => {
 		localStorage.setItem(TOKEN_KEY, token);
 	});
@@ -36,5 +35,14 @@ if (elmDiv) {
 	app.ports.deleteToken.subscribe(() => {
 		localStorage.removeItem(TOKEN_KEY);
 	});
+}
+
+// for create listings
+const elmListingDiv = document.querySelector('#elm-target-listing');
+if (elmListingDiv) {
+  	
+
+	const flags = {};
+	let app = Elm.Main.embed(elmDiv, flags);
 }
 
