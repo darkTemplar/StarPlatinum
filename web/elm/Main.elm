@@ -4,6 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Navigation
+import String exposing (toLower)
 
 import Auth.Types
 import Auth.State
@@ -197,7 +198,7 @@ pageToHash page = case page of
     NotFound -> "#notFound"
 
 hashToPage: String -> Page
-hashToPage hash = case hash of
+hashToPage hash = case (toLower hash) of
     "/#" -> HomePage
     "" -> HomePage
     "#/login" -> LoginPage
