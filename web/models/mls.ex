@@ -8,7 +8,7 @@ defmodule Offerdate.Mls do
 		timestamps()
 	end
 
-	@allowed_fields ~w(listing_price sale_price beds bath area)
+	@allowed_fields ~w(mls)
 
 	def changeset(model, params \\ :invalid) do
 		model
