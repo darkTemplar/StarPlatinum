@@ -6,46 +6,6 @@ import Navigation exposing (..)
 import Date exposing (..)
 
 
-initAddress: Address
-initAddress = {
-    street = "",
-    unit = "",
-    city = "",
-    state = "",
-    country = "",
-    lat = "",
-    long = "",
-    zip = ""
-}
-
-initListingDetails: ListingDetails
-initListingDetails = {
-    listPrice = 0.0,
-    purchasePrice = 0.0,
-    offerDate = Date.fromTime 0,
-    escrowDate = Date.fromTime 0,
-    beds = 0.0,
-    bath = 0.0,
-    area = 0.0
-}
-
-initContingency: Contingency
-initContingency = {
-    financing = True,
-    financingDays = 10,
-    appraisal = True,
-    appraisalDays = 10,
-    condition = True,
-    conditionDays = 10
-}
-
-initPropertyCondition: PropertyCondition
-initPropertyCondition = {
-    asIs = True,
-    buyerPays = True,
-    sellerObligation = True
-}
-
 init: Model
 init = {
     page = AddressPage,
@@ -64,25 +24,13 @@ update msg model =
             ( model, Navigation.newUrl <| pageToHash model.page)
         ChangePage page ->
             ( { model | page = page }, Cmd.none )
-        AddressChangeContinue ->
+        AddressPageMsg msg ->
             (model, Cmd.none)
-        AddressChangeBack page -> 
+        ListingDetailsPageMsg msg ->
+            (model, Cmd.none) 
+        ContingencyPageMsg msg ->
             (model, Cmd.none)
-        ListingDetailsChangeContinue ->
-            (model, Cmd.none)
-        ListingDetailsChangeBack -> 
-            (model, Cmd.none)
-        PricingChangeContinue ->
-            (model, Cmd.none)
-        PricingChangeBack -> 
-            (model, Cmd.none)
-        ContingencyChangeContinue ->
-            (model, Cmd.none)
-        ContingencyChangeBack -> 
-            (model, Cmd.none)
-        PropertyConditionChangeContinue ->
-            (model, Cmd.none)
-        PropertyConditionChangeBack -> 
+        PropertyConditionPageMsg msg -> 
             (model, Cmd.none)
 
     

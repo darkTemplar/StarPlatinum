@@ -24,16 +24,9 @@ type Page = NotFound
     | PropertyConditionPage
 
 
-type Msg
-    = Navigate Page
+type Msg = Navigate Page
     | ChangePage Page
-    | AddressChangeContinue
-    | AddressChangeBack
-    | ListingDetailsChangeContinue
-    | ListingDetailsChangeBack
-    | PricingChangeContinue
-    | PricingChangeBack
-    | ContingencyChangeContinue
-    | ContingencyChangeBack
-    | PropertyConditionChangeContinue
-    | PropertyConditionChangeBack
+    | AddressPageMsg AddressMsg
+    | ListingDetailsPageMsg ListingMsg
+    | ContingencyPageMsg ContingencyMsg
+    | PropertyConditionPageMsg PropertyConditionMsg
