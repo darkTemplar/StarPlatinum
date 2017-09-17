@@ -8,3 +8,12 @@ type alias Contingency = {
     condition: Bool,
     conditionDays: Int
 }
+
+type ContingencyMsg = ToggleFinancing
+    | FinancingDays String
+    | ToggleAppraisal
+    | AppraisalDays String
+    | ToggleCondition
+    | ConditionDays String
+    | Back
+    | Continue

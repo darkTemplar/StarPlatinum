@@ -6,3 +6,9 @@ type alias PropertyCondition = {
     buyerPays: Bool,
     sellerObligation: Bool
 }
+
+type PropertyConditionMsg = ToggleAsIs
+    | ToggleBuyerPays
+    | ToggleSellerObligation
+    | Back
+    | Continue

@@ -1,6 +1,5 @@
 module CreateListing.Address.View exposing (root)
 
-import CreateListing.Types exposing (..)
 import CreateListing.Address.Types exposing (..)
 
 import Html exposing (..)
@@ -16,7 +15,7 @@ formatAddress address =
         ", " ++ address.country 
 
 
-root: Address -> Html Msg
+root: Address -> Html AddressMsg
 root address =
     div [class "modal-fade"][
             div [class "modal-dialog"][
@@ -28,16 +27,16 @@ root address =
                         div [class "container-fluid"][
                             Html.form [][
                                 div [class "form-group"] [
-                                    input [type_ "text", placeholder "Address", class "form-control", id "address", 
-                                    value (formatAddress address)] []
+                                    input [type_ "text", placeholder "Address", class "form-control", id "autocomplete", 
+                                    value (formatAddress address), onInput AddressChange, onFocus Geolocate] []
                                 ]
                             ]
                         ]
                     ],
                     div [class "modal-footer"] [
                         div [class "footer-content"] [
-                            button [type_ "button", class "btn btn-secondary", onClick AddressChangeBack] [text "Go Back"],
-                            button [type_ "button", class "btn btn-primary btn-block", onClick AddressChangeContinue] [text "Continue"]
+                            button [type_ "button", class "btn btn-secondary", onClick Back] [text "Go Back"],
+                            button [type_ "button", class "btn btn-primary btn-block", onClick Continue] [text "Continue"]
                         ]
                     ]
                 ]

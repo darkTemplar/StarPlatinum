@@ -11,3 +11,9 @@ type alias Address = {
     long: String,
     zip: String
 }
+
+type AddressMsg = 
+    AddressChange String
+    | Geolocate
+    | Continue
+    | Back

@@ -1,6 +1,5 @@
 module CreateListing.ListingDetails.View exposing (root)
 
-import CreateListing.Types exposing (..)
 import CreateListing.ListingDetails.Types exposing (..)
 
 import Html exposing (..)
@@ -9,7 +8,7 @@ import Html.Events exposing (..)
 
 
 
-root: ListingDetails -> Html Msg
+root: ListingDetails -> Html ListingMsg
 root listingDetails = 
     div [class "modal-fade"][
             div [class "modal-dialog"][
@@ -23,39 +22,39 @@ root listingDetails =
                                 div [class "form-row"] [
                                     div [class "form-group col-md-4"] [
                                         input [type_ "text", placeholder "List Price", class "form-control", id "listPrice", 
-                                        value (toString listingDetails.listPrice)] []
+                                        value (toString listingDetails.listPrice), onInput ListPrice] []
                                     ],
                                     div [class "form-group col-md-4"] [
                                         input [type_ "date", placeholder "Date", class "form-control", id "offerDate", 
-                                        value (toString listingDetails.offerDate)] []
+                                        value (toString listingDetails.offerDate), onInput OfferDate] []
                                     ],
                                     div [class "form-group col-md-4"] [
                                         input [type_ "text", placeholder "Time", class "form-control", id "time", 
-                                        value (toString listingDetails.offerDate)] []
+                                        value (toString listingDetails.offerDate), onInput OfferTime] []
                                     ]
                                 ],
                                 div [class "form-row"] [
                                     div [class "form-group col-md-8"] [
                                         input [type_ "text", placeholder "Purchase Price", class "form-control", id "purchasePrice", 
-                                        value (toString listingDetails.listPrice)] []
+                                        value (toString listingDetails.listPrice), onInput PurchasePrice] []
                                     ],
                                     div [class "form-group col-md-4"] [
                                         input [type_ "date", placeholder "Escrow Date", class "form-control", id "escrowDate", 
-                                        value (toString listingDetails.escrowDate)] []
+                                        value (toString listingDetails.escrowDate), onInput EscrowDate] []
                                     ]
                                 ],
                                 div [class "form-row"][
                                     div [class "form-group col-md-4"] [
                                         input [type_ "text", placeholder "Beds", class "form-control", id "bed", 
-                                        value (toString listingDetails.beds)] []
+                                        value (toString listingDetails.beds), onInput Beds] []
                                     ],
                                     div [class "form-group col-md-4"] [
                                         input [type_ "text", placeholder "Baths", class "form-control", id "bath", 
-                                        value (toString listingDetails.bath)] []
+                                        value (toString listingDetails.baths), onInput Baths] []
                                     ],
                                     div [class "form-group col-md-4"] [
                                         input [type_ "text", placeholder "Area sq ft", class "form-control", id "area", 
-                                        value (toString listingDetails.area)] []
+                                        value (toString listingDetails.area), onInput Area] []
                                     ]
                                 ]
 
@@ -64,8 +63,8 @@ root listingDetails =
                     ],
                     div [class "modal-footer"] [
                         div [class "footer-content"] [
-                            button [type_ "button", class "btn btn-secondary", onClick PricingChangeBack] [text "Go Back"],
-                            button [type_ "button", class "btn btn-primary", onClick PricingChangeContinue] [text "Continue"]
+                            button [type_ "button", class "btn btn-secondary", onClick Back] [text "Go Back"],
+                            button [type_ "button", class "btn btn-primary", onClick Continue] [text "Continue"]
 
                         ]
                     ]
