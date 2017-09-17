@@ -2,10 +2,9 @@ port module Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (..)
-import Navigation
-import String exposing (toLower)
+import Navigation exposing (Location)
 
+import Routing exposing (..)
 import Auth.Types
 import Auth.State
 import Auth.View
@@ -13,30 +12,24 @@ import Auth.View
 -- model
 
 type alias Model = {
-    page : Page,
+    route : Route,
     loginModel: Auth.Types.Model,
     token: Maybe String,
     loggedIn: Bool
     }
 
 
-type Page = NotFound
-    | HomePage
-    | LoginPage
-    | SignupPage
-
-
 init : Flags -> Navigation.Location -> ( Model, Cmd Msg )
 init flags location = 
     let
-        page = 
-            hashToPage location.hash
+        route = 
+            parseLocation location
 
         (loginModel, loginCmd) = 
             Auth.State.init
 
         initModel = {
-            page = page,
+            route = route,
             loginModel = loginModel,
             token = flags.token,
             loggedIn = flags.token /= Nothing
@@ -53,20 +46,18 @@ init flags location =
         
 
 -- update
-type Msg
-    = Navigate Page
-    | ChangePage Page
+type Msg =
+    OnLocationChange Location
     | LoginPageMsg Auth.Types.Msg
     | Logout
+
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Navigate page ->
-            ( model, Navigation.newUrl <| pageToHash model.page)
-        ChangePage page ->
-            ( { model | page = page }, Cmd.none )
+        OnLocationChange location ->
+            ({model | route = parseLocation location}, Cmd.none)
         LoginPageMsg msg -> 
             let
                 (loginModel, loginCmd, token) = Auth.State.update msg model.loginModel
@@ -99,31 +90,44 @@ update msg model =
 
 
 -- view
+
+page: Model -> Html Msg
+page model =
+    case model.route of
+        NotFoundRoute ->
+            notFoundView
+        HomeRoute ->
+            homeView
+        LoginRoute -> 
+            Html.map LoginPageMsg (Auth.View.root True model.loginModel)
+        SignupRoute ->
+            Html.map LoginPageMsg (Auth.View.root False model.loginModel)
+
 view : Model -> Html Msg
 view model =
     let
-        page =
-            case model.page of
-                NotFound ->
-                    div [ class "main" ]
-                        [ h1 []
-                            [ text "Sorry the page you are looking for was not found!" ]
-                        ]
-                HomePage ->
-                    div [ class "main" ]
-                        [ h1 []
-                            [ text "Welcome to Offerdate!" ]
-                        ]        
-                LoginPage -> 
-                    Html.map LoginPageMsg (Auth.View.root True model.loginModel)
-
-                SignupPage -> 
-                    Html.map LoginPageMsg (Auth.View.root False model.loginModel)
+        newPage =
+            page model            
     in
         div [class "container"]
             [ pageHeader model
-            , page
+            , newPage
             ]
+
+notFoundView: Html Msg
+notFoundView = 
+    div [ class "main" ]
+        [ h1 []
+            [ text "Sorry the page you are looking for was not found!" ]
+        ]
+
+homeView: Html Msg
+homeView = 
+    div [ class "main" ]
+        [ h1 []
+            [ text "Welcome to Offerdate!" ]
+        ]
+
 
 pageHeader : Model -> Html Msg
 pageHeader model = 
@@ -185,31 +189,7 @@ subscriptions model =
             Auth.State.subscriptions model.loginModel
     in
         Sub.batch [Sub.map LoginPageMsg loginSub]
-                
-
-
--- utility functions
-
-pageToHash: Page -> String
-pageToHash page = case page of
-    HomePage -> "#/"
-    LoginPage -> "#/login"
-    SignupPage -> "#/signup"
-    NotFound -> "#notFound"
-
-hashToPage: String -> Page
-hashToPage hash = case (toLower hash) of
-    "/#" -> HomePage
-    "" -> HomePage
-    "#/login" -> LoginPage
-    "#/signup" -> SignupPage
-    _ -> NotFound
-
-locationToMsg: Navigation.Location -> Msg
-locationToMsg location = 
-    location.hash
-    |> hashToPage
-    |> ChangePage    
+                 
 
 
 -- main 
@@ -220,7 +200,7 @@ type alias Flags = {
 
 main : Program Flags Model Msg
 main =
-    Navigation.programWithFlags locationToMsg
+    Navigation.programWithFlags OnLocationChange
         { init = init
         , update = update
         , view = view
