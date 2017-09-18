@@ -18,11 +18,17 @@ matchers =
     , map SignupRoute (s "signup")
     ]
 
--- we can parsePath if we don't want to route with hash
 parseLocation : Location -> Route
 parseLocation location =
-    case (parseHash matchers location) of
+    case (parsePath matchers location) of
         Just route ->
             route
         Nothing ->
             NotFoundRoute
+
+
+loginUrl: String
+loginUrl = "/login"
+
+signupUrl: String
+signupUrl = "/signup"

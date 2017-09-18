@@ -8747,6 +8747,121 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
 
+var _elm_lang$html$Html_Events$keyCode = A2(_elm_lang$core$Json_Decode$field, 'keyCode', _elm_lang$core$Json_Decode$int);
+var _elm_lang$html$Html_Events$targetChecked = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'target',
+		_1: {
+			ctor: '::',
+			_0: 'checked',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$bool);
+var _elm_lang$html$Html_Events$targetValue = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'target',
+		_1: {
+			ctor: '::',
+			_0: 'value',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _elm_lang$html$Html_Events$defaultOptions = _elm_lang$virtual_dom$VirtualDom$defaultOptions;
+var _elm_lang$html$Html_Events$onWithOptions = _elm_lang$virtual_dom$VirtualDom$onWithOptions;
+var _elm_lang$html$Html_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
+var _elm_lang$html$Html_Events$onFocus = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'focus',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onBlur = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'blur',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onSubmitOptions = _elm_lang$core$Native_Utils.update(
+	_elm_lang$html$Html_Events$defaultOptions,
+	{preventDefault: true});
+var _elm_lang$html$Html_Events$onSubmit = function (msg) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'submit',
+		_elm_lang$html$Html_Events$onSubmitOptions,
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onCheck = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'change',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetChecked));
+};
+var _elm_lang$html$Html_Events$onInput = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'input',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetValue));
+};
+var _elm_lang$html$Html_Events$onMouseOut = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseout',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseOver = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseover',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseLeave = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseleave',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseEnter = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseenter',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseUp = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseup',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseDown = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mousedown',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onDoubleClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'dblclick',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'click',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$Options = F2(
+	function (a, b) {
+		return {stopPropagation: a, preventDefault: b};
+	});
+
 var _elm_lang$http$Native_Http = function() {
 
 
@@ -9761,215 +9876,6 @@ var _evancz$url_parser$UrlParser$intParam = function (name) {
 	return A2(_evancz$url_parser$UrlParser$customParam, name, _evancz$url_parser$UrlParser$intParamHelp);
 };
 
-var _krisajenkins$remotedata$RemoteData$isNotAsked = function (data) {
-	var _p0 = data;
-	if (_p0.ctor === 'NotAsked') {
-		return true;
-	} else {
-		return false;
-	}
-};
-var _krisajenkins$remotedata$RemoteData$isLoading = function (data) {
-	var _p1 = data;
-	if (_p1.ctor === 'Loading') {
-		return true;
-	} else {
-		return false;
-	}
-};
-var _krisajenkins$remotedata$RemoteData$isFailure = function (data) {
-	var _p2 = data;
-	if (_p2.ctor === 'Failure') {
-		return true;
-	} else {
-		return false;
-	}
-};
-var _krisajenkins$remotedata$RemoteData$isSuccess = function (data) {
-	var _p3 = data;
-	if (_p3.ctor === 'Success') {
-		return true;
-	} else {
-		return false;
-	}
-};
-var _krisajenkins$remotedata$RemoteData$withDefault = F2(
-	function ($default, data) {
-		var _p4 = data;
-		if (_p4.ctor === 'Success') {
-			return _p4._0;
-		} else {
-			return $default;
-		}
-	});
-var _krisajenkins$remotedata$RemoteData$Success = function (a) {
-	return {ctor: 'Success', _0: a};
-};
-var _krisajenkins$remotedata$RemoteData$succeed = _krisajenkins$remotedata$RemoteData$Success;
-var _krisajenkins$remotedata$RemoteData$prism = {
-	reverseGet: _krisajenkins$remotedata$RemoteData$Success,
-	getOption: function (data) {
-		var _p5 = data;
-		if (_p5.ctor === 'Success') {
-			return _elm_lang$core$Maybe$Just(_p5._0);
-		} else {
-			return _elm_lang$core$Maybe$Nothing;
-		}
-	}
-};
-var _krisajenkins$remotedata$RemoteData$Failure = function (a) {
-	return {ctor: 'Failure', _0: a};
-};
-var _krisajenkins$remotedata$RemoteData$fromResult = function (result) {
-	var _p6 = result;
-	if (_p6.ctor === 'Err') {
-		return _krisajenkins$remotedata$RemoteData$Failure(_p6._0);
-	} else {
-		return _krisajenkins$remotedata$RemoteData$Success(_p6._0);
-	}
-};
-var _krisajenkins$remotedata$RemoteData$asCmd = _elm_lang$core$Task$attempt(_krisajenkins$remotedata$RemoteData$fromResult);
-var _krisajenkins$remotedata$RemoteData$sendRequest = _elm_lang$http$Http$send(_krisajenkins$remotedata$RemoteData$fromResult);
-var _krisajenkins$remotedata$RemoteData$fromTask = function (_p7) {
-	return A2(
-		_elm_lang$core$Task$onError,
-		function (_p8) {
-			return _elm_lang$core$Task$succeed(
-				_krisajenkins$remotedata$RemoteData$Failure(_p8));
-		},
-		A2(_elm_lang$core$Task$map, _krisajenkins$remotedata$RemoteData$Success, _p7));
-};
-var _krisajenkins$remotedata$RemoteData$Loading = {ctor: 'Loading'};
-var _krisajenkins$remotedata$RemoteData$NotAsked = {ctor: 'NotAsked'};
-var _krisajenkins$remotedata$RemoteData$map = F2(
-	function (f, data) {
-		var _p9 = data;
-		switch (_p9.ctor) {
-			case 'Success':
-				return _krisajenkins$remotedata$RemoteData$Success(
-					f(_p9._0));
-			case 'Loading':
-				return _krisajenkins$remotedata$RemoteData$Loading;
-			case 'NotAsked':
-				return _krisajenkins$remotedata$RemoteData$NotAsked;
-			default:
-				return _krisajenkins$remotedata$RemoteData$Failure(_p9._0);
-		}
-	});
-var _krisajenkins$remotedata$RemoteData$toMaybe = function (_p10) {
-	return A2(
-		_krisajenkins$remotedata$RemoteData$withDefault,
-		_elm_lang$core$Maybe$Nothing,
-		A2(_krisajenkins$remotedata$RemoteData$map, _elm_lang$core$Maybe$Just, _p10));
-};
-var _krisajenkins$remotedata$RemoteData$mapError = F2(
-	function (f, data) {
-		var _p11 = data;
-		switch (_p11.ctor) {
-			case 'Success':
-				return _krisajenkins$remotedata$RemoteData$Success(_p11._0);
-			case 'Failure':
-				return _krisajenkins$remotedata$RemoteData$Failure(
-					f(_p11._0));
-			case 'Loading':
-				return _krisajenkins$remotedata$RemoteData$Loading;
-			default:
-				return _krisajenkins$remotedata$RemoteData$NotAsked;
-		}
-	});
-var _krisajenkins$remotedata$RemoteData$mapBoth = F2(
-	function (successFn, errorFn) {
-		return function (_p12) {
-			return A2(
-				_krisajenkins$remotedata$RemoteData$mapError,
-				errorFn,
-				A2(_krisajenkins$remotedata$RemoteData$map, successFn, _p12));
-		};
-	});
-var _krisajenkins$remotedata$RemoteData$andThen = F2(
-	function (f, data) {
-		var _p13 = data;
-		switch (_p13.ctor) {
-			case 'Success':
-				return f(_p13._0);
-			case 'Failure':
-				return _krisajenkins$remotedata$RemoteData$Failure(_p13._0);
-			case 'NotAsked':
-				return _krisajenkins$remotedata$RemoteData$NotAsked;
-			default:
-				return _krisajenkins$remotedata$RemoteData$Loading;
-		}
-	});
-var _krisajenkins$remotedata$RemoteData$andMap = F2(
-	function (wrappedValue, wrappedFunction) {
-		var _p14 = wrappedFunction;
-		switch (_p14.ctor) {
-			case 'Success':
-				return A2(_krisajenkins$remotedata$RemoteData$map, _p14._0, wrappedValue);
-			case 'Failure':
-				return _krisajenkins$remotedata$RemoteData$Failure(_p14._0);
-			case 'Loading':
-				return _krisajenkins$remotedata$RemoteData$Loading;
-			default:
-				return _krisajenkins$remotedata$RemoteData$NotAsked;
-		}
-	});
-var _krisajenkins$remotedata$RemoteData$map2 = F3(
-	function (f, a, b) {
-		return A2(
-			_krisajenkins$remotedata$RemoteData$andMap,
-			b,
-			A2(_krisajenkins$remotedata$RemoteData$map, f, a));
-	});
-var _krisajenkins$remotedata$RemoteData$map3 = F4(
-	function (f, a, b, c) {
-		return A2(
-			_krisajenkins$remotedata$RemoteData$andMap,
-			c,
-			A2(
-				_krisajenkins$remotedata$RemoteData$andMap,
-				b,
-				A2(_krisajenkins$remotedata$RemoteData$map, f, a)));
-	});
-var _krisajenkins$remotedata$RemoteData$append = F2(
-	function (a, b) {
-		return A2(
-			_krisajenkins$remotedata$RemoteData$andMap,
-			b,
-			A2(
-				_krisajenkins$remotedata$RemoteData$map,
-				F2(
-					function (v0, v1) {
-						return {ctor: '_Tuple2', _0: v0, _1: v1};
-					}),
-				a));
-	});
-var _krisajenkins$remotedata$RemoteData$update = F2(
-	function (f, remoteData) {
-		var _p15 = remoteData;
-		switch (_p15.ctor) {
-			case 'Success':
-				var _p16 = f(_p15._0);
-				var first = _p16._0;
-				var second = _p16._1;
-				return {
-					ctor: '_Tuple2',
-					_0: _krisajenkins$remotedata$RemoteData$Success(first),
-					_1: second
-				};
-			case 'NotAsked':
-				return {ctor: '_Tuple2', _0: _krisajenkins$remotedata$RemoteData$NotAsked, _1: _elm_lang$core$Platform_Cmd$none};
-			case 'Loading':
-				return {ctor: '_Tuple2', _0: _krisajenkins$remotedata$RemoteData$Loading, _1: _elm_lang$core$Platform_Cmd$none};
-			default:
-				return {
-					ctor: '_Tuple2',
-					_0: _krisajenkins$remotedata$RemoteData$Failure(_p15._0),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-		}
-	});
-
 var _user$project$Auth_Types$Model = F3(
 	function (a, b, c) {
 		return {email: a, password: b, error: c};
@@ -10634,6 +10540,8 @@ var _user$project$Auth_View$root = F2(
 			});
 	});
 
+var _user$project$Routing$signupUrl = '/signup';
+var _user$project$Routing$loginUrl = '/login';
 var _user$project$Routing$SignupRoute = {ctor: 'SignupRoute'};
 var _user$project$Routing$LoginRoute = {ctor: 'LoginRoute'};
 var _user$project$Routing$HomeRoute = {ctor: 'HomeRoute'};
@@ -10659,12 +10567,33 @@ var _user$project$Routing$matchers = _evancz$url_parser$UrlParser$oneOf(
 	});
 var _user$project$Routing$NotFoundRoute = {ctor: 'NotFoundRoute'};
 var _user$project$Routing$parseLocation = function (location) {
-	var _p0 = A2(_evancz$url_parser$UrlParser$parseHash, _user$project$Routing$matchers, location);
+	var _p0 = A2(_evancz$url_parser$UrlParser$parsePath, _user$project$Routing$matchers, location);
 	if (_p0.ctor === 'Just') {
 		return _p0._0;
 	} else {
 		return _user$project$Routing$NotFoundRoute;
 	}
+};
+
+var _user$project$Utils$onLinkClick = function (message) {
+	var options = {stopPropagation: false, preventDefault: true};
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'click',
+		options,
+		_elm_lang$core$Json_Decode$succeed(message));
+};
+var _user$project$Utils$stringToFloat = function (str) {
+	return A2(
+		_elm_lang$core$Result$withDefault,
+		0.0,
+		_elm_lang$core$String$toFloat(str));
+};
+var _user$project$Utils$stringToInt = function (str) {
+	return A2(
+		_elm_lang$core$Result$withDefault,
+		0,
+		_elm_lang$core$String$toInt(str));
 };
 
 var _user$project$Main$userHeader = function (model) {
@@ -10827,6 +10756,177 @@ var _user$project$Main$userHeader = function (model) {
 			}
 		});
 };
+var _user$project$Main$homeView = A2(
+	_elm_lang$html$Html$div,
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$class('main'),
+		_1: {ctor: '[]'}
+	},
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$h1,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('Welcome to Offerdate!'),
+				_1: {ctor: '[]'}
+			}),
+		_1: {ctor: '[]'}
+	});
+var _user$project$Main$notFoundView = A2(
+	_elm_lang$html$Html$div,
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$class('main'),
+		_1: {ctor: '[]'}
+	},
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$h1,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('Sorry the page you are looking for was not found!'),
+				_1: {ctor: '[]'}
+			}),
+		_1: {ctor: '[]'}
+	});
+var _user$project$Main$saveToken = _elm_lang$core$Native_Platform.outgoingPort(
+	'saveToken',
+	function (v) {
+		return v;
+	});
+var _user$project$Main$deleteToken = _elm_lang$core$Native_Platform.outgoingPort(
+	'deleteToken',
+	function (v) {
+		return null;
+	});
+var _user$project$Main$Model = F4(
+	function (a, b, c, d) {
+		return {route: a, loginModel: b, token: c, loggedIn: d};
+	});
+var _user$project$Main$Flags = function (a) {
+	return {token: a};
+};
+var _user$project$Main$Logout = {ctor: 'Logout'};
+var _user$project$Main$LoginPageMsg = function (a) {
+	return {ctor: 'LoginPageMsg', _0: a};
+};
+var _user$project$Main$init = F2(
+	function (flags, location) {
+		var _p0 = _user$project$Auth_State$init;
+		var loginModel = _p0._0;
+		var loginCmd = _p0._1;
+		var cmds = _elm_lang$core$Platform_Cmd$batch(
+			{
+				ctor: '::',
+				_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$LoginPageMsg, loginCmd),
+				_1: {ctor: '[]'}
+			});
+		var route = _user$project$Routing$parseLocation(location);
+		var initModel = {
+			route: route,
+			loginModel: loginModel,
+			token: flags.token,
+			loggedIn: !_elm_lang$core$Native_Utils.eq(flags.token, _elm_lang$core$Maybe$Nothing)
+		};
+		return {ctor: '_Tuple2', _0: initModel, _1: cmds};
+	});
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
+			case 'ChangeLocation':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _elm_lang$navigation$Navigation$newUrl(_p1._0)
+				};
+			case 'OnLocationChange':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							route: _user$project$Routing$parseLocation(_p1._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'LoginPageMsg':
+				var _p2 = A2(_user$project$Auth_State$update, _p1._0, model.loginModel);
+				var loginModel = _p2._0;
+				var loginCmd = _p2._1;
+				var token = _p2._2;
+				var loggedIn = !_elm_lang$core$Native_Utils.eq(token, _elm_lang$core$Maybe$Nothing);
+				var saveTokenCmd = function () {
+					var _p3 = token;
+					if (_p3.ctor === 'Just') {
+						return _user$project$Main$saveToken(_p3._0);
+					} else {
+						return _elm_lang$core$Platform_Cmd$none;
+					}
+				}();
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{loginModel: loginModel, token: token, loggedIn: loggedIn}),
+					_1: _elm_lang$core$Platform_Cmd$batch(
+						{
+							ctor: '::',
+							_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$LoginPageMsg, loginCmd),
+							_1: {
+								ctor: '::',
+								_0: saveTokenCmd,
+								_1: {ctor: '[]'}
+							}
+						})
+				};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{token: _elm_lang$core$Maybe$Nothing, loggedIn: false}),
+					_1: _user$project$Main$deleteToken(
+						{ctor: '_Tuple0'})
+				};
+		}
+	});
+var _user$project$Main$page = function (model) {
+	var _p4 = model.route;
+	switch (_p4.ctor) {
+		case 'NotFoundRoute':
+			return _user$project$Main$notFoundView;
+		case 'HomeRoute':
+			return _user$project$Main$homeView;
+		case 'LoginRoute':
+			return A2(
+				_elm_lang$html$Html$map,
+				_user$project$Main$LoginPageMsg,
+				A2(_user$project$Auth_View$root, true, model.loginModel));
+		default:
+			return A2(
+				_elm_lang$html$Html$map,
+				_user$project$Main$LoginPageMsg,
+				A2(_user$project$Auth_View$root, false, model.loginModel));
+	}
+};
+var _user$project$Main$subscriptions = function (model) {
+	var loginSub = _user$project$Auth_State$subscriptions(model.loginModel);
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: A2(_elm_lang$core$Platform_Sub$map, _user$project$Main$LoginPageMsg, loginSub),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Main$ChangeLocation = function (a) {
+	return {ctor: 'ChangeLocation', _0: a};
+};
 var _user$project$Main$visitorHeader = function (model) {
 	return A2(
 		_elm_lang$html$Html$nav,
@@ -10970,7 +11070,12 @@ var _user$project$Main$visitorHeader = function (model) {
 											_1: {
 												ctor: '::',
 												_0: _elm_lang$html$Html_Attributes$class('btn btn-default mr-sm-2'),
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: _user$project$Utils$onLinkClick(
+														_user$project$Main$ChangeLocation(_user$project$Routing$loginUrl)),
+													_1: {ctor: '[]'}
+												}
 											}
 										},
 										{
@@ -10988,7 +11093,12 @@ var _user$project$Main$visitorHeader = function (model) {
 												_1: {
 													ctor: '::',
 													_0: _elm_lang$html$Html_Attributes$class('btn btn-primary'),
-													_1: {ctor: '[]'}
+													_1: {
+														ctor: '::',
+														_0: _user$project$Utils$onLinkClick(
+															_user$project$Main$ChangeLocation(_user$project$Routing$signupUrl)),
+														_1: {ctor: '[]'}
+													}
 												}
 											},
 											{
@@ -11007,164 +11117,11 @@ var _user$project$Main$visitorHeader = function (model) {
 		});
 };
 var _user$project$Main$pageHeader = function (model) {
-	var _p0 = model.loggedIn;
-	if (_p0 === true) {
+	var _p5 = model.loggedIn;
+	if (_p5 === true) {
 		return _user$project$Main$userHeader(model);
 	} else {
 		return _user$project$Main$visitorHeader(model);
-	}
-};
-var _user$project$Main$homeView = A2(
-	_elm_lang$html$Html$div,
-	{
-		ctor: '::',
-		_0: _elm_lang$html$Html_Attributes$class('main'),
-		_1: {ctor: '[]'}
-	},
-	{
-		ctor: '::',
-		_0: A2(
-			_elm_lang$html$Html$h1,
-			{ctor: '[]'},
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html$text('Welcome to Offerdate!'),
-				_1: {ctor: '[]'}
-			}),
-		_1: {ctor: '[]'}
-	});
-var _user$project$Main$notFoundView = A2(
-	_elm_lang$html$Html$div,
-	{
-		ctor: '::',
-		_0: _elm_lang$html$Html_Attributes$class('main'),
-		_1: {ctor: '[]'}
-	},
-	{
-		ctor: '::',
-		_0: A2(
-			_elm_lang$html$Html$h1,
-			{ctor: '[]'},
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html$text('Sorry the page you are looking for was not found!'),
-				_1: {ctor: '[]'}
-			}),
-		_1: {ctor: '[]'}
-	});
-var _user$project$Main$saveToken = _elm_lang$core$Native_Platform.outgoingPort(
-	'saveToken',
-	function (v) {
-		return v;
-	});
-var _user$project$Main$deleteToken = _elm_lang$core$Native_Platform.outgoingPort(
-	'deleteToken',
-	function (v) {
-		return null;
-	});
-var _user$project$Main$Model = F4(
-	function (a, b, c, d) {
-		return {route: a, loginModel: b, token: c, loggedIn: d};
-	});
-var _user$project$Main$Flags = function (a) {
-	return {token: a};
-};
-var _user$project$Main$Logout = {ctor: 'Logout'};
-var _user$project$Main$LoginPageMsg = function (a) {
-	return {ctor: 'LoginPageMsg', _0: a};
-};
-var _user$project$Main$init = F2(
-	function (flags, location) {
-		var _p1 = _user$project$Auth_State$init;
-		var loginModel = _p1._0;
-		var loginCmd = _p1._1;
-		var cmds = _elm_lang$core$Platform_Cmd$batch(
-			{
-				ctor: '::',
-				_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$LoginPageMsg, loginCmd),
-				_1: {ctor: '[]'}
-			});
-		var route = _user$project$Routing$parseLocation(location);
-		var initModel = {
-			route: route,
-			loginModel: loginModel,
-			token: flags.token,
-			loggedIn: !_elm_lang$core$Native_Utils.eq(flags.token, _elm_lang$core$Maybe$Nothing)
-		};
-		return {ctor: '_Tuple2', _0: initModel, _1: cmds};
-	});
-var _user$project$Main$update = F2(
-	function (msg, model) {
-		var _p2 = msg;
-		switch (_p2.ctor) {
-			case 'OnLocationChange':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							route: _user$project$Routing$parseLocation(_p2._0)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'LoginPageMsg':
-				var _p3 = A2(_user$project$Auth_State$update, _p2._0, model.loginModel);
-				var loginModel = _p3._0;
-				var loginCmd = _p3._1;
-				var token = _p3._2;
-				var loggedIn = !_elm_lang$core$Native_Utils.eq(token, _elm_lang$core$Maybe$Nothing);
-				var saveTokenCmd = function () {
-					var _p4 = token;
-					if (_p4.ctor === 'Just') {
-						return _user$project$Main$saveToken(_p4._0);
-					} else {
-						return _elm_lang$core$Platform_Cmd$none;
-					}
-				}();
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{loginModel: loginModel, token: token, loggedIn: loggedIn}),
-					_1: _elm_lang$core$Platform_Cmd$batch(
-						{
-							ctor: '::',
-							_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$LoginPageMsg, loginCmd),
-							_1: {
-								ctor: '::',
-								_0: saveTokenCmd,
-								_1: {ctor: '[]'}
-							}
-						})
-				};
-			default:
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{token: _elm_lang$core$Maybe$Nothing, loggedIn: false}),
-					_1: _user$project$Main$deleteToken(
-						{ctor: '_Tuple0'})
-				};
-		}
-	});
-var _user$project$Main$page = function (model) {
-	var _p5 = model.route;
-	switch (_p5.ctor) {
-		case 'NotFoundRoute':
-			return _user$project$Main$notFoundView;
-		case 'HomeRoute':
-			return _user$project$Main$homeView;
-		case 'LoginRoute':
-			return A2(
-				_elm_lang$html$Html$map,
-				_user$project$Main$LoginPageMsg,
-				A2(_user$project$Auth_View$root, true, model.loginModel));
-		default:
-			return A2(
-				_elm_lang$html$Html$map,
-				_user$project$Main$LoginPageMsg,
-				A2(_user$project$Auth_View$root, false, model.loginModel));
 	}
 };
 var _user$project$Main$view = function (model) {
@@ -11184,15 +11141,6 @@ var _user$project$Main$view = function (model) {
 				_0: newPage,
 				_1: {ctor: '[]'}
 			}
-		});
-};
-var _user$project$Main$subscriptions = function (model) {
-	var loginSub = _user$project$Auth_State$subscriptions(model.loginModel);
-	return _elm_lang$core$Platform_Sub$batch(
-		{
-			ctor: '::',
-			_0: A2(_elm_lang$core$Platform_Sub$map, _user$project$Main$LoginPageMsg, loginSub),
-			_1: {ctor: '[]'}
 		});
 };
 var _user$project$Main$OnLocationChange = function (a) {

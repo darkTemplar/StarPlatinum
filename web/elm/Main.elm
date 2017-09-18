@@ -2,9 +2,10 @@ port module Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Navigation exposing (Location)
+import Navigation exposing (Location, newUrl)
 
 import Routing exposing (..)
+import Utils exposing (onLinkClick)
 import Auth.Types
 import Auth.State
 import Auth.View
@@ -48,6 +49,7 @@ init flags location =
 -- update
 type Msg =
     OnLocationChange Location
+    | ChangeLocation String
     | LoginPageMsg Auth.Types.Msg
     | Logout
 
@@ -56,6 +58,8 @@ type Msg =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        ChangeLocation url ->
+            (model, newUrl url)
         OnLocationChange location ->
             ({model | route = parseLocation location}, Cmd.none)
         LoginPageMsg msg -> 
@@ -153,8 +157,8 @@ visitorHeader model =
                     a [href "#", class "nav-item nav-link"] [text "Listings"]
                 ],
                 Html.form [class "form-inline"] [
-                    button [type_ "submit", class "btn btn-default mr-sm-2"] [text "Login"],
-                    button [type_ "submit", class "btn btn-primary"] [text "Signup"]
+                    button [type_ "submit", class "btn btn-default mr-sm-2", onLinkClick (ChangeLocation loginUrl)] [text "Login"],
+                    button [type_ "submit", class "btn btn-primary", onLinkClick (ChangeLocation signupUrl)] [text "Signup"]
                 ]
             ]
     ]
