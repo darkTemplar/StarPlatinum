@@ -5,16 +5,21 @@ import Html.Attributes exposing (..)
 import Navigation exposing (Location, newUrl)
 
 import Routing exposing (..)
-import Utils exposing (onLinkClick)
+import Utils exposing (onLinkClick, notFoundView)
 import Auth.Types
 import Auth.State
 import Auth.View
+
+import CreateListing.Types
+import CreateListing.State
+import CreateListing.View
 
 -- model
 
 type alias Model = {
     route : Route,
     loginModel: Auth.Types.Model,
+    createListingModel: CreateListing.Types.Model,
     token: Maybe String,
     loggedIn: Bool
     }
@@ -29,9 +34,13 @@ init flags location =
         (loginModel, loginCmd) = 
             Auth.State.init
 
+        createListingModel =
+            CreateListing.State.initModel
+
         initModel = {
             route = route,
             loginModel = loginModel,
+            createListingModel = createListingModel,
             token = flags.token,
             loggedIn = flags.token /= Nothing
         }
@@ -52,6 +61,7 @@ type Msg =
     | ChangeLocation String
     | LoginPageMsg Auth.Types.Msg
     | Logout
+    | CreateListingPageMsg CreateListing.Types.Msg
 
 
 
@@ -88,7 +98,14 @@ update msg model =
                 token = Nothing,
                 loggedIn = False},
             deleteToken ()
-                )             
+                )
+        CreateListingPageMsg msg ->
+            let
+                (updatedListingModel, cmd) = CreateListing.State.update msg model.createListingModel
+                                
+            in
+                ({model | createListingModel = updatedListingModel}, Cmd.batch [Cmd.map CreateListingPageMsg cmd])
+                                            
             
 
 
@@ -106,6 +123,22 @@ page model =
             Html.map LoginPageMsg (Auth.View.root True model.loginModel)
         SignupRoute ->
             Html.map LoginPageMsg (Auth.View.root False model.loginModel)
+        ListingsRoute ->
+            listingsLandingView
+        CreateListingRoute subpath ->
+            let
+                subroute = 
+                    CreateListing.State.parseSubpath subpath
+                updatedListingModel = 
+                    CreateListing.State.updateSubroute subroute model.createListingModel
+                updatedModel = 
+                    {model | createListingModel = updatedListingModel}
+                    
+            in
+                    
+                Html.map CreateListingPageMsg (CreateListing.View.root updatedModel.createListingModel)
+
+
 
 view : Model -> Html Msg
 view model =
@@ -118,12 +151,6 @@ view model =
             , newPage
             ]
 
-notFoundView: Html Msg
-notFoundView = 
-    div [ class "main" ]
-        [ h1 []
-            [ text "Sorry the page you are looking for was not found!" ]
-        ]
 
 homeView: Html Msg
 homeView = 
@@ -132,6 +159,13 @@ homeView =
             [ text "Welcome to Offerdate!" ]
         ]
 
+listingsLandingView: Html Msg
+listingsLandingView = 
+    div [ class "main" ]
+        [ h1 []
+            [ text "Create a listing!" ]
+        , button [type_ "submit", class "btn btn-default mr-sm-2", onLinkClick (ChangeLocation newListingUrl)] [text "Start"]
+        ]
 
 pageHeader : Model -> Html Msg
 pageHeader model = 
@@ -154,7 +188,7 @@ visitorHeader model =
                 div [class "nav navbar-nav mr-auto"] [
                     a [href "#", class "nav-item nav-link"] [text "Buy"],
                     a [href "#", class "nav-item nav-link"] [text "Sell"],
-                    a [href "#", class "nav-item nav-link"] [text "Listings"]
+                    a [href "#", class "nav-item nav-link", onLinkClick (ChangeLocation listingsUrl)] [text "Listings"]
                 ],
                 Html.form [class "form-inline"] [
                     button [type_ "submit", class "btn btn-default mr-sm-2", onLinkClick (ChangeLocation loginUrl)] [text "Login"],

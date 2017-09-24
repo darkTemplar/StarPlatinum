@@ -8,6 +8,8 @@ type Route =
     | HomeRoute
     | LoginRoute
     | SignupRoute
+    | ListingsRoute
+    | CreateListingRoute String
 
 
 matchers : Parser (Route -> a) a
@@ -16,6 +18,8 @@ matchers =
     [ map HomeRoute top
     , map LoginRoute (s "login")
     , map SignupRoute (s "signup")
+    , map ListingsRoute (s "listings")
+    , map CreateListingRoute (s "listing/new" </> string)
     ]
 
 parseLocation : Location -> Route
@@ -32,3 +36,14 @@ loginUrl = "/login"
 
 signupUrl: String
 signupUrl = "/signup"
+
+listingsUrl: String
+listingsUrl = "/listings"
+
+newListingUrl: String
+newListingUrl = "/listing/new"
+
+
+
+
+-- FIXME: right now the above urls only work if navigated to from home page, directly typing them in browser fails

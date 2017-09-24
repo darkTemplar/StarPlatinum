@@ -1,13 +1,12 @@
-module CreateListing.ListingDetails.State exposing (initListingDetails, update)
+module CreateListing.ListingDetails.State exposing (init, update)
 
 import CreateListing.ListingDetails.Types exposing (..)
 import Utils exposing (stringToFloat)
 
-import Date exposing (..)
 
 
-initListingDetails: ListingDetails
-initListingDetails = {
+init: ListingDetails
+init = {
     listPrice = 0.0,
     purchasePrice = 0.0,
     offerDate = Nothing,

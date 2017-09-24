@@ -1,11 +1,11 @@
-module CreateListing.Contingency.State exposing (update)
+module CreateListing.Contingency.State exposing (update, init)
 
 import CreateListing.Contingency.Types exposing (..)
 import Utils exposing (stringToInt)
 
 
-initContingency: Contingency
-initContingency = {
+init: Contingency
+init = {
     financing = True,
     financingDays = 10,
     appraisal = True,

@@ -1,9 +1,9 @@
-module CreateListing.Address.State exposing (update)
+module CreateListing.Address.State exposing (update, init)
 
 import CreateListing.Address.Types exposing (..)
 
-initAddress: Address
-initAddress = {
+init: Address
+init = {
     street = "",
     unit = "",
     city = "",

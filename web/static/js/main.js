@@ -5757,6 +5757,39 @@ var _elm_lang$core$Platform$Task = {ctor: 'Task'};
 var _elm_lang$core$Platform$ProcessId = {ctor: 'ProcessId'};
 var _elm_lang$core$Platform$Router = {ctor: 'Router'};
 
+//import Result //
+
+var _elm_lang$core$Native_Date = function() {
+
+function fromString(str)
+{
+	var date = new Date(str);
+	return isNaN(date.getTime())
+		? _elm_lang$core$Result$Err('Unable to parse \'' + str + '\' as a date. Dates must be in the ISO 8601 format.')
+		: _elm_lang$core$Result$Ok(date);
+}
+
+var dayTable = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+var monthTable =
+	['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+	 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+
+return {
+	fromString: fromString,
+	year: function(d) { return d.getFullYear(); },
+	month: function(d) { return { ctor: monthTable[d.getMonth()] }; },
+	day: function(d) { return d.getDate(); },
+	hour: function(d) { return d.getHours(); },
+	minute: function(d) { return d.getMinutes(); },
+	second: function(d) { return d.getSeconds(); },
+	millisecond: function(d) { return d.getMilliseconds(); },
+	toTime: function(d) { return d.getTime(); },
+	fromTime: function(t) { return new Date(t); },
+	dayOfWeek: function(d) { return { ctor: dayTable[d.getDay()] }; }
+};
+
+}();
 var _elm_lang$core$Task$onError = _elm_lang$core$Native_Scheduler.onError;
 var _elm_lang$core$Task$andThen = _elm_lang$core$Native_Scheduler.andThen;
 var _elm_lang$core$Task$spawnCmd = F2(
@@ -6168,6 +6201,39 @@ var _elm_lang$core$Time$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Time'] = {pkg: 'elm-lang/core', init: _elm_lang$core$Time$init, onEffects: _elm_lang$core$Time$onEffects, onSelfMsg: _elm_lang$core$Time$onSelfMsg, tag: 'sub', subMap: _elm_lang$core$Time$subMap};
+
+var _elm_lang$core$Date$millisecond = _elm_lang$core$Native_Date.millisecond;
+var _elm_lang$core$Date$second = _elm_lang$core$Native_Date.second;
+var _elm_lang$core$Date$minute = _elm_lang$core$Native_Date.minute;
+var _elm_lang$core$Date$hour = _elm_lang$core$Native_Date.hour;
+var _elm_lang$core$Date$dayOfWeek = _elm_lang$core$Native_Date.dayOfWeek;
+var _elm_lang$core$Date$day = _elm_lang$core$Native_Date.day;
+var _elm_lang$core$Date$month = _elm_lang$core$Native_Date.month;
+var _elm_lang$core$Date$year = _elm_lang$core$Native_Date.year;
+var _elm_lang$core$Date$fromTime = _elm_lang$core$Native_Date.fromTime;
+var _elm_lang$core$Date$toTime = _elm_lang$core$Native_Date.toTime;
+var _elm_lang$core$Date$fromString = _elm_lang$core$Native_Date.fromString;
+var _elm_lang$core$Date$now = A2(_elm_lang$core$Task$map, _elm_lang$core$Date$fromTime, _elm_lang$core$Time$now);
+var _elm_lang$core$Date$Date = {ctor: 'Date'};
+var _elm_lang$core$Date$Sun = {ctor: 'Sun'};
+var _elm_lang$core$Date$Sat = {ctor: 'Sat'};
+var _elm_lang$core$Date$Fri = {ctor: 'Fri'};
+var _elm_lang$core$Date$Thu = {ctor: 'Thu'};
+var _elm_lang$core$Date$Wed = {ctor: 'Wed'};
+var _elm_lang$core$Date$Tue = {ctor: 'Tue'};
+var _elm_lang$core$Date$Mon = {ctor: 'Mon'};
+var _elm_lang$core$Date$Dec = {ctor: 'Dec'};
+var _elm_lang$core$Date$Nov = {ctor: 'Nov'};
+var _elm_lang$core$Date$Oct = {ctor: 'Oct'};
+var _elm_lang$core$Date$Sep = {ctor: 'Sep'};
+var _elm_lang$core$Date$Aug = {ctor: 'Aug'};
+var _elm_lang$core$Date$Jul = {ctor: 'Jul'};
+var _elm_lang$core$Date$Jun = {ctor: 'Jun'};
+var _elm_lang$core$Date$May = {ctor: 'May'};
+var _elm_lang$core$Date$Apr = {ctor: 'Apr'};
+var _elm_lang$core$Date$Mar = {ctor: 'Mar'};
+var _elm_lang$core$Date$Feb = {ctor: 'Feb'};
+var _elm_lang$core$Date$Jan = {ctor: 'Jan'};
 
 var _elm_lang$core$Process$kill = _elm_lang$core$Native_Scheduler.kill;
 var _elm_lang$core$Process$sleep = _elm_lang$core$Native_Scheduler.sleep;
@@ -10134,7 +10200,11 @@ var _user$project$Auth_View$loginForm = A2(
 	});
 var _user$project$Auth_View$signupForm = A2(
 	_elm_lang$html$Html$form,
-	{ctor: '[]'},
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html_Events$onSubmit(_user$project$Auth_Types$Continue),
+		_1: {ctor: '[]'}
+	},
 	{
 		ctor: '::',
 		_0: A2(
@@ -10294,7 +10364,7 @@ var _user$project$Auth_View$signupForm = A2(
 								_elm_lang$html$Html$button,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$type_('button'),
+									_0: _elm_lang$html$Html_Attributes$type_('submit'),
 									_1: {
 										ctor: '::',
 										_0: _elm_lang$html$Html_Attributes$class('btn btn-primary btn-block'),
@@ -10540,41 +10610,298 @@ var _user$project$Auth_View$root = F2(
 			});
 	});
 
-var _user$project$Routing$signupUrl = '/signup';
-var _user$project$Routing$loginUrl = '/login';
-var _user$project$Routing$SignupRoute = {ctor: 'SignupRoute'};
-var _user$project$Routing$LoginRoute = {ctor: 'LoginRoute'};
-var _user$project$Routing$HomeRoute = {ctor: 'HomeRoute'};
-var _user$project$Routing$matchers = _evancz$url_parser$UrlParser$oneOf(
-	{
-		ctor: '::',
-		_0: A2(_evancz$url_parser$UrlParser$map, _user$project$Routing$HomeRoute, _evancz$url_parser$UrlParser$top),
-		_1: {
-			ctor: '::',
-			_0: A2(
-				_evancz$url_parser$UrlParser$map,
-				_user$project$Routing$LoginRoute,
-				_evancz$url_parser$UrlParser$s('login')),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_evancz$url_parser$UrlParser$map,
-					_user$project$Routing$SignupRoute,
-					_evancz$url_parser$UrlParser$s('signup')),
-				_1: {ctor: '[]'}
-			}
-		}
+var _user$project$CreateListing_Address_Types$Address = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {street: a, unit: b, city: c, state: d, country: e, lat: f, $long: g, zip: h};
 	});
-var _user$project$Routing$NotFoundRoute = {ctor: 'NotFoundRoute'};
-var _user$project$Routing$parseLocation = function (location) {
-	var _p0 = A2(_evancz$url_parser$UrlParser$parsePath, _user$project$Routing$matchers, location);
-	if (_p0.ctor === 'Just') {
-		return _p0._0;
-	} else {
-		return _user$project$Routing$NotFoundRoute;
-	}
+var _user$project$CreateListing_Address_Types$Back = {ctor: 'Back'};
+var _user$project$CreateListing_Address_Types$Continue = {ctor: 'Continue'};
+var _user$project$CreateListing_Address_Types$Geolocate = {ctor: 'Geolocate'};
+var _user$project$CreateListing_Address_Types$AddressChange = function (a) {
+	return {ctor: 'AddressChange', _0: a};
 };
 
+var _user$project$CreateListing_Address_State$update = F2(
+	function (msg, address) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'AddressChange':
+				return {ctor: '_Tuple2', _0: address, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'Geolocate':
+				return {ctor: '_Tuple2', _0: address, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'Continue':
+				return {ctor: '_Tuple2', _0: address, _1: _elm_lang$core$Platform_Cmd$none};
+			default:
+				return {ctor: '_Tuple2', _0: address, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$CreateListing_Address_State$init = {street: '', unit: '', city: '', state: '', country: '', lat: '', $long: '', zip: ''};
+
+var _user$project$CreateListing_Address_View$formatAddress = function (address) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		address.street,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			', ',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				address.unit,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					', ',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						address.city,
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							', ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								address.state,
+								A2(_elm_lang$core$Basics_ops['++'], ', ', address.country))))))));
+};
+var _user$project$CreateListing_Address_View$root = function (address) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('modal-fade'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('modal-dialog'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('modal-content'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('modal-header'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$h5,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('modal-title'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Property Info'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('modal-body'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$div,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('container-fluid'),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$form,
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: A2(
+															_elm_lang$html$Html$div,
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$class('form-group'),
+																_1: {ctor: '[]'}
+															},
+															{
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$html$Html$input,
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Attributes$type_('text'),
+																		_1: {
+																			ctor: '::',
+																			_0: _elm_lang$html$Html_Attributes$placeholder('Address'),
+																			_1: {
+																				ctor: '::',
+																				_0: _elm_lang$html$Html_Attributes$class('form-control'),
+																				_1: {
+																					ctor: '::',
+																					_0: _elm_lang$html$Html_Attributes$id('autocomplete'),
+																					_1: {
+																						ctor: '::',
+																						_0: _elm_lang$html$Html_Attributes$value(
+																							_user$project$CreateListing_Address_View$formatAddress(address)),
+																						_1: {
+																							ctor: '::',
+																							_0: _elm_lang$html$Html_Events$onInput(_user$project$CreateListing_Address_Types$AddressChange),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Events$onFocus(_user$project$CreateListing_Address_Types$Geolocate),
+																								_1: {ctor: '[]'}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	},
+																	{ctor: '[]'}),
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$div,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('modal-footer'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$div,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$class('footer-content'),
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: A2(
+														_elm_lang$html$Html$button,
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$type_('button'),
+															_1: {
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$class('btn btn-secondary'),
+																_1: {
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Events$onClick(_user$project$CreateListing_Address_Types$Back),
+																	_1: {ctor: '[]'}
+																}
+															}
+														},
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html$text('Go Back'),
+															_1: {ctor: '[]'}
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_elm_lang$html$Html$button,
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$type_('button'),
+																_1: {
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Attributes$class('btn btn-primary btn-block'),
+																	_1: {
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Events$onClick(_user$project$CreateListing_Address_Types$Continue),
+																		_1: {ctor: '[]'}
+																	}
+																}
+															},
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html$text('Continue'),
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}
+												}),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+
+var _user$project$CreateListing_Contingency_Types$Contingency = F6(
+	function (a, b, c, d, e, f) {
+		return {financing: a, financingDays: b, appraisal: c, appraisalDays: d, condition: e, conditionDays: f};
+	});
+var _user$project$CreateListing_Contingency_Types$Continue = {ctor: 'Continue'};
+var _user$project$CreateListing_Contingency_Types$Back = {ctor: 'Back'};
+var _user$project$CreateListing_Contingency_Types$ConditionDays = function (a) {
+	return {ctor: 'ConditionDays', _0: a};
+};
+var _user$project$CreateListing_Contingency_Types$ToggleCondition = {ctor: 'ToggleCondition'};
+var _user$project$CreateListing_Contingency_Types$AppraisalDays = function (a) {
+	return {ctor: 'AppraisalDays', _0: a};
+};
+var _user$project$CreateListing_Contingency_Types$ToggleAppraisal = {ctor: 'ToggleAppraisal'};
+var _user$project$CreateListing_Contingency_Types$FinancingDays = function (a) {
+	return {ctor: 'FinancingDays', _0: a};
+};
+var _user$project$CreateListing_Contingency_Types$ToggleFinancing = {ctor: 'ToggleFinancing'};
+
+var _user$project$Utils$notFoundView = A2(
+	_elm_lang$html$Html$div,
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$class('main'),
+		_1: {ctor: '[]'}
+	},
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$h1,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('Sorry the page you are looking for was not found!'),
+				_1: {ctor: '[]'}
+			}),
+		_1: {ctor: '[]'}
+	});
 var _user$project$Utils$onLinkClick = function (message) {
 	var options = {stopPropagation: false, preventDefault: true};
 	return A3(
@@ -10594,6 +10921,1733 @@ var _user$project$Utils$stringToInt = function (str) {
 		_elm_lang$core$Result$withDefault,
 		0,
 		_elm_lang$core$String$toInt(str));
+};
+
+var _user$project$CreateListing_Contingency_State$update = F2(
+	function (msg, contingency) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'ToggleFinancing':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						contingency,
+						{financing: !contingency.financing}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'FinancingDays':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						contingency,
+						{
+							financingDays: _user$project$Utils$stringToInt(_p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ToggleAppraisal':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						contingency,
+						{appraisal: !contingency.appraisal}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'AppraisalDays':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						contingency,
+						{
+							appraisalDays: _user$project$Utils$stringToInt(_p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ToggleCondition':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						contingency,
+						{condition: !contingency.condition}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ConditionDays':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						contingency,
+						{
+							conditionDays: _user$project$Utils$stringToInt(_p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Continue':
+				return {ctor: '_Tuple2', _0: contingency, _1: _elm_lang$core$Platform_Cmd$none};
+			default:
+				return {ctor: '_Tuple2', _0: contingency, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$CreateListing_Contingency_State$init = {financing: true, financingDays: 10, appraisal: true, appraisalDays: 10, condition: true, conditionDays: 10};
+
+var _user$project$CreateListing_Contingency_View$root = function (contingency) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('modal-fade'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('modal-dialog'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('modal-content'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('modal-header'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$h5,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('modal-title'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Contingencies'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('modal-body'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$div,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('container-fluid'),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$form,
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: A2(
+															_elm_lang$html$Html$div,
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$class('form-row'),
+																_1: {ctor: '[]'}
+															},
+															{
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$html$Html$div,
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Attributes$class('form-check col-md-6'),
+																		_1: {ctor: '[]'}
+																	},
+																	{
+																		ctor: '::',
+																		_0: A2(
+																			_elm_lang$html$Html$label,
+																			{
+																				ctor: '::',
+																				_0: _elm_lang$html$Html_Attributes$class('form-check-label'),
+																				_1: {ctor: '[]'}
+																			},
+																			{
+																				ctor: '::',
+																				_0: _elm_lang$html$Html$text('Financing'),
+																				_1: {
+																					ctor: '::',
+																					_0: A2(
+																						_elm_lang$html$Html$input,
+																						{
+																							ctor: '::',
+																							_0: _elm_lang$html$Html_Attributes$type_('checkbox'),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$class('form-check-input'),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$id('financing'),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Attributes$checked(contingency.financing),
+																										_1: {
+																											ctor: '::',
+																											_0: _elm_lang$html$Html_Events$onClick(_user$project$CreateListing_Contingency_Types$ToggleFinancing),
+																											_1: {ctor: '[]'}
+																										}
+																									}
+																								}
+																							}
+																						},
+																						{ctor: '[]'}),
+																					_1: {ctor: '[]'}
+																				}
+																			}),
+																		_1: {
+																			ctor: '::',
+																			_0: A2(
+																				_elm_lang$html$Html$label,
+																				{ctor: '[]'},
+																				{
+																					ctor: '::',
+																					_0: _elm_lang$html$Html$text('Contingency length'),
+																					_1: {
+																						ctor: '::',
+																						_0: A2(
+																							_elm_lang$html$Html$input,
+																							{
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$type_('text'),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$placeholder('10'),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Attributes$class('form-control'),
+																										_1: {
+																											ctor: '::',
+																											_0: _elm_lang$html$Html_Attributes$id('financingLength'),
+																											_1: {
+																												ctor: '::',
+																												_0: _elm_lang$html$Html_Events$onInput(_user$project$CreateListing_Contingency_Types$FinancingDays),
+																												_1: {ctor: '[]'}
+																											}
+																										}
+																									}
+																								}
+																							},
+																							{ctor: '[]'}),
+																						_1: {
+																							ctor: '::',
+																							_0: _elm_lang$html$Html$text('Days'),
+																							_1: {ctor: '[]'}
+																						}
+																					}
+																				}),
+																			_1: {ctor: '[]'}
+																		}
+																	}),
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_elm_lang$html$Html$div,
+																		{
+																			ctor: '::',
+																			_0: _elm_lang$html$Html_Attributes$class('form-check col-md-6'),
+																			_1: {ctor: '[]'}
+																		},
+																		{
+																			ctor: '::',
+																			_0: A2(
+																				_elm_lang$html$Html$label,
+																				{
+																					ctor: '::',
+																					_0: _elm_lang$html$Html_Attributes$class('form-check-label'),
+																					_1: {ctor: '[]'}
+																				},
+																				{
+																					ctor: '::',
+																					_0: _elm_lang$html$Html$text('Appraisal'),
+																					_1: {
+																						ctor: '::',
+																						_0: A2(
+																							_elm_lang$html$Html$input,
+																							{
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$type_('checkbox'),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$class('form-check-input'),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Attributes$id('appraisal'),
+																										_1: {
+																											ctor: '::',
+																											_0: _elm_lang$html$Html_Attributes$checked(contingency.appraisal),
+																											_1: {
+																												ctor: '::',
+																												_0: _elm_lang$html$Html_Events$onClick(_user$project$CreateListing_Contingency_Types$ToggleAppraisal),
+																												_1: {ctor: '[]'}
+																											}
+																										}
+																									}
+																								}
+																							},
+																							{ctor: '[]'}),
+																						_1: {ctor: '[]'}
+																					}
+																				}),
+																			_1: {
+																				ctor: '::',
+																				_0: A2(
+																					_elm_lang$html$Html$label,
+																					{ctor: '[]'},
+																					{
+																						ctor: '::',
+																						_0: _elm_lang$html$Html$text('Contingency length'),
+																						_1: {
+																							ctor: '::',
+																							_0: A2(
+																								_elm_lang$html$Html$input,
+																								{
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$type_('text'),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Attributes$placeholder('10'),
+																										_1: {
+																											ctor: '::',
+																											_0: _elm_lang$html$Html_Attributes$class('form-control'),
+																											_1: {
+																												ctor: '::',
+																												_0: _elm_lang$html$Html_Attributes$id('appraisalLength'),
+																												_1: {
+																													ctor: '::',
+																													_0: _elm_lang$html$Html_Events$onInput(_user$project$CreateListing_Contingency_Types$AppraisalDays),
+																													_1: {ctor: '[]'}
+																												}
+																											}
+																										}
+																									}
+																								},
+																								{ctor: '[]'}),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html$text('Days'),
+																								_1: {ctor: '[]'}
+																							}
+																						}
+																					}),
+																				_1: {ctor: '[]'}
+																			}
+																		}),
+																	_1: {ctor: '[]'}
+																}
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_elm_lang$html$Html$div,
+																{
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Attributes$class('form-row'),
+																	_1: {ctor: '[]'}
+																},
+																{
+																	ctor: '::',
+																	_0: A2(
+																		_elm_lang$html$Html$div,
+																		{
+																			ctor: '::',
+																			_0: _elm_lang$html$Html_Attributes$class('form-check col-md-6'),
+																			_1: {ctor: '[]'}
+																		},
+																		{
+																			ctor: '::',
+																			_0: A2(
+																				_elm_lang$html$Html$label,
+																				{
+																					ctor: '::',
+																					_0: _elm_lang$html$Html_Attributes$class('form-check-label'),
+																					_1: {ctor: '[]'}
+																				},
+																				{
+																					ctor: '::',
+																					_0: _elm_lang$html$Html$text('Property Condition'),
+																					_1: {
+																						ctor: '::',
+																						_0: A2(
+																							_elm_lang$html$Html$input,
+																							{
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$type_('checkbox'),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$class('form-check-input'),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Attributes$id('propertyCondition'),
+																										_1: {
+																											ctor: '::',
+																											_0: _elm_lang$html$Html_Attributes$checked(contingency.condition),
+																											_1: {
+																												ctor: '::',
+																												_0: _elm_lang$html$Html_Events$onClick(_user$project$CreateListing_Contingency_Types$ToggleCondition),
+																												_1: {ctor: '[]'}
+																											}
+																										}
+																									}
+																								}
+																							},
+																							{ctor: '[]'}),
+																						_1: {ctor: '[]'}
+																					}
+																				}),
+																			_1: {
+																				ctor: '::',
+																				_0: A2(
+																					_elm_lang$html$Html$label,
+																					{ctor: '[]'},
+																					{
+																						ctor: '::',
+																						_0: _elm_lang$html$Html$text('Contingency length'),
+																						_1: {
+																							ctor: '::',
+																							_0: A2(
+																								_elm_lang$html$Html$input,
+																								{
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$type_('text'),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Attributes$placeholder('10'),
+																										_1: {
+																											ctor: '::',
+																											_0: _elm_lang$html$Html_Attributes$class('form-control'),
+																											_1: {
+																												ctor: '::',
+																												_0: _elm_lang$html$Html_Attributes$id('propertyConditionLength'),
+																												_1: {
+																													ctor: '::',
+																													_0: _elm_lang$html$Html_Events$onInput(_user$project$CreateListing_Contingency_Types$ConditionDays),
+																													_1: {ctor: '[]'}
+																												}
+																											}
+																										}
+																									}
+																								},
+																								{ctor: '[]'}),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html$text('Days'),
+																								_1: {ctor: '[]'}
+																							}
+																						}
+																					}),
+																				_1: {ctor: '[]'}
+																			}
+																		}),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {ctor: '[]'}
+														}
+													}),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$div,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('modal-footer'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$div,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$class('footer-content'),
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: A2(
+														_elm_lang$html$Html$button,
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$type_('button'),
+															_1: {
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$class('btn btn-secondary'),
+																_1: {
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Events$onClick(_user$project$CreateListing_Contingency_Types$Back),
+																	_1: {ctor: '[]'}
+																}
+															}
+														},
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html$text('Go Back'),
+															_1: {ctor: '[]'}
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_elm_lang$html$Html$button,
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$type_('button'),
+																_1: {
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Attributes$class('btn btn-primary'),
+																	_1: {
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Events$onClick(_user$project$CreateListing_Contingency_Types$Continue),
+																		_1: {ctor: '[]'}
+																	}
+																}
+															},
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html$text('Continue'),
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}
+												}),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+
+var _user$project$CreateListing_ListingDetails_Types$ListingDetails = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {listPrice: a, purchasePrice: b, offerDate: c, offerTime: d, escrowDate: e, beds: f, baths: g, area: h};
+	});
+var _user$project$CreateListing_ListingDetails_Types$Continue = {ctor: 'Continue'};
+var _user$project$CreateListing_ListingDetails_Types$Back = {ctor: 'Back'};
+var _user$project$CreateListing_ListingDetails_Types$Area = function (a) {
+	return {ctor: 'Area', _0: a};
+};
+var _user$project$CreateListing_ListingDetails_Types$Baths = function (a) {
+	return {ctor: 'Baths', _0: a};
+};
+var _user$project$CreateListing_ListingDetails_Types$Beds = function (a) {
+	return {ctor: 'Beds', _0: a};
+};
+var _user$project$CreateListing_ListingDetails_Types$EscrowDate = function (a) {
+	return {ctor: 'EscrowDate', _0: a};
+};
+var _user$project$CreateListing_ListingDetails_Types$PurchasePrice = function (a) {
+	return {ctor: 'PurchasePrice', _0: a};
+};
+var _user$project$CreateListing_ListingDetails_Types$OfferTime = function (a) {
+	return {ctor: 'OfferTime', _0: a};
+};
+var _user$project$CreateListing_ListingDetails_Types$OfferDate = function (a) {
+	return {ctor: 'OfferDate', _0: a};
+};
+var _user$project$CreateListing_ListingDetails_Types$ListPrice = function (a) {
+	return {ctor: 'ListPrice', _0: a};
+};
+
+var _user$project$CreateListing_ListingDetails_State$update = F2(
+	function (msg, listingDetails) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'ListPrice':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						listingDetails,
+						{
+							listPrice: _user$project$Utils$stringToFloat(_p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'PurchasePrice':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						listingDetails,
+						{
+							purchasePrice: _user$project$Utils$stringToFloat(_p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'OfferDate':
+				return {ctor: '_Tuple2', _0: listingDetails, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'OfferTime':
+				return {ctor: '_Tuple2', _0: listingDetails, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'EscrowDate':
+				return {ctor: '_Tuple2', _0: listingDetails, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'Beds':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						listingDetails,
+						{
+							beds: _user$project$Utils$stringToFloat(_p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Baths':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						listingDetails,
+						{
+							baths: _user$project$Utils$stringToFloat(_p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Area':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						listingDetails,
+						{
+							area: _user$project$Utils$stringToFloat(_p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Continue':
+				return {ctor: '_Tuple2', _0: listingDetails, _1: _elm_lang$core$Platform_Cmd$none};
+			default:
+				return {ctor: '_Tuple2', _0: listingDetails, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$CreateListing_ListingDetails_State$init = {listPrice: 0.0, purchasePrice: 0.0, offerDate: _elm_lang$core$Maybe$Nothing, offerTime: _elm_lang$core$Maybe$Nothing, escrowDate: _elm_lang$core$Maybe$Nothing, beds: 0.0, baths: 0.0, area: 0.0};
+
+var _user$project$CreateListing_ListingDetails_View$root = function (listingDetails) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('modal-fade'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('modal-dialog'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('modal-content'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('modal-header'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$h5,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('modal-title'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Property Details'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('modal-body'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$div,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('container-fluid'),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$form,
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: A2(
+															_elm_lang$html$Html$div,
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$class('form-row'),
+																_1: {ctor: '[]'}
+															},
+															{
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$html$Html$div,
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Attributes$class('form-group col-md-4'),
+																		_1: {ctor: '[]'}
+																	},
+																	{
+																		ctor: '::',
+																		_0: A2(
+																			_elm_lang$html$Html$input,
+																			{
+																				ctor: '::',
+																				_0: _elm_lang$html$Html_Attributes$type_('text'),
+																				_1: {
+																					ctor: '::',
+																					_0: _elm_lang$html$Html_Attributes$placeholder('List Price'),
+																					_1: {
+																						ctor: '::',
+																						_0: _elm_lang$html$Html_Attributes$class('form-control'),
+																						_1: {
+																							ctor: '::',
+																							_0: _elm_lang$html$Html_Attributes$id('listPrice'),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$value(
+																									_elm_lang$core$Basics$toString(listingDetails.listPrice)),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Events$onInput(_user$project$CreateListing_ListingDetails_Types$ListPrice),
+																									_1: {ctor: '[]'}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			},
+																			{ctor: '[]'}),
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_elm_lang$html$Html$div,
+																		{
+																			ctor: '::',
+																			_0: _elm_lang$html$Html_Attributes$class('form-group col-md-4'),
+																			_1: {ctor: '[]'}
+																		},
+																		{
+																			ctor: '::',
+																			_0: A2(
+																				_elm_lang$html$Html$input,
+																				{
+																					ctor: '::',
+																					_0: _elm_lang$html$Html_Attributes$type_('date'),
+																					_1: {
+																						ctor: '::',
+																						_0: _elm_lang$html$Html_Attributes$placeholder('Date'),
+																						_1: {
+																							ctor: '::',
+																							_0: _elm_lang$html$Html_Attributes$class('form-control'),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$id('offerDate'),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$value(
+																										_elm_lang$core$Basics$toString(listingDetails.offerDate)),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Events$onInput(_user$project$CreateListing_ListingDetails_Types$OfferDate),
+																										_1: {ctor: '[]'}
+																									}
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{ctor: '[]'}),
+																			_1: {ctor: '[]'}
+																		}),
+																	_1: {
+																		ctor: '::',
+																		_0: A2(
+																			_elm_lang$html$Html$div,
+																			{
+																				ctor: '::',
+																				_0: _elm_lang$html$Html_Attributes$class('form-group col-md-4'),
+																				_1: {ctor: '[]'}
+																			},
+																			{
+																				ctor: '::',
+																				_0: A2(
+																					_elm_lang$html$Html$input,
+																					{
+																						ctor: '::',
+																						_0: _elm_lang$html$Html_Attributes$type_('text'),
+																						_1: {
+																							ctor: '::',
+																							_0: _elm_lang$html$Html_Attributes$placeholder('Time'),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$class('form-control'),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$id('time'),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Attributes$value(
+																											_elm_lang$core$Basics$toString(listingDetails.offerDate)),
+																										_1: {
+																											ctor: '::',
+																											_0: _elm_lang$html$Html_Events$onInput(_user$project$CreateListing_ListingDetails_Types$OfferTime),
+																											_1: {ctor: '[]'}
+																										}
+																									}
+																								}
+																							}
+																						}
+																					},
+																					{ctor: '[]'}),
+																				_1: {ctor: '[]'}
+																			}),
+																		_1: {ctor: '[]'}
+																	}
+																}
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_elm_lang$html$Html$div,
+																{
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Attributes$class('form-row'),
+																	_1: {ctor: '[]'}
+																},
+																{
+																	ctor: '::',
+																	_0: A2(
+																		_elm_lang$html$Html$div,
+																		{
+																			ctor: '::',
+																			_0: _elm_lang$html$Html_Attributes$class('form-group col-md-8'),
+																			_1: {ctor: '[]'}
+																		},
+																		{
+																			ctor: '::',
+																			_0: A2(
+																				_elm_lang$html$Html$input,
+																				{
+																					ctor: '::',
+																					_0: _elm_lang$html$Html_Attributes$type_('text'),
+																					_1: {
+																						ctor: '::',
+																						_0: _elm_lang$html$Html_Attributes$placeholder('Purchase Price'),
+																						_1: {
+																							ctor: '::',
+																							_0: _elm_lang$html$Html_Attributes$class('form-control'),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$id('purchasePrice'),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$value(
+																										_elm_lang$core$Basics$toString(listingDetails.listPrice)),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Events$onInput(_user$project$CreateListing_ListingDetails_Types$PurchasePrice),
+																										_1: {ctor: '[]'}
+																									}
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{ctor: '[]'}),
+																			_1: {ctor: '[]'}
+																		}),
+																	_1: {
+																		ctor: '::',
+																		_0: A2(
+																			_elm_lang$html$Html$div,
+																			{
+																				ctor: '::',
+																				_0: _elm_lang$html$Html_Attributes$class('form-group col-md-4'),
+																				_1: {ctor: '[]'}
+																			},
+																			{
+																				ctor: '::',
+																				_0: A2(
+																					_elm_lang$html$Html$input,
+																					{
+																						ctor: '::',
+																						_0: _elm_lang$html$Html_Attributes$type_('date'),
+																						_1: {
+																							ctor: '::',
+																							_0: _elm_lang$html$Html_Attributes$placeholder('Escrow Date'),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$class('form-control'),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$id('escrowDate'),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Attributes$value(
+																											_elm_lang$core$Basics$toString(listingDetails.escrowDate)),
+																										_1: {
+																											ctor: '::',
+																											_0: _elm_lang$html$Html_Events$onInput(_user$project$CreateListing_ListingDetails_Types$EscrowDate),
+																											_1: {ctor: '[]'}
+																										}
+																									}
+																								}
+																							}
+																						}
+																					},
+																					{ctor: '[]'}),
+																				_1: {ctor: '[]'}
+																			}),
+																		_1: {ctor: '[]'}
+																	}
+																}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$html$Html$div,
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Attributes$class('form-row'),
+																		_1: {ctor: '[]'}
+																	},
+																	{
+																		ctor: '::',
+																		_0: A2(
+																			_elm_lang$html$Html$div,
+																			{
+																				ctor: '::',
+																				_0: _elm_lang$html$Html_Attributes$class('form-group col-md-4'),
+																				_1: {ctor: '[]'}
+																			},
+																			{
+																				ctor: '::',
+																				_0: A2(
+																					_elm_lang$html$Html$input,
+																					{
+																						ctor: '::',
+																						_0: _elm_lang$html$Html_Attributes$type_('text'),
+																						_1: {
+																							ctor: '::',
+																							_0: _elm_lang$html$Html_Attributes$placeholder('Beds'),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$class('form-control'),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$id('bed'),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Attributes$value(
+																											_elm_lang$core$Basics$toString(listingDetails.beds)),
+																										_1: {
+																											ctor: '::',
+																											_0: _elm_lang$html$Html_Events$onInput(_user$project$CreateListing_ListingDetails_Types$Beds),
+																											_1: {ctor: '[]'}
+																										}
+																									}
+																								}
+																							}
+																						}
+																					},
+																					{ctor: '[]'}),
+																				_1: {ctor: '[]'}
+																			}),
+																		_1: {
+																			ctor: '::',
+																			_0: A2(
+																				_elm_lang$html$Html$div,
+																				{
+																					ctor: '::',
+																					_0: _elm_lang$html$Html_Attributes$class('form-group col-md-4'),
+																					_1: {ctor: '[]'}
+																				},
+																				{
+																					ctor: '::',
+																					_0: A2(
+																						_elm_lang$html$Html$input,
+																						{
+																							ctor: '::',
+																							_0: _elm_lang$html$Html_Attributes$type_('text'),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$placeholder('Baths'),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$class('form-control'),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Attributes$id('bath'),
+																										_1: {
+																											ctor: '::',
+																											_0: _elm_lang$html$Html_Attributes$value(
+																												_elm_lang$core$Basics$toString(listingDetails.baths)),
+																											_1: {
+																												ctor: '::',
+																												_0: _elm_lang$html$Html_Events$onInput(_user$project$CreateListing_ListingDetails_Types$Baths),
+																												_1: {ctor: '[]'}
+																											}
+																										}
+																									}
+																								}
+																							}
+																						},
+																						{ctor: '[]'}),
+																					_1: {ctor: '[]'}
+																				}),
+																			_1: {
+																				ctor: '::',
+																				_0: A2(
+																					_elm_lang$html$Html$div,
+																					{
+																						ctor: '::',
+																						_0: _elm_lang$html$Html_Attributes$class('form-group col-md-4'),
+																						_1: {ctor: '[]'}
+																					},
+																					{
+																						ctor: '::',
+																						_0: A2(
+																							_elm_lang$html$Html$input,
+																							{
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$type_('text'),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$placeholder('Area sq ft'),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Attributes$class('form-control'),
+																										_1: {
+																											ctor: '::',
+																											_0: _elm_lang$html$Html_Attributes$id('area'),
+																											_1: {
+																												ctor: '::',
+																												_0: _elm_lang$html$Html_Attributes$value(
+																													_elm_lang$core$Basics$toString(listingDetails.area)),
+																												_1: {
+																													ctor: '::',
+																													_0: _elm_lang$html$Html_Events$onInput(_user$project$CreateListing_ListingDetails_Types$Area),
+																													_1: {ctor: '[]'}
+																												}
+																											}
+																										}
+																									}
+																								}
+																							},
+																							{ctor: '[]'}),
+																						_1: {ctor: '[]'}
+																					}),
+																				_1: {ctor: '[]'}
+																			}
+																		}
+																	}),
+																_1: {ctor: '[]'}
+															}
+														}
+													}),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$div,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('modal-footer'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$div,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$class('footer-content'),
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: A2(
+														_elm_lang$html$Html$button,
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$type_('button'),
+															_1: {
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$class('btn btn-secondary'),
+																_1: {
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Events$onClick(_user$project$CreateListing_ListingDetails_Types$Back),
+																	_1: {ctor: '[]'}
+																}
+															}
+														},
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html$text('Go Back'),
+															_1: {ctor: '[]'}
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_elm_lang$html$Html$button,
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$type_('button'),
+																_1: {
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Attributes$class('btn btn-primary'),
+																	_1: {
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Events$onClick(_user$project$CreateListing_ListingDetails_Types$Continue),
+																		_1: {ctor: '[]'}
+																	}
+																}
+															},
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html$text('Continue'),
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}
+												}),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+
+var _user$project$CreateListing_PropertyCondition_Types$PropertyCondition = F3(
+	function (a, b, c) {
+		return {asIs: a, buyerPays: b, sellerObligation: c};
+	});
+var _user$project$CreateListing_PropertyCondition_Types$Continue = {ctor: 'Continue'};
+var _user$project$CreateListing_PropertyCondition_Types$Back = {ctor: 'Back'};
+var _user$project$CreateListing_PropertyCondition_Types$ToggleSellerObligation = {ctor: 'ToggleSellerObligation'};
+var _user$project$CreateListing_PropertyCondition_Types$ToggleBuyerPays = {ctor: 'ToggleBuyerPays'};
+var _user$project$CreateListing_PropertyCondition_Types$ToggleAsIs = {ctor: 'ToggleAsIs'};
+
+var _user$project$CreateListing_PropertyCondition_State$update = F2(
+	function (msg, propertyCondition) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'ToggleAsIs':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						propertyCondition,
+						{asIs: !propertyCondition.asIs}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ToggleSellerObligation':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						propertyCondition,
+						{sellerObligation: !propertyCondition.sellerObligation}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ToggleBuyerPays':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						propertyCondition,
+						{buyerPays: !propertyCondition.buyerPays}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Continue':
+				return {ctor: '_Tuple2', _0: propertyCondition, _1: _elm_lang$core$Platform_Cmd$none};
+			default:
+				return {ctor: '_Tuple2', _0: propertyCondition, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$CreateListing_PropertyCondition_State$init = {asIs: true, buyerPays: true, sellerObligation: true};
+
+var _user$project$CreateListing_PropertyCondition_View$root = function (propertyCondition) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('modal-fade'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('modal-dialog'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('modal-content'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('modal-header'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$h5,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('modal-title'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Property Details'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('modal-body'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$div,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('container-fluid'),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$form,
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: A2(
+															_elm_lang$html$Html$div,
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$class('form-group'),
+																_1: {ctor: '[]'}
+															},
+															{
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$html$Html$label,
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Attributes$class('form-check-label'),
+																		_1: {ctor: '[]'}
+																	},
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html$text('As is'),
+																		_1: {
+																			ctor: '::',
+																			_0: A2(
+																				_elm_lang$html$Html$input,
+																				{
+																					ctor: '::',
+																					_0: _elm_lang$html$Html_Attributes$type_('checkbox'),
+																					_1: {
+																						ctor: '::',
+																						_0: _elm_lang$html$Html_Attributes$class('form-check-input'),
+																						_1: {
+																							ctor: '::',
+																							_0: _elm_lang$html$Html_Attributes$id('asIs'),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$checked(propertyCondition.asIs),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Events$onClick(_user$project$CreateListing_PropertyCondition_Types$ToggleAsIs),
+																									_1: {ctor: '[]'}
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{ctor: '[]'}),
+																			_1: {ctor: '[]'}
+																		}
+																	}),
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_elm_lang$html$Html$div,
+																{
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Attributes$class('form-group'),
+																	_1: {ctor: '[]'}
+																},
+																{
+																	ctor: '::',
+																	_0: A2(
+																		_elm_lang$html$Html$label,
+																		{
+																			ctor: '::',
+																			_0: _elm_lang$html$Html_Attributes$class('form-check-label'),
+																			_1: {ctor: '[]'}
+																		},
+																		{
+																			ctor: '::',
+																			_0: _elm_lang$html$Html$text('Buyer pays for structural pest control inspection'),
+																			_1: {
+																				ctor: '::',
+																				_0: A2(
+																					_elm_lang$html$Html$input,
+																					{
+																						ctor: '::',
+																						_0: _elm_lang$html$Html_Attributes$type_('checkbox'),
+																						_1: {
+																							ctor: '::',
+																							_0: _elm_lang$html$Html_Attributes$class('form-check-input'),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$id('appraisal'),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$checked(propertyCondition.buyerPays),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Events$onClick(_user$project$CreateListing_PropertyCondition_Types$ToggleBuyerPays),
+																										_1: {ctor: '[]'}
+																									}
+																								}
+																							}
+																						}
+																					},
+																					{ctor: '[]'}),
+																				_1: {ctor: '[]'}
+																			}
+																		}),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$html$Html$div,
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Attributes$class('form-group'),
+																		_1: {ctor: '[]'}
+																	},
+																	{
+																		ctor: '::',
+																		_0: A2(
+																			_elm_lang$html$Html$label,
+																			{
+																				ctor: '::',
+																				_0: _elm_lang$html$Html_Attributes$class('form-check-label'),
+																				_1: {ctor: '[]'}
+																			},
+																			{
+																				ctor: '::',
+																				_0: _elm_lang$html$Html$text('Seller obligation to repair and correct'),
+																				_1: {
+																					ctor: '::',
+																					_0: A2(
+																						_elm_lang$html$Html$input,
+																						{
+																							ctor: '::',
+																							_0: _elm_lang$html$Html_Attributes$type_('checkbox'),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Attributes$class('form-check-input'),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html_Attributes$id('appraisal'),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html_Attributes$checked(propertyCondition.sellerObligation),
+																										_1: {
+																											ctor: '::',
+																											_0: _elm_lang$html$Html_Events$onClick(_user$project$CreateListing_PropertyCondition_Types$ToggleSellerObligation),
+																											_1: {ctor: '[]'}
+																										}
+																									}
+																								}
+																							}
+																						},
+																						{ctor: '[]'}),
+																					_1: {ctor: '[]'}
+																				}
+																			}),
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {ctor: '[]'}
+															}
+														}
+													}),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$div,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('modal-footer'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$div,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$class('footer-content'),
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: A2(
+														_elm_lang$html$Html$button,
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$type_('button'),
+															_1: {
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$class('btn btn-secondary'),
+																_1: {
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Events$onClick(_user$project$CreateListing_PropertyCondition_Types$Back),
+																	_1: {ctor: '[]'}
+																}
+															}
+														},
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html$text('Go Back'),
+															_1: {ctor: '[]'}
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_elm_lang$html$Html$button,
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$type_('button'),
+																_1: {
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Attributes$class('btn btn-primary'),
+																	_1: {
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Events$onClick(_user$project$CreateListing_PropertyCondition_Types$Continue),
+																		_1: {ctor: '[]'}
+																	}
+																}
+															},
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html$text('Continue'),
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}
+												}),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+
+var _user$project$CreateListing_Types$propertyCondition = '/propertyCondition';
+var _user$project$CreateListing_Types$contingency = '/contingency';
+var _user$project$CreateListing_Types$address = '/address';
+var _user$project$CreateListing_Types$listingDetails = '/listingDetails';
+var _user$project$CreateListing_Types$Model = F6(
+	function (a, b, c, d, e, f) {
+		return {subroute: a, address: b, listingDetails: c, contingency: d, propertyCondition: e, error: f};
+	});
+var _user$project$CreateListing_Types$NotFoundRoute = {ctor: 'NotFoundRoute'};
+var _user$project$CreateListing_Types$PropertyConditionRoute = {ctor: 'PropertyConditionRoute'};
+var _user$project$CreateListing_Types$ContingencyRoute = {ctor: 'ContingencyRoute'};
+var _user$project$CreateListing_Types$ListingDetailsRoute = {ctor: 'ListingDetailsRoute'};
+var _user$project$CreateListing_Types$AddressRoute = {ctor: 'AddressRoute'};
+var _user$project$CreateListing_Types$PropertyConditionPageMsg = function (a) {
+	return {ctor: 'PropertyConditionPageMsg', _0: a};
+};
+var _user$project$CreateListing_Types$ContingencyPageMsg = function (a) {
+	return {ctor: 'ContingencyPageMsg', _0: a};
+};
+var _user$project$CreateListing_Types$ListingDetailsPageMsg = function (a) {
+	return {ctor: 'ListingDetailsPageMsg', _0: a};
+};
+var _user$project$CreateListing_Types$AddressPageMsg = function (a) {
+	return {ctor: 'AddressPageMsg', _0: a};
+};
+
+var _user$project$CreateListing_State$parseSubpath = function (subpath) {
+	var _p0 = subpath;
+	switch (_p0) {
+		case 'address':
+			return _user$project$CreateListing_Types$AddressRoute;
+		case 'listingDetails':
+			return _user$project$CreateListing_Types$ListingDetailsRoute;
+		case 'contingency':
+			return _user$project$CreateListing_Types$ContingencyRoute;
+		case 'propertyCondition':
+			return _user$project$CreateListing_Types$PropertyConditionRoute;
+		default:
+			return _user$project$CreateListing_Types$NotFoundRoute;
+	}
+};
+var _user$project$CreateListing_State$update = F2(
+	function (msg, model) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
+			case 'AddressPageMsg':
+				var _p2 = A2(_user$project$CreateListing_Address_State$update, _p1._0, model.address);
+				var address = _p2._0;
+				var addressCmd = _p2._1;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{address: address}),
+					_1: _elm_lang$core$Platform_Cmd$batch(
+						{
+							ctor: '::',
+							_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$CreateListing_Types$AddressPageMsg, addressCmd),
+							_1: {ctor: '[]'}
+						})
+				};
+			case 'ListingDetailsPageMsg':
+				var _p3 = A2(_user$project$CreateListing_ListingDetails_State$update, _p1._0, model.listingDetails);
+				var listingDetails = _p3._0;
+				var listingDetailsCmd = _p3._1;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{listingDetails: listingDetails}),
+					_1: _elm_lang$core$Platform_Cmd$batch(
+						{
+							ctor: '::',
+							_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$CreateListing_Types$ListingDetailsPageMsg, listingDetailsCmd),
+							_1: {ctor: '[]'}
+						})
+				};
+			case 'ContingencyPageMsg':
+				var _p4 = A2(_user$project$CreateListing_Contingency_State$update, _p1._0, model.contingency);
+				var contingency = _p4._0;
+				var contingencyCmd = _p4._1;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{contingency: contingency}),
+					_1: _elm_lang$core$Platform_Cmd$batch(
+						{
+							ctor: '::',
+							_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$CreateListing_Types$ContingencyPageMsg, contingencyCmd),
+							_1: {ctor: '[]'}
+						})
+				};
+			default:
+				var _p5 = A2(_user$project$CreateListing_PropertyCondition_State$update, _p1._0, model.propertyCondition);
+				var propertyCondition = _p5._0;
+				var propertyConditionCmd = _p5._1;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{propertyCondition: propertyCondition}),
+					_1: _elm_lang$core$Platform_Cmd$batch(
+						{
+							ctor: '::',
+							_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$CreateListing_Types$PropertyConditionPageMsg, propertyConditionCmd),
+							_1: {ctor: '[]'}
+						})
+				};
+		}
+	});
+var _user$project$CreateListing_State$updateSubroute = F2(
+	function (subroute, model) {
+		return _elm_lang$core$Native_Utils.update(
+			model,
+			{subroute: subroute});
+	});
+var _user$project$CreateListing_State$initModel = {subroute: _user$project$CreateListing_Types$AddressRoute, address: _user$project$CreateListing_Address_State$init, listingDetails: _user$project$CreateListing_ListingDetails_State$init, contingency: _user$project$CreateListing_Contingency_State$init, propertyCondition: _user$project$CreateListing_PropertyCondition_State$init, error: _elm_lang$core$Maybe$Nothing};
+
+var _user$project$CreateListing_View$root = function (model) {
+	var _p0 = model.subroute;
+	switch (_p0.ctor) {
+		case 'AddressRoute':
+			return A2(
+				_elm_lang$html$Html$map,
+				_user$project$CreateListing_Types$AddressPageMsg,
+				_user$project$CreateListing_Address_View$root(model.address));
+		case 'ListingDetailsRoute':
+			return A2(
+				_elm_lang$html$Html$map,
+				_user$project$CreateListing_Types$ListingDetailsPageMsg,
+				_user$project$CreateListing_ListingDetails_View$root(model.listingDetails));
+		case 'ContingencyRoute':
+			return A2(
+				_elm_lang$html$Html$map,
+				_user$project$CreateListing_Types$ContingencyPageMsg,
+				_user$project$CreateListing_Contingency_View$root(model.contingency));
+		case 'PropertyConditionRoute':
+			return A2(
+				_elm_lang$html$Html$map,
+				_user$project$CreateListing_Types$PropertyConditionPageMsg,
+				_user$project$CreateListing_PropertyCondition_View$root(model.propertyCondition));
+		default:
+			return _user$project$Utils$notFoundView;
+	}
+};
+
+var _user$project$Routing$newListingUrl = '/listing/new';
+var _user$project$Routing$listingsUrl = '/listings';
+var _user$project$Routing$signupUrl = '/signup';
+var _user$project$Routing$loginUrl = '/login';
+var _user$project$Routing$CreateListingRoute = function (a) {
+	return {ctor: 'CreateListingRoute', _0: a};
+};
+var _user$project$Routing$ListingsRoute = {ctor: 'ListingsRoute'};
+var _user$project$Routing$SignupRoute = {ctor: 'SignupRoute'};
+var _user$project$Routing$LoginRoute = {ctor: 'LoginRoute'};
+var _user$project$Routing$HomeRoute = {ctor: 'HomeRoute'};
+var _user$project$Routing$matchers = _evancz$url_parser$UrlParser$oneOf(
+	{
+		ctor: '::',
+		_0: A2(_evancz$url_parser$UrlParser$map, _user$project$Routing$HomeRoute, _evancz$url_parser$UrlParser$top),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_evancz$url_parser$UrlParser$map,
+				_user$project$Routing$LoginRoute,
+				_evancz$url_parser$UrlParser$s('login')),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_evancz$url_parser$UrlParser$map,
+					_user$project$Routing$SignupRoute,
+					_evancz$url_parser$UrlParser$s('signup')),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_evancz$url_parser$UrlParser$map,
+						_user$project$Routing$ListingsRoute,
+						_evancz$url_parser$UrlParser$s('listings')),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_evancz$url_parser$UrlParser$map,
+							_user$project$Routing$CreateListingRoute,
+							A2(
+								_evancz$url_parser$UrlParser_ops['</>'],
+								_evancz$url_parser$UrlParser$s('listing/new'),
+								_evancz$url_parser$UrlParser$string)),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		}
+	});
+var _user$project$Routing$NotFoundRoute = {ctor: 'NotFoundRoute'};
+var _user$project$Routing$parseLocation = function (location) {
+	var _p0 = A2(_evancz$url_parser$UrlParser$parsePath, _user$project$Routing$matchers, location);
+	if (_p0.ctor === 'Just') {
+		return _p0._0;
+	} else {
+		return _user$project$Routing$NotFoundRoute;
+	}
 };
 
 var _user$project$Main$userHeader = function (model) {
@@ -10775,25 +12829,6 @@ var _user$project$Main$homeView = A2(
 			}),
 		_1: {ctor: '[]'}
 	});
-var _user$project$Main$notFoundView = A2(
-	_elm_lang$html$Html$div,
-	{
-		ctor: '::',
-		_0: _elm_lang$html$Html_Attributes$class('main'),
-		_1: {ctor: '[]'}
-	},
-	{
-		ctor: '::',
-		_0: A2(
-			_elm_lang$html$Html$h1,
-			{ctor: '[]'},
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html$text('Sorry the page you are looking for was not found!'),
-				_1: {ctor: '[]'}
-			}),
-		_1: {ctor: '[]'}
-	});
 var _user$project$Main$saveToken = _elm_lang$core$Native_Platform.outgoingPort(
 	'saveToken',
 	function (v) {
@@ -10804,12 +12839,15 @@ var _user$project$Main$deleteToken = _elm_lang$core$Native_Platform.outgoingPort
 	function (v) {
 		return null;
 	});
-var _user$project$Main$Model = F4(
-	function (a, b, c, d) {
-		return {route: a, loginModel: b, token: c, loggedIn: d};
+var _user$project$Main$Model = F5(
+	function (a, b, c, d, e) {
+		return {route: a, loginModel: b, createListingModel: c, token: d, loggedIn: e};
 	});
 var _user$project$Main$Flags = function (a) {
 	return {token: a};
+};
+var _user$project$Main$CreateListingPageMsg = function (a) {
+	return {ctor: 'CreateListingPageMsg', _0: a};
 };
 var _user$project$Main$Logout = {ctor: 'Logout'};
 var _user$project$Main$LoginPageMsg = function (a) {
@@ -10817,6 +12855,7 @@ var _user$project$Main$LoginPageMsg = function (a) {
 };
 var _user$project$Main$init = F2(
 	function (flags, location) {
+		var createListingModel = _user$project$CreateListing_State$initModel;
 		var _p0 = _user$project$Auth_State$init;
 		var loginModel = _p0._0;
 		var loginCmd = _p0._1;
@@ -10830,6 +12869,7 @@ var _user$project$Main$init = F2(
 		var initModel = {
 			route: route,
 			loginModel: loginModel,
+			createListingModel: createListingModel,
 			token: flags.token,
 			loggedIn: !_elm_lang$core$Native_Utils.eq(flags.token, _elm_lang$core$Maybe$Nothing)
 		};
@@ -10885,7 +12925,7 @@ var _user$project$Main$update = F2(
 							}
 						})
 				};
-			default:
+			case 'Logout':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -10894,27 +12934,24 @@ var _user$project$Main$update = F2(
 					_1: _user$project$Main$deleteToken(
 						{ctor: '_Tuple0'})
 				};
+			default:
+				var _p4 = A2(_user$project$CreateListing_State$update, _p1._0, model.createListingModel);
+				var updatedListingModel = _p4._0;
+				var cmd = _p4._1;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{createListingModel: updatedListingModel}),
+					_1: _elm_lang$core$Platform_Cmd$batch(
+						{
+							ctor: '::',
+							_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$CreateListingPageMsg, cmd),
+							_1: {ctor: '[]'}
+						})
+				};
 		}
 	});
-var _user$project$Main$page = function (model) {
-	var _p4 = model.route;
-	switch (_p4.ctor) {
-		case 'NotFoundRoute':
-			return _user$project$Main$notFoundView;
-		case 'HomeRoute':
-			return _user$project$Main$homeView;
-		case 'LoginRoute':
-			return A2(
-				_elm_lang$html$Html$map,
-				_user$project$Main$LoginPageMsg,
-				A2(_user$project$Auth_View$root, true, model.loginModel));
-		default:
-			return A2(
-				_elm_lang$html$Html$map,
-				_user$project$Main$LoginPageMsg,
-				A2(_user$project$Auth_View$root, false, model.loginModel));
-	}
-};
 var _user$project$Main$subscriptions = function (model) {
 	var loginSub = _user$project$Auth_State$subscriptions(model.loginModel);
 	return _elm_lang$core$Platform_Sub$batch(
@@ -10926,6 +12963,80 @@ var _user$project$Main$subscriptions = function (model) {
 };
 var _user$project$Main$ChangeLocation = function (a) {
 	return {ctor: 'ChangeLocation', _0: a};
+};
+var _user$project$Main$listingsLandingView = A2(
+	_elm_lang$html$Html$div,
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$class('main'),
+		_1: {ctor: '[]'}
+	},
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$h1,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('Create a listing!'),
+				_1: {ctor: '[]'}
+			}),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$button,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$type_('submit'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('btn btn-default mr-sm-2'),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Utils$onLinkClick(
+								_user$project$Main$ChangeLocation(_user$project$Routing$newListingUrl)),
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Start'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		}
+	});
+var _user$project$Main$page = function (model) {
+	var _p5 = model.route;
+	switch (_p5.ctor) {
+		case 'NotFoundRoute':
+			return _user$project$Utils$notFoundView;
+		case 'HomeRoute':
+			return _user$project$Main$homeView;
+		case 'LoginRoute':
+			return A2(
+				_elm_lang$html$Html$map,
+				_user$project$Main$LoginPageMsg,
+				A2(_user$project$Auth_View$root, true, model.loginModel));
+		case 'SignupRoute':
+			return A2(
+				_elm_lang$html$Html$map,
+				_user$project$Main$LoginPageMsg,
+				A2(_user$project$Auth_View$root, false, model.loginModel));
+		case 'ListingsRoute':
+			return _user$project$Main$listingsLandingView;
+		default:
+			var subroute = _user$project$CreateListing_State$parseSubpath(_p5._0);
+			var updatedListingModel = A2(_user$project$CreateListing_State$updateSubroute, subroute, model.createListingModel);
+			var updatedModel = _elm_lang$core$Native_Utils.update(
+				model,
+				{createListingModel: updatedListingModel});
+			return A2(
+				_elm_lang$html$Html$map,
+				_user$project$Main$CreateListingPageMsg,
+				_user$project$CreateListing_View$root(updatedModel.createListingModel));
+	}
 };
 var _user$project$Main$visitorHeader = function (model) {
 	return A2(
@@ -11039,7 +13150,12 @@ var _user$project$Main$visitorHeader = function (model) {
 												_1: {
 													ctor: '::',
 													_0: _elm_lang$html$Html_Attributes$class('nav-item nav-link'),
-													_1: {ctor: '[]'}
+													_1: {
+														ctor: '::',
+														_0: _user$project$Utils$onLinkClick(
+															_user$project$Main$ChangeLocation(_user$project$Routing$listingsUrl)),
+														_1: {ctor: '[]'}
+													}
 												}
 											},
 											{
@@ -11117,8 +13233,8 @@ var _user$project$Main$visitorHeader = function (model) {
 		});
 };
 var _user$project$Main$pageHeader = function (model) {
-	var _p5 = model.loggedIn;
-	if (_p5 === true) {
+	var _p6 = model.loggedIn;
+	if (_p6 === true) {
 		return _user$project$Main$userHeader(model);
 	} else {
 		return _user$project$Main$visitorHeader(model);

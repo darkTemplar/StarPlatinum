@@ -1,14 +1,36 @@
 module CreateListing.Types exposing (..)
 
-import CreateListing.Address.Types exposing (..)
-import CreateListing.ListingDetails.Types exposing (..)
-import CreateListing.Contingency.Types exposing (..)
-import CreateListing.PropertyCondition.Types exposing (..)
+import CreateListing.Address.Types exposing (Address, AddressMsg)
+import CreateListing.ListingDetails.Types exposing (ListingDetails, ListingMsg)
+import CreateListing.Contingency.Types exposing (Contingency, ContingencyMsg)
+import CreateListing.PropertyCondition.Types exposing (PropertyCondition, PropertyConditionMsg)
 
 
+
+-- listing/new/<modal step>  
+
+
+listingDetails: String
+listingDetails = "/listingDetails"
+
+address: String
+address = "/address"
+
+contingency: String
+contingency = "/contingency"
+
+propertyCondition: String
+propertyCondition = "/propertyCondition"
+
+
+type Subroute = AddressRoute
+    | ListingDetailsRoute
+    | ContingencyRoute
+    | PropertyConditionRoute
+    | NotFoundRoute
 
 type alias Model = {
-    page : Page,
+    subroute: Subroute,
     address: Address,
     listingDetails: ListingDetails,
     contingency: Contingency,
@@ -16,17 +38,11 @@ type alias Model = {
     error: Maybe String
     }
 
-
-type Page = NotFound
-    | AddressPage
-    | ListingDetailsPage
-    | ContingencyPage
-    | PropertyConditionPage
-
-
-type Msg = Navigate Page
-    | ChangePage Page
-    | AddressPageMsg AddressMsg
+type Msg = 
+    AddressPageMsg AddressMsg
     | ListingDetailsPageMsg ListingMsg
     | ContingencyPageMsg ContingencyMsg
     | PropertyConditionPageMsg PropertyConditionMsg
+
+
+
