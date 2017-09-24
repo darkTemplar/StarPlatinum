@@ -3,6 +3,7 @@ module Auth.View exposing (root, loginForm, signupForm)
 import Auth.Types exposing (..)
 
 import Html exposing (..)
+import Html.Events exposing (..)
 import Html.Attributes exposing (..)
 
 fbLoginBtn: Html Msg
@@ -22,7 +23,7 @@ googleLoginBtn =
 
 signupForm: Html Msg
 signupForm = 
-    Html.form [] [
+    Html.form [onSubmit Continue] [
         div [class "form-row"] [
             div [class "form-group col-md-6"] [
                 input [type_ "text", placeholder "First Name", class "form-control", id "firstName"] []
@@ -38,7 +39,7 @@ signupForm =
                 input [type_ "password", placeholder "Password", class "form-control", id "password"] []
             ],
         div [class "form-group"] [
-            button [type_ "button", class "btn btn-primary btn-block"] [text "Continue"]
+            button [type_ "submit", class "btn btn-primary btn-block"] [text "Continue"]
         ]
         
     ]
