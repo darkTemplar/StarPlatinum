@@ -33,7 +33,7 @@ defmodule Offerdate.Router do
   end
 
   scope "/", Offerdate do
-    pipe_through :browser # replace by browser if you want phoenix to display views for incoming requests
+    pipe_through :browser
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create]
     resources "/listings", ListingController, only: [:index]
