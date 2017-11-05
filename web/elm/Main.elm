@@ -58,8 +58,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div [ class "container" ]
-        [ pageHeader model
-        , homeView
+        [ homeView
         ]
 
 
@@ -68,38 +67,6 @@ homeView =
     div [ class "main" ]
         [ h1 []
             [ text "Welcome to Offerdate!" ]
-        ]
-
-
-pageHeader : Model -> Html Msg
-pageHeader model =
-    case model.loggedIn of
-        True ->
-            userHeader model
-
-        False ->
-            visitorHeader model
-
-
-visitorHeader : Model -> Html Msg
-visitorHeader model =
-    nav [ class "navbar navbar-default navbar-fixed-top navbar-expand-sm justify-content-between" ]
-        [ div [ class "navbar-header" ]
-            [ a [ href "#", class "navbar-brand" ]
-                [ img [ src "", alt "Offerdate" ] []
-                ]
-            ]
-        , div [ class "navbar-collapse" ]
-            [ div [ class "nav navbar-nav mr-auto" ]
-                [ a [ href "#", class "nav-item nav-link" ] [ text "Buy" ]
-                , a [ href "#", class "nav-item nav-link" ] [ text "Sell" ]
-                , a [ href listingsUrl, class "nav-item nav-link" ] [ text "Listings" ]
-                ]
-            , Html.form [ class "form-inline" ]
-                [ button [ type_ "submit", class "btn btn-default mr-sm-2", onLinkClick (ChangeLocation loginUrl) ] [ text "Login" ]
-                , button [ type_ "submit", class "btn btn-primary", onLinkClick (ChangeLocation signupUrl) ] [ text "Signup" ]
-                ]
-            ]
         ]
 
 
