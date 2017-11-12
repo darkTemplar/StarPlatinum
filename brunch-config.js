@@ -59,7 +59,7 @@ exports.config = {
     },
     elmBrunch: {
       elmFolder: 'web/elm',
-      mainModules: ['Main.elm', 'Auth/Main.elm'],
+      mainModules: ['Main.elm', 'Signup.elm', 'Login.elm'],
       outputFolder: '../static/js',
       outputFile: 'elm.js',
       makeParameters : ['--debug']

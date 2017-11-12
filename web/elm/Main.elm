@@ -13,12 +13,12 @@ type alias Model =
     }
 
 
-init : Flags -> ( Model, Cmd Msg )
-init flags =
+init : (Model, Cmd Msg )
+init =
     let
         initModel =
-            { token = flags.token
-            , loggedIn = flags.token /= Nothing
+            { token = Nothing
+            , loggedIn = False
             }
     in
         ( initModel, Cmd.none )
@@ -101,14 +101,10 @@ subscriptions model =
 -- main
 
 
-type alias Flags =
-    { token : Maybe String
-    }
 
 
-main : Program Flags Model Msg
 main =
-    programWithFlags
+    program
         { init = init
         , update = update
         , view = view

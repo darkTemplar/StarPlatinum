@@ -39,12 +39,12 @@ if (elmDiv) {
 
 const elmLogin = document.querySelector('#elm-login');
 if (elmLogin) {
-	let app = Elm.Main.embed(elmLogin);
+	let app = Elm.Login.embed(elmLogin);
 }
 
 const elmSignup = document.querySelector('#elm-signup');
 if (elmSignup) {
-	let app = Elm.Main.embed(elmSignup);
+	let app = Elm.Signup.embed(elmSignup);
 }
 
 // for create listings
