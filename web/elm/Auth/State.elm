@@ -1,59 +1,91 @@
-module Auth.State exposing (init, update, subscriptions)
-
-import Http exposing (..)
-import Navigation
+module Auth.State exposing (subscriptions, update, init)
 import Auth.Types exposing (..)
-import Auth.Rest exposing (..)
+import Auth.Rest exposing (postCmd)
+import Navigation
+import Http
 
 
-initModel: Model
-initModel = {
-    email = "",
-    password = "",
-    error = Nothing}
-
-init: (Model, Cmd Msg)
-init = 
-    (initModel, Cmd.none)
+-- model
 
 
-update: Msg -> Model -> (Model, Cmd Msg, Maybe String)
-update msg model = 
-    case msg of 
-        EmailInput email -> (
-            {model | email = email}, Cmd.none, Nothing)
-        PasswordInput password -> 
-            ({model | password = password}, Cmd.none, Nothing)
-        Error error -> 
-            ({model | error = Just error}, Cmd.none, Nothing)
-        Continue -> 
-            let
-                cmd = 
-                    postCmd LoginResponse model 
-                    
-            in
-                    
-            (model, cmd, Nothing)
-        LoginResponse (Ok token) -> 
-            (initModel, Navigation.newUrl "#/", Just token)
+initModel : Model
+initModel =
+    { email = ""
+    , password = ""
+    , error = Nothing
+    , isLogin = False
+    }
 
-        LoginResponse (Err err) ->
-            let
-                errMsg = case err of
-                    Http.BadStatus resp -> 
-                        case resp.status.code of
-                            401 -> 
-                                resp.body
-                            _ -> 
-                                resp.status.message
-                    _ ->
-                        "Authentication Error" 
-                    
-            in
 
-                ({model| error = Just errMsg}, Cmd.none, Nothing)
-
+init : ( Model, Cmd Msg )
+init =
+    ( initModel, Cmd.none )
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
+
+
+-- update
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        EmailInput email ->
+            ( { model | email = email }
+            , Cmd.none
+            )
+
+        PasswordInput password ->
+            ( { model | password = password }, Cmd.none )
+
+        Error error ->
+            ( { model | error = Just error }, Cmd.none )
+
+        LoginButtonClick ->
+            let
+                cmd =
+                    postCmd LoginResponse model
+            in
+                ( model, cmd )
+        SignupButtonClick ->
+            let
+                cmd =
+                    postCmd LoginResponse model
+            in
+                ( model, cmd )
+        FbButtonClick ->
+            let
+                cmd =
+                    postCmd LoginResponse model
+            in
+                ( model, cmd )
+
+        GoogleButtonClick ->
+            let
+                cmd =
+                    postCmd LoginResponse model
+            in
+                ( model, cmd )
+
+        LoginResponse (Ok token) ->
+            ( initModel, Navigation.newUrl "#/" )
+
+        LoginResponse (Err err) ->
+            let
+                errMsg =
+                    case err of
+                        Http.BadStatus resp ->
+                            case resp.status.code of
+                                401 ->
+                                    resp.body
+
+                                _ ->
+                                    resp.status.message
+
+                        _ ->
+                            "Authentication Error"
+            in
+                ( { model | error = Just errMsg }, Cmd.none )
+

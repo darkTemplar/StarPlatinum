@@ -19,7 +19,7 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
-import Elm from './main';
+const Elm = require("./elm.js");
 const elmDiv = document.querySelector('#elm-target');
 if (elmDiv) {
   	
@@ -37,11 +37,19 @@ if (elmDiv) {
 	});
 }
 
+const elmLogin = document.querySelector('#elm-login');
+if (elmLogin) {
+	let app = Elm.Main.embed(elmLogin);
+}
+
+const elmSignup = document.querySelector('#elm-signup');
+if (elmSignup) {
+	let app = Elm.Main.embed(elmSignup);
+}
+
 // for create listings
 const elmListingDiv = document.querySelector('#elm-target-listing');
 if (elmListingDiv) {
-  	
-
 	const flags = {};
 	let app = Elm.Main.embed(elmDiv, flags);
 }

@@ -1,10 +1,7 @@
 port module Main exposing (..)
-
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Navigation
-import Routing exposing (..)
-import Utils exposing (onLinkClick)
 
 
 -- model
