@@ -3,7 +3,6 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Navigation
 
-
 -- model
 
 
@@ -30,7 +29,6 @@ init =
 
 type Msg
     = ChangeLocation String
-    | Logout
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -38,14 +36,6 @@ update msg model =
     case msg of
         ChangeLocation url ->
             ( model, Navigation.load url )
-
-        Logout ->
-            ( { model
-                | token = Nothing
-                , loggedIn = False
-              }
-            , deleteToken ()
-            )
 
 
 
@@ -111,8 +101,3 @@ main =
         , subscriptions = subscriptions
         }
 
-
-port saveToken : String -> Cmd msg
-
-
-port deleteToken : () -> Cmd msg

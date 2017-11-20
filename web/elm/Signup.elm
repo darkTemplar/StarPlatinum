@@ -1,12 +1,13 @@
-module Signup exposing (..)
+port module Signup exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Navigation 
 import Http exposing (..)
 import Json.Encode as JE
-import Json.Decode as JD exposing (field)
+import Json.Decode as JD exposing (field, Decoder)
 
+import Routing exposing (getPageUrl, signup, home)
 import SharedComponents.GoogleLoginButton exposing (googleLoginButton)
 import SharedComponents.FbLoginButton exposing (fbLoginButton)
 import SharedComponents.ErrorPanel exposing (errorPanel)
@@ -30,9 +31,20 @@ initModel =
     }
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( initModel, Cmd.none )
+init : Flags -> ( Model, Cmd Msg )
+init flags = 
+    let
+        model = initModel
+        cmd =
+            case flags.token of 
+                Just jwt ->
+                    Navigation.newUrl Routing.home
+                Nothing ->
+                    Cmd.none
+        
+    in
+        
+        ( model, cmd )
 
 
 
@@ -49,9 +61,6 @@ type Msg
 
 
 
-authUrl: String
-authUrl = "localhost:4000/sessions"
-
 tokenDecoder = 
     field "token" JD.string
 
@@ -61,18 +70,18 @@ requestBody model = JE.object
                     |> JE.encode 4
                     |> Http.stringBody "application/json"
 
-postRequest: Model -> Http.Request String 
-postRequest model = let
+postRequest: Model -> Decoder String -> Http.Request String 
+postRequest model decoder = let
         body = requestBody model
 
-        decoder = tokenDecoder
+        authUrl = getPageUrl signup
     in
         Http.post authUrl body decoder
         
 
 postCmd: (Result Http.Error String -> Msg) -> Model -> Cmd Msg
 postCmd msg model = let
-        request = postRequest model  
+        request = postRequest model tokenDecoder
     in
         Http.send msg request
 
@@ -112,7 +121,12 @@ update msg model =
                 ( model, cmd )
 
         SignupResponse (Ok token) ->
-            ( initModel, Navigation.newUrl "#/" )
+            let
+               saveTokenCmd  = saveSignupToken token
+                    
+            in
+                
+                ( initModel, Cmd.batch[saveTokenCmd, Navigation.newUrl Routing.home] )
 
         SignupResponse (Err err) ->
             let
@@ -202,12 +216,16 @@ subscriptions model =
 
 
 -- main
-
+type alias Flags =
+    { token : Maybe String
+    }
 
 main =
-    program
+    programWithFlags
         { init = init
         , update = update
         , view = view
         , subscriptions = subscriptions
         }
+
+port saveSignupToken : String -> Cmd msg

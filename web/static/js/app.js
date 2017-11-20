@@ -20,31 +20,43 @@ import "phoenix_html"
 
 // import socket from "./socket"
 const Elm = require("./elm.js");
+const TOKEN_KEY = 'token';
+
+const getToken = () => {
+	return localStorage.getItem(TOKEN_KEY);
+}
+
+const setToken = (token) => {
+    localStorage.setItem(TOKEN_KEY, token);
+}
+
+const deleteToken = () => {
+	localStorage.removeItem(TOKEN_KEY);
+}
+
 const elmDiv = document.querySelector('#elm-target');
 if (elmDiv) {
-  	
-
-	const TOKEN_KEY = 'token';
-	const token = localStorage.getItem(TOKEN_KEY);
-	const flags = {token: token};
-	let app = Elm.Main.embed(elmDiv, flags);
-	app.ports.saveToken.subscribe((token) => {
-		localStorage.setItem(TOKEN_KEY, token);
-	});
-
-	app.ports.deleteToken.subscribe(() => {
-		localStorage.removeItem(TOKEN_KEY);
-	});
+	let app = Elm.Main.embed(elmDiv);
 }
 
 const elmLogin = document.querySelector('#elm-login');
 if (elmLogin) {
-	let app = Elm.Login.embed(elmLogin);
+	const token = getToken();
+	const flags = {token: token};
+	let app = Elm.Login.embed(elmLogin, flags);
+    app.ports.saveLoginToken.subscribe((token) => {
+		setToken(token);
+	});
 }
 
 const elmSignup = document.querySelector('#elm-signup');
 if (elmSignup) {
-	let app = Elm.Signup.embed(elmSignup);
+	const token = getToken();
+	const flags = {token: token};
+	let app = Elm.Login.embed(elmSignup, flags);
+    app.ports.saveSignupToken.subscribe((token) => {
+		setToken(token);
+	});
 }
 
 // for create listings
