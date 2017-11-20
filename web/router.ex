@@ -23,7 +23,7 @@ defmodule Offerdate.Router do
 
 
   scope "/api", JwtExample do
-    pipe_through [ :api ]
+    pipe_through [ :api, :api_auth ]
     resources "/users", UserApiController, only: [:index, :show, :new, :create]
     resources "/listings", ListingController, only: [:new, :show, :edit, :delete]
   end
