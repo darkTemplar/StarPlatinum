@@ -9,7 +9,11 @@ defmodule Offerdate.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/", from: :offerdate, gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt asset-manifest.json service-worker.js)
+    only: ~w(manifest.json favicon.ico robots.txt asset-manifest.json service-worker.js)
+
+  plug Plug.Static,
+    at: "/static", from: :offerdate, gzip: false,
+    only: ~w(css media js)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

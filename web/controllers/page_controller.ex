@@ -2,6 +2,6 @@ defmodule Offerdate.PageController do
   use Offerdate.Web, :controller
 
   def index(conn, _params) do
-    render conn, "index.html"
+    html(conn, File.read!("priv/index.html"))
   end
 end

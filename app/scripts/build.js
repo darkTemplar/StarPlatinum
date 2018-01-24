@@ -50,9 +50,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
     // if you're in it, you don't end up in Trash
     const contents = fs.readdirSync(paths.appBuild);
     contents.forEach((file) => {
-      console.log('directory file', file);
       if (directoriesToKeep.indexOf(file) === -1) {
-        console.log('removing');
         fs.removeSync(path.resolve(paths.appBuild, file));
       }
     });
