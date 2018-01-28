@@ -14,6 +14,7 @@ export default function withRedux(WrappedComponent) {
         <Provider store={this.store}>
           <WrappedComponent
             store={this.store}
+            {...this.props}
           />
         </Provider>
       );

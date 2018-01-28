@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { bootstrap } from './actions/actionCreators';
+import { css, withStyles } from '../../shared/hocs/withStyles';
 import HomeAppContainer from './containers/HomeAppContainer';
 import Layout from '../../shared/layout';
 import myReducer from './reducers/myReducer';
@@ -11,6 +12,7 @@ import withRedux from '../../shared/hocs/withRedux';
 const propTypes = {
   store: PropTypes.object.isRequired,
   bootstrapData: PropTypes.object,
+  styles: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
@@ -42,6 +44,9 @@ export class Home extends React.PureComponent {
         <Link href="/about" >
           about
         </Link>
+        <div {...css(this.props.styles.test)}>
+          TEST TEST CSS THIS SHOULD BE 16 px from top
+        </div>
         <HomeAppContainer />
       </Layout>
     );
@@ -51,4 +56,8 @@ export class Home extends React.PureComponent {
 Home.propTypes = propTypes;
 Home.defaultProps = defaultProps;
 
-export default withRedux(Home);
+export default withStyles(({ unit, color }) => ({
+  test: {
+    marginTop: 2 * unit,
+  },
+}), { pureComponent: true })(withRedux(Home));

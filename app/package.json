@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node --harmony server.js"
+    "dev": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aphrodite": "^1.2.5",
     "express": "^4.16.2",
     "lodash": "^4.17.4",
     "next": "^4.2.3",
