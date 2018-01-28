@@ -2,7 +2,7 @@ import { StyleSheet, css as aphroditeCSS } from 'aphrodite';
 import React from 'react';
 import _get from 'lodash/get';
 
-import { unit } from '../styles/size';
+import { unit, font } from '../styles/size';
 import color from '../styles/color';
 
 /**
@@ -16,6 +16,7 @@ export function withStyles(styles, options = {}) {
   const _styles = StyleSheet.create(styles({
     unit,
     color,
+    font,
   }));
 
   return function _withStyles(WrappedComponent) {
