@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Container, Row, Col } from 'react-grid-system';
 
 import { bootstrap } from './actions/actionCreators';
 import { css, withStyles } from '../../shared/hocs/withStyles';
@@ -47,6 +48,11 @@ export class Home extends React.PureComponent {
         <div {...css(this.props.styles.test)}>
           TEST TEST CSS THIS SHOULD BE 16 px from top
         </div>
+        <Row>
+          <Col md={4} offset={{ md: 4 }}>
+            COLUMN LIKE BOOTSTRAP
+          </Col>
+        </Row>
         <HomeAppContainer />
       </Layout>
     );
