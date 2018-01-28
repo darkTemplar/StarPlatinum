@@ -1,12 +1,13 @@
 import Link from 'next/link';
-import PropTypes from 'prop-types';
 import React from 'react';
 
+import { css, withStyles, withStylesPropTypes } from '../../shared/hocs/withStyles';
+import { withRedux, withReduxPropTypes } from '../../shared/hocs/withRedux';
 import Layout from '../../shared/layout';
-import withRedux from '../../shared/hocs/withRedux';
 
 const propTypes = {
-  store: PropTypes.object.isRequired,
+  ...withReduxPropTypes,
+  ...withStylesPropTypes,
 };
 
 export class About extends React.PureComponent {
@@ -32,6 +33,8 @@ export class About extends React.PureComponent {
         <Link href="/home" >
           home
         </Link>
+        <div {...css(this.props.styles.test)}>
+        </div>
       </Layout>
     );
   }
@@ -39,4 +42,9 @@ export class About extends React.PureComponent {
 
 About.propTypes = propTypes;
 
-export default withRedux(About);
+export default withStyles(({ color }) => ({
+  test: {
+    height: 200,
+    backgroundColor: color.core.blueberry,
+  },
+}), { pureComponent: true })(withRedux(About));

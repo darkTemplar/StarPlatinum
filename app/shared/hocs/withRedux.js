@@ -1,8 +1,10 @@
-import React from 'react';
 import { Provider } from 'react-redux';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import configureStore from '../redux/store/configureStore';
 
-export default function withRedux(WrappedComponent) {
+export function withRedux(WrappedComponent) {
   return class WithRedux extends React.PureComponent {
     constructor(props) {
       super(props);
@@ -23,3 +25,7 @@ export default function withRedux(WrappedComponent) {
 
   WithRedux.displayName = `withRedux(${WrappedComponent.displayName || WrappedComponent.name})`;
 }
+
+export const withReduxPropTypes = {
+  store: PropTypes.object.isRequired,
+};

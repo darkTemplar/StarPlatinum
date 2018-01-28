@@ -4,16 +4,16 @@ import React from 'react';
 import { Container, Row, Col } from 'react-grid-system';
 
 import { bootstrap } from './actions/actionCreators';
-import { css, withStyles } from '../../shared/hocs/withStyles';
+import { css, withStyles, withStylesPropTypes } from '../../shared/hocs/withStyles';
+import { withRedux, withReduxPropTypes } from '../../shared/hocs/withRedux';
 import HomeAppContainer from './containers/HomeAppContainer';
 import Layout from '../../shared/layout';
 import myReducer from './reducers/myReducer';
-import withRedux from '../../shared/hocs/withRedux';
 
 const propTypes = {
-  store: PropTypes.object.isRequired,
   bootstrapData: PropTypes.object,
-  styles: PropTypes.object.isRequired,
+  ...withReduxPropTypes,
+  ...withStylesPropTypes,
 };
 
 const defaultProps = {

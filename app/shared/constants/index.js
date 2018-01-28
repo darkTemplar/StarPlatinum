@@ -1,0 +1,1 @@
+export const APHRODITE_DATA_KEY = '__APP_APRHODITE_DATA__';
