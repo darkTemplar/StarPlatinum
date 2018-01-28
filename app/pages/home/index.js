@@ -1,4 +1,3 @@
-import { Provider } from 'react-redux';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -6,10 +5,11 @@ import React from 'react';
 import { bootstrap } from './actions/actionCreators';
 import HomeAppContainer from './containers/HomeAppContainer';
 import Layout from '../../shared/layout';
-import configureStore from '../../shared/redux/store/configureStore';
 import myReducer from './reducers/myReducer';
+import withRedux from '../../shared/hocs/withRedux';
 
 const propTypes = {
+  store: PropTypes.object.isRequired,
   bootstrapData: PropTypes.object,
 };
 
@@ -17,7 +17,7 @@ const defaultProps = {
   bootstrapData: {},
 };
 
-export default class Home extends React.PureComponent {
+export class Home extends React.PureComponent {
   static getInitialProps ({ }) {
     return {
       bootstrapData: {
@@ -26,29 +26,29 @@ export default class Home extends React.PureComponent {
     };
   }
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
+    const { store, bootstrapData } = this.props;
 
-    this.store = configureStore();
-    this.store.injectAll({
+    store.injectAll({
       myReducer: myReducer,
     })
-    this.store.dispatch(bootstrap(this.props.bootstrapData));
+    store.dispatch(bootstrap(bootstrapData));
   }
 
   render() {
     return (
-      <Provider store={this.store}>
-        <Layout>
-          <Link href="/about" >
-            about
-          </Link>
-          <HomeAppContainer />
-        </Layout>
-      </Provider>
+      <Layout>
+        <Link href="/about" >
+          about
+        </Link>
+        <HomeAppContainer />
+      </Layout>
     );
   }
 }
 
 Home.propTypes = propTypes;
 Home.defaultProps = defaultProps;
+
+export default withRedux(Home);

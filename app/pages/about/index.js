@@ -1,23 +1,25 @@
-import { Provider } from 'react-redux';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import React from 'react';
-import withRedux from 'next-redux-wrapper';
 
-import { bootstrap } from '../home/actions/actionCreators';
 import Layout from '../../shared/layout';
-import configureStore from '../../shared/redux/store/configureStore';
+import withRedux from '../../shared/hocs/withRedux';
 
-export default class About extends React.PureComponent {
+const propTypes = {
+  store: PropTypes.object.isRequired,
+};
+
+export class About extends React.PureComponent {
   static getInitialProps () {
     return {
     };
   }
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
+    const { store } = this.props;
 
-    this.store = configureStore();
-    this.store.injectAll({
+    store.injectAll({
       aboutReducer: () => ({
         bar: 2,
       }),
@@ -26,13 +28,15 @@ export default class About extends React.PureComponent {
 
   render() {
     return (
-      <Provider store={this.store}>
-        <Layout>
-          <Link href="/home" >
-            home
-          </Link>
-        </Layout>
-      </Provider>
+      <Layout>
+        <Link href="/home" >
+          home
+        </Link>
+      </Layout>
     );
   }
 }
+
+About.propTypes = propTypes;
+
+export default withRedux(About);
