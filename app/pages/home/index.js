@@ -1,13 +1,14 @@
+import { Row, Col } from 'react-grid-system';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Container, Row, Col } from 'react-grid-system';
 
 import { bootstrap } from './actions/actionCreators';
 import { css, withStyles, withStylesPropTypes } from '../../shared/hocs/withStyles';
 import { withRedux, withReduxPropTypes } from '../../shared/hocs/withRedux';
 import HomeAppContainer from './containers/HomeAppContainer';
 import Layout from '../../shared/layout';
+import Spacing from '../../shared/components/Spacing';
 import myReducer from './reducers/myReducer';
 
 const propTypes = {
@@ -45,7 +46,7 @@ export class Home extends React.PureComponent {
         <Link href="/about" >
           about
         </Link>
-        <div {...css(this.props.styles.test)}>
+        <div {...css(this.props.styles.test, { color: 'blue' })}>
           TEST TEST CSS THIS SHOULD BE 16 px from top
         </div>
         <Row>
@@ -53,6 +54,9 @@ export class Home extends React.PureComponent {
             COLUMN LIKE BOOTSTRAP
           </Col>
         </Row>
+        <Spacing top={4} left={2}>
+          TEST SPACING COMPONENT
+        </Spacing>
         <HomeAppContainer />
       </Layout>
     );
