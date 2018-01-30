@@ -56,6 +56,10 @@ export function css() {
   // of aphrodite, which is okay, just need to be careful when performing aphrodite upgrades or find a more robust
   // way to check for non aphrodite objects
   const aphroditeCssProperties = Array.prototype.map.call(arguments, (arg) => {
+    if (!arg) {
+      return null;
+    }
+
     if (!arg._name) {
       const id = _uniqueId('css');
 
@@ -63,7 +67,7 @@ export function css() {
     }
 
     return arg;
-  });
+  }).filter(rule => !!rule);
 
   return {
     className: aphroditeCSS.apply(null, aphroditeCssProperties),

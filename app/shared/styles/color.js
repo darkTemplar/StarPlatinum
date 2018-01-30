@@ -25,9 +25,12 @@ export const greys = {
   coal: black,
 };
 
+const border = greys.haze;
+
 const color = {
   core,
   greys,
+  border: border,
 };
 
 export default color;

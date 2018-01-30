@@ -7,6 +7,7 @@ import { bootstrap } from './actions/actionCreators';
 import { css, withStyles, withStylesPropTypes } from '../../shared/hocs/withStyles';
 import { withRedux, withReduxPropTypes } from '../../shared/hocs/withRedux';
 import HomeAppContainer from './containers/HomeAppContainer';
+import Input from '../../shared/components/Input';
 import Layout from '../../shared/layout';
 import Spacing from '../../shared/components/Spacing';
 import myReducer from './reducers/myReducer';
@@ -57,6 +58,21 @@ export class Home extends React.PureComponent {
         <Spacing top={4} left={2}>
           TEST SPACING COMPONENT
         </Spacing>
+        <Input
+          type="text"
+          id="foobar"
+          value="abcde"
+          label="small input"
+          onChange={(value) => { console.log(value); }}
+        />
+        <Input
+          type="text"
+          id="foobar2"
+          value="abcde"
+          label="large input"
+          onChange={(value) => { console.log(value); }}
+          lg
+        />
         <HomeAppContainer />
       </Layout>
     );
