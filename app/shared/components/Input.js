@@ -88,10 +88,12 @@ Input.defaultProps = defaultProps;
 export default withStyles(({ color, unit, font }) => ({
   inputContainer: {
     border: `1px solid ${color.border}`,
+    paddingTop: 0.5 * unit,
   },
 
   inputContainerLarge: {
     fontSize: font.large,
+    paddingTop: unit,
   },
 
   input: {
@@ -101,18 +103,18 @@ export default withStyles(({ color, unit, font }) => ({
     width: '100%',
     padding: unit,
     boxSizing: 'border-box',
+    fontSize: font.medium,
   },
 
   inputLarge: {
     fontSize: font.large,
-    padding: 1.5 * unit,
+    padding: `${1.5 * unit}px ${unit}px`,
   },
 
   label: {
-    padding: `${0.5 * unit}px ${1 * unit}px 0`,
-  },
-
-  labelLarge: {
-    padding: `${0.5 * unit}px ${1.5 * unit}px 0`,
+    color: color.greys.cloud,
+    fontSize: font.small,
+    letterSpacing: 1,
+    padding: `0 ${1 * unit}px`,
   },
 }), { pureComponent: true })(Input);

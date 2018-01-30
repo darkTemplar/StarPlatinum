@@ -39,8 +39,10 @@ Layout.defaultProps = defaultProps;
 
 export default withStyles(({ font, unit, color }) => ({
   base: {
+    fontFamily: 'Helvetica Regular',
     fontSize: font.medium,
     color: color.core.black,
+    lineHeight: 1.48,
   },
 
   maxPageWidth: {

@@ -42,12 +42,14 @@ export class Home extends React.PureComponent {
   }
 
   render() {
+    const { styles } = this.props;
+
     return (
       <Layout>
         <Link href="/about" >
           about
         </Link>
-        <div {...css(this.props.styles.test, { color: 'blue' })}>
+        <div {...css(styles.test, { color: 'blue' })}>
           TEST TEST CSS THIS SHOULD BE 16 px from top
         </div>
         <Row>
@@ -62,17 +64,32 @@ export class Home extends React.PureComponent {
           type="text"
           id="foobar"
           value="abcde"
-          label="small input"
+          label="BEDROOMS"
           onChange={(value) => { console.log(value); }}
+          borderlessBottom
         />
-        <Input
-          type="text"
-          id="foobar2"
-          value="abcde"
-          label="large input"
-          onChange={(value) => { console.log(value); }}
-          lg
-        />
+        <div {...css(styles.half)}>
+          <Input
+            type="text"
+            id="foobar2"
+            value="abcde"
+            label="BEDROOMS"
+            onChange={(value) => { console.log(value); }}
+            lg
+            borderlessRight
+          />
+        </div>
+        <div {...css(styles.half)}>
+          <Input
+            type="text"
+            id="foobar3"
+            value="abcde"
+            label="BEDROOMS"
+            onChange={(value) => { console.log(value); }}
+            lg
+          />
+        </div>
+
         <HomeAppContainer />
       </Layout>
     );
@@ -85,5 +102,9 @@ Home.defaultProps = defaultProps;
 export default withStyles(({ unit, color }) => ({
   test: {
     marginTop: 2 * unit,
+  },
+  half: {
+    float: 'left',
+    width: '50%',
   },
 }), { pureComponent: true })(withRedux(Home));
