@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { FORM_NAME, FORM_FIELD_SQFT } from '../constants/form';
-import Input from '../../../shared/components/Input';
+import { css, withStyles } from '../../../shared/hocs/withStyles';
 import Select from '../../../shared/components/Select';
 import SquareFeetField from './fields/SquareFeetField';
 
@@ -24,6 +24,7 @@ function select(field) {
               name="bathrooms"
               id="create-listing-bathrooms"
               label="BATHROOMS"
+              borderlessLeft
               options={[{
                 value: 1,
                 label: 1,
@@ -44,14 +45,18 @@ export class CreateListingForm extends React.PureComponent {
   render() {
     return (
       <form onSubmit={this.props.handleSubmit}>
-        <Field
-          name={FORM_FIELD_SQFT}
-          component={SquareFeetField}
-        />
-        <Field
-          name="bathrooms"
-          component={select}
-        />
+        <div {...css(this.props.styles.item)}>
+          <Field
+            name={FORM_FIELD_SQFT}
+            component={SquareFeetField}
+          />
+        </div>
+        <div {...css(this.props.styles.item)}>
+          <Field
+            name="bathrooms"
+            component={select}
+          />
+        </div>
       </form>
     );
   }
@@ -59,6 +64,13 @@ export class CreateListingForm extends React.PureComponent {
 
 CreateListingForm.contextTypes = contextTypes;
 
-export default reduxForm({
-  form: FORM_NAME,
-})(CreateListingForm);
+export default withStyles(() => ({
+  item: {
+    float: 'left',
+    width: '25%',
+  },
+}), { pureComponent: true })(
+  reduxForm({
+    form: FORM_NAME,
+  })(CreateListingForm)
+);

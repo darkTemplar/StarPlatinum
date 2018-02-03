@@ -61,20 +61,25 @@ export function Select({
       >
         <Text small inline muted>{label}</Text>
       </label>
-      <select
-        id={id}
-        name={name}
-        ref={selectRef}
-        onChange={onChange}
-        {...css(styles.select, lg && styles.selectLarge)}
-        {...otherProps}
-      >
-        {options.map(option => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      <div {...css(styles.actualSelectWrapper)}>
+        <select
+          id={id}
+          name={name}
+          ref={selectRef}
+          onChange={onChange}
+          {...css(styles.select, lg && styles.selectLarge)}
+          {...otherProps}
+        >
+          {options.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <div {...css(styles.chevron)}>
+          >
+        </div>
+      </div>
     </div>
   );
 }
@@ -102,6 +107,7 @@ export default withStyles(({ unit, color, font }) => ({
     padding: unit,
     boxSizing: 'border-box',
     fontSize: font.medium,
+    paddingRight: 6 * unit,
   },
 
   selectLarge: {
@@ -111,5 +117,18 @@ export default withStyles(({ unit, color, font }) => ({
 
   label: {
     padding: `0 ${1 * unit}px`,
+  },
+
+  actualSelectWrapper: {
+    position: 'relative',
+  },
+
+  chevron: {
+    zIndex: -1,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: 4 * unit,
+    height: '100%',
   },
 }), { pureComponent: true })(Select);
