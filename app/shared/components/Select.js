@@ -1,62 +1,54 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { css, withStyles, withStylePropTypes } from '../hocs/withStyles';
+import { css, withStyles, withStylesPropTypes } from '../hocs/withStyles';
+import SelectOptionShape from '../shapes/SelectOptionShape';
 import Text from './Text';
 
 const propTypes = {
-  type: PropTypes.oneOf(['text', 'email', 'tel']).isRequired,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  inputRef: PropTypes.func,
-  name: PropTypes.string,
-  value: PropTypes.string,
-  autoFocus: PropTypes.bool,
-  lg: PropTypes.bool,
-  inline: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(SelectOptionShape).isRequired,
+  selectRef: PropTypes.func,
   borderlessTop: PropTypes.bool,
   borderlessRight: PropTypes.bool,
   borderlessBottom: PropTypes.bool,
   borderlessLeft: PropTypes.bool,
-  ...withStylePropTypes,
+  lg: PropTypes.bool,
+  ...withStylesPropTypes,
 };
 
 const defaultProps = {
-  inline: false,
-  lg: false,
+  selectRef() {},
   borderlessTop: false,
   borderlessRight: false,
   borderlessBottom: false,
   borderlessLeft: false,
-  value: '',
-  name: '',
-  inputRef() {},
+  lg: false,
 };
 
-export function Input({
-  type,
-  label,
-  id,
+export function Select({
   onChange,
-  inline,
-  value,
+  label,
+  name,
+  id,
+  selectRef,
   borderlessTop,
   borderlessRight,
   borderlessBottom,
   borderlessLeft,
   lg,
   styles,
-  name,
-  inputRef,
-  autoFocus,
-  ...rest,
+  options,
+  ...otherProps,
 }) {
   return (
     <div
       {...css(
-        styles.inputContainer,
-        lg && styles.inputContainerLarge,
+        styles.selectContainer,
+        lg && styles.selectContainerLarge,
         borderlessTop && { borderTop: 'none' },
         borderlessRight && { borderRight: 'none' },
         borderlessBottom && { borderBottom: 'none' },
@@ -65,43 +57,45 @@ export function Input({
     >
       <label
         htmlFor={id}
-        {...css(styles.label, lg && styles.labelLarge)}
+        {...css(styles.label)}
       >
-        <Text small muted inline>{label}</Text>
+        <Text small inline muted>{label}</Text>
       </label>
-      <input
-        ref={inputRef}
+      <select
         id={id}
-        name={name || id}
-        type={type}
-        onChange={(e) => {
-          onChange(e.target.value);
-        }}
-        value={value}
-        autoFocus={autoFocus}
-        {...css(styles.input, lg && styles.inputLarge)}
-        {...rest}
-      />
+        name={name}
+        ref={selectRef}
+        onChange={onChange}
+        {...css(styles.select, lg && styles.selectLarge)}
+        {...otherProps}
+      >
+        {options.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }
 
-Input.propTypes = propTypes;
-Input.defaultProps = defaultProps;
+Select.propTypes = propTypes;
+Select.defaultProps = defaultProps;
 
-export default withStyles(({ color, unit, font }) => ({
-  inputContainer: {
+export default withStyles(({ unit, color, font }) => ({
+  selectContainer: {
     border: `1px solid ${color.border}`,
     paddingTop: 0.5 * unit,
   },
 
-  inputContainerLarge: {
+  selectContainerLarge: {
     fontSize: font.large,
     paddingTop: unit,
   },
 
-  input: {
+  select: {
     '-webkit-appearance': 'none',
+    background: 'none',
     border: 'none',
     display: 'block',
     width: '100%',
@@ -110,7 +104,7 @@ export default withStyles(({ color, unit, font }) => ({
     fontSize: font.medium,
   },
 
-  inputLarge: {
+  selectLarge: {
     fontSize: font.large,
     padding: `${1.5 * unit}px ${unit}px`,
   },
@@ -118,4 +112,4 @@ export default withStyles(({ color, unit, font }) => ({
   label: {
     padding: `0 ${1 * unit}px`,
   },
-}), { pureComponent: true })(Input);
+}), { pureComponent: true })(Select);
