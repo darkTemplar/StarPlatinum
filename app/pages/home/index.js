@@ -7,6 +7,7 @@ import { bootstrap } from './actions/actionCreators';
 import { css, withStyles, withStylesPropTypes } from '../../shared/hocs/withStyles';
 import { withRedux, withReduxPropTypes } from '../../shared/hocs/withRedux';
 import HomeAppContainer from './containers/HomeAppContainer';
+import Title from '../../shared/components/Title';
 import Input from '../../shared/components/Input';
 import Layout from '../../shared/layout';
 import Spacing from '../../shared/components/Spacing';
@@ -89,7 +90,9 @@ export class Home extends React.PureComponent {
             lg
           />
         </div>
-
+        <Title level={1}>
+          LEVEL 1
+        </Title>
         <HomeAppContainer />
       </Layout>
     );
