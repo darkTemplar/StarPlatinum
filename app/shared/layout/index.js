@@ -39,12 +39,14 @@ Layout.defaultProps = defaultProps;
 
 export default withStyles(({ font, unit, color }) => ({
   base: {
+    fontFamily: 'Helvetica Regular',
     fontSize: font.medium,
     color: color.core.black,
+    lineHeight: 1.48,
   },
 
   maxPageWidth: {
-    width: 135 * unit,
+    maxWidth: 135 * unit,
     margin: '0 auto',
   },
 }), { pureComponent: true })(Layout);

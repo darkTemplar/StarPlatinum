@@ -18,6 +18,18 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
+          <style dangerouslySetInnerHTML={{ __html: `
+            @font-face {
+              font-family: 'Helvetica Regular';
+              src: url(/static/Helvetica-Regular.ttf);
+            }
+
+            * {
+              box-sizing: border-box;
+            }
+          `}}
+          />
+
           <style dangerouslySetInnerHTML={{ __html: this.props.css.content }} data-aphrodite />
         </Head>
         <body>
