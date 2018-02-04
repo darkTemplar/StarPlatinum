@@ -3,6 +3,7 @@ import csv
 import random
 from math import ceil, floor
 
+NUM_OFFERS_PER_LISTING = 10
 
 def read_listings_from_file(filename):
     """
@@ -24,32 +25,32 @@ def generate_random_offer(list_price):
     escrow_fluctuation = random.uniform(-0.3, 0.3)
     # financing (vars)
     offer['offer_price'] = ceil((1 + price_fluctuation) * list_price) # round off to nearest int
-    offer['all_cash'] = random.randint(0, 1) # boolean
+    offer['all_cash'] = random.choice(['Y','N']) # boolean
     offer['proportion_down_payment'] = random.random() # percentage between 0 and 1
-    offer['financing_contingency'] = random.randint(0, 1) # boolean
-    offer['appraisal_contingency'] = random.randint(0, 1) # boolean
+    offer['financing_contingency'] = random.choice(['Y','N']) # boolean
+    offer['appraisal_contingency'] = random.choice(['Y','N']) # boolean
 
     # financing terms (do we need more variables)
-    offer['preapproved_loan'] = random.randint(0, 1) # boolean
+    offer['preapproved_loan'] = random.choice(['Y','N']) # boolean
 
     # escrow terms 
     offer['escrow_period'] = ceil(30 * (1 + escrow_fluctuation))  # days
-    offer['pays_title_insurance'] = random.randint(0, 1) # boolean (buyer or seliler)
-    offer['chooses_title_insurance'] = random.randint(0, 1) # boolean (buyer or seller)
-    offer['pays_escrow_fees'] = random.randint(0, 1) # boolean (buyer or seller)
-    offer['chooses_escrow_company'] = random.randint(0, 1) # boolean (buyer or seller)
+    offer['pays_title_insurance'] = random.choice(['B','S']) # boolean (buyer or seliler)
+    offer['chooses_title_insurance'] = random.choice(['B','S']) # boolean (buyer or seller)
+    offer['pays_escrow_fees'] = random.choice(['B','S']) # boolean (buyer or seller)
+    offer['chooses_escrow_company'] = random.choice(['B','S']) # boolean (buyer or seller)
 
     #property condition
-    offer['property_as_is'] = random.randint(0, 1) # boolean
-    offer['property_inspection_contingency'] = random.randint(0, 1) # boolean
-    offer['pest_control'] = random.randint(0, 1) # boolean (buyer or seller pays)
-    offer['repairs_payment'] = random.randint(0, 1) # (buyer or seller pays)
+    offer['property_as_is'] = random.choice(['Y','N']) # boolean
+    offer['property_inspection_contingency'] = random.choice(['Y','N']) # boolean
+    offer['pest_control'] = random.choice(['B','S']) # boolean (buyer or seller pays)
+    offer['repairs_payment'] = random.choice(['B','S']) # (buyer or seller pays)
     # disclosures
     offer['num_disclosures_signed'] = random.randint(0, 5) # int
     
     # other terms
-    offer['accept_liquid_damages'] = random.randint(0, 1) # boolean
-    offer['pays_for_home_warranty'] = random.randint(0, 1) # boolean
+    offer['accept_liquid_damages'] = random.choice(['Y','N']) # boolean
+    offer['pays_for_home_warranty'] = random.choice(['Y','N']) # boolean
     return offer
 
 def write_offers(offers):
@@ -67,9 +68,12 @@ def write_offers(offers):
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         listings_file = sys.argv[1]
+        offers = []
         with open(listings_file) as f:
             list_prices = [int(line) for line in f.readlines()]
-        offers = [generate_random_offer(list_price) for list_price in list_prices]
+            for list_price in list_prices:
+                for i in range(NUM_OFFERS_PER_LISTING):
+                    offers.append(generate_random_offer(list_price))
         write_offers(offers)
     else:
         print("Please provide a text file as input for list prices")
