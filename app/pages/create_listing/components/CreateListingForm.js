@@ -34,13 +34,12 @@ export class CreateListingForm extends React.PureComponent {
   }
 }
 
+CreateListingForm.propTypes = propTypes;
 CreateListingForm.contextTypes = contextTypes;
 
 export default withStyles(() => ({
   item: {
   },
-}), { pureComponent: true })(
-  reduxForm({
-    form: FORM_NAME,
-  })(CreateListingForm)
-);
+}), { pureComponent: true })(reduxForm({
+  form: FORM_NAME,
+})(CreateListingForm));

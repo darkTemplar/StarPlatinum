@@ -3,7 +3,7 @@ import React from 'react';
 import {
   css,
   withStyles,
-  withStylesPropTypes
+  withStylesPropTypes,
 } from '../../../shared/hocs/withStyles';
 import CreateListingForm from './CreateListingForm';
 import Spacing from '../../../shared/components/Spacing';

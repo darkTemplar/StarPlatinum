@@ -7,9 +7,9 @@ import {
 } from '../../../shared/hocs/withStyles';
 import BathroomsField from './fields/BathroomsField';
 import BedroomsField from './fields/BedroomsField';
+import Spacing from '../../../shared/components/Spacing';
 import SquareFeetField from './fields/SquareFeetField';
 import Title from '../../../shared/components/Title';
-import Spacing from '../../../shared/components/Spacing';
 
 const propTypes = {
   ...withStylesPropTypes,
