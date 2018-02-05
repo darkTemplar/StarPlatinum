@@ -4,40 +4,38 @@ import React from 'react';
 import { css, withStyles, withStylePropTypes }from '../hocs/withStyles';
 
 const propTypes = {
-  level: PropTypes.oneOf([1, 2, 3, 4]).isRequired,
+  level: PropTypes.oneOf([1, 2, 3]).isRequired,
   children: PropTypes.node.isRequired,
-  bold: PropTypes.bool,
+  jumbo: PropTypes.bool,
   ...withStylePropTypes,
 };
 
 const defaultProps = {
-  bold: false,
+  jumbo: false,
 };
 
 const levelToComponentMap = {
   1: 'h1',
   2: 'h2',
   3: 'h3',
-  4: 'h4',
 };
 
 export function Title({
   level,
   children,
-  bold,
   styles,
+  jumbo,
 }) {
-  const Component = levelToComponentMap[level];
+  const Component = jumbo ? 'h1' : levelToComponentMap[level];
 
   return (
     <Component
       {...css(
         styles.default,
-        bold && styles.bold,
-        level === 1 && styles.level1,
+        level === 1 && styles.level1  ,
         level === 2 && styles.level2,
         level === 3 && styles.level3,
-        level === 4 && styles.level4,
+        jumbo && styles.jumbo,
       )}
     >
       {children}
@@ -48,13 +46,15 @@ export function Title({
 Title.propTypes = propTypes;
 Title.defaultProps = defaultProps;
 
-export default withStyles(({ font, color }) => ({
-  bold: {
-    fontWeight: 'bold',
-  },
-
+export default withStyles(({ font, color, fontFamily }) => ({
   default: {
     margin: 0,
+    fontFamily: fontFamily.bold,
+  },
+
+  jumbo: {
+    fontSize: font.jumbo,
+    fontFamily: fontFamily.jumbo,
   },
 
   level1: {
@@ -67,9 +67,5 @@ export default withStyles(({ font, color }) => ({
 
   level3: {
     fontSize: font.h3,
-  },
-
-  level4: {
-    fontSize: font.h4,
   },
 }), { pureComponent: true })(Title);

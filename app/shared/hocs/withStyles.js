@@ -4,10 +4,11 @@ import React from 'react';
 import _get from 'lodash/get';
 import _uniqueId from 'lodash/uniqueId';
 
+import { APHRODITE_DATA_KEY } from '../constants';
 import { unit, font } from '../styles/size';
 import color from '../styles/color';
+import fontFamily, { fontSource } from '../styles/fontFamily';
 import isBrowser from '../utils/isBrowser';
-import { APHRODITE_DATA_KEY } from '../constants';
 
 let isHydrated = false;
 
@@ -30,6 +31,8 @@ export function withStyles(styles, options = {}) {
     unit,
     color,
     font,
+    fontFamily,
+    fontSource,
   }));
 
   return function _withStyles(WrappedComponent) {

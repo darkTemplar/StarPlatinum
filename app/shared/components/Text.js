@@ -5,7 +5,7 @@ import { css, withStyles, withStylesPropTypes } from '../hocs/withStyles';
 
 const propTypes = {
   children: PropTypes.string.isRequired,
-  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg']),
+  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
   bold: PropTypes.bool,
   inline: PropTypes.bool,
   muted: PropTypes.bool,
@@ -37,6 +37,7 @@ export function Text({
         size === 'md' && styles.md,
         size === 'lg' && styles.lg,
         bold && styles.bold,
+        bold && size === 'md' && styles.mdBold,
         muted && styles.muted,
       )}
     >
@@ -47,13 +48,14 @@ export function Text({
 
 Text.propTypes = propTypes;
 
-export default withStyles(({ font, color }) => ({
+export default withStyles(({ font, color, fontFamily }) => ({
   bold: {
-    fontWeight: 'bold',
+    fontFamily: fontFamily.bold,
   },
 
   xs: {
     fontSize: font.xsmall,
+    fontFamily: fontFamily.regular,
   },
 
   sm: {
@@ -64,8 +66,16 @@ export default withStyles(({ font, color }) => ({
     fontSize: font.medium,
   },
 
+  mdBold: {
+    fontFamily: fontFamily.semiBold,
+  },
+
   lg: {
     fontSize: font.large,
+  },
+
+  xl: {
+    fontSize: font.xlarge,
   },
 
   muted: {

@@ -1,12 +1,10 @@
 import { Container } from 'react-grid-system';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet } from 'aphrodite';
 
-import { APHRODITE_DATA_KEY } from '../constants';
 import { css, withStyles } from '../hocs/withStyles';
 import Header from '../header';
-import isBrowser from '../utils/isBrowser';
+import Text from '../components/Text';
 
 const propTypes = {
   styles: PropTypes.object.isRequired,
@@ -37,12 +35,18 @@ export class Layout extends React.Component {
 Layout.propTypes = propTypes;
 Layout.defaultProps = defaultProps;
 
-export default withStyles(({ font, unit, color }) => ({
+export default withStyles(({ font, unit, color, fontFamily, fontSource }) => ({
   base: {
-    fontFamily: 'Helvetica Regular',
     fontSize: font.medium,
     color: color.core.black,
     lineHeight: 1.48,
+    fontFamily: [
+      fontSource.regular,
+      fontSource.bold,
+      fontSource.semiBold,
+      fontSource.extraBold,
+    ],
+    fontSize: font.medium,
   },
 
   maxPageWidth: {

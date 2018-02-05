@@ -19,11 +19,6 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <style dangerouslySetInnerHTML={{ __html: `
-            @font-face {
-              font-family: 'Helvetica Regular';
-              src: url(/static/Helvetica-Regular.ttf);
-            }
-
             * {
               box-sizing: border-box;
             }
