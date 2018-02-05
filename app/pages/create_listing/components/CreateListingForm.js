@@ -4,7 +4,7 @@ import React from 'react';
 
 import { FORM_NAME } from '../constants/form';
 import { withStyles } from '../../../shared/hocs/withStyles';
-import BasicListingDetailsSection from './fields/BasicListingDetailsSection';
+import BasicListingDetailsSection from './BasicListingDetailsSection';
 
 const propTypes = {
   // redux form provided onSubmit handler

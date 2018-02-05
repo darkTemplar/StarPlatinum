@@ -1,25 +1,30 @@
+import { Field } from 'redux-form';
 import React from 'react';
 
-import Input from '../../../../shared/components/Input';
 import { FORM_FIELD_SQFT } from '../../constants/form';
-import ReduxFormFieldShape from '../../shapes/ReduxFormFieldShape';
+import Input from '../../../../shared/components/Input';
 
-const propTypes = {
- 
-};
+function SquareFeetInput(field) {
+  const { input, meta, ...rest } = field;
 
-export default function SquareFeetField(field) {
   return (
-    <div>
-      <Input
-        id="create-listing-bedrooms"
-        type="text"
-        name={FORM_FIELD_SQFT}
-        label="SQFT"
-        {...field.input}
-      />
-    </div>
+    <Input
+      id="create-listing-bedrooms"
+      type="text"
+      name={FORM_FIELD_SQFT}
+      label="SQFT"
+      {...input}
+      {...rest}
+    />
   );
 }
 
-SquareFeetField.propTypes = propTypes;
+export default function SquareFeetField(props) {
+  return (
+    <Field
+      name={FORM_FIELD_SQFT}
+      component={SquareFeetInput}
+      {...props}
+    />
+  );
+}
