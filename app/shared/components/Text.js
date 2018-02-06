@@ -47,6 +47,7 @@ export function Text({
 }
 
 Text.propTypes = propTypes;
+Text.defaultProps = defaultProps;
 
 export default withStyles(({ font, color, fontFamily }) => ({
   bold: {

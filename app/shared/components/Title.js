@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { css, withStyles, withStylePropTypes }from '../hocs/withStyles';
+import { css, withStyles, withStylePropTypes } from '../hocs/withStyles';
 
 const propTypes = {
   level: PropTypes.oneOf([1, 2, 3]).isRequired,
@@ -46,7 +46,7 @@ export function Title({
 Title.propTypes = propTypes;
 Title.defaultProps = defaultProps;
 
-export default withStyles(({ font, color, fontFamily }) => ({
+export default withStyles(({ font, fontFamily }) => ({
   default: {
     margin: 0,
     fontFamily: fontFamily.bold,

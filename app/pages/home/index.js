@@ -11,6 +11,7 @@ import Title from '../../shared/components/Title';
 import Input from '../../shared/components/Input';
 import Layout from '../../shared/layout';
 import Spacing from '../../shared/components/Spacing';
+import Button from '../../shared/components/Button';
 import myReducer from './reducers/myReducer';
 
 const propTypes = {
@@ -94,6 +95,11 @@ export class Home extends React.PureComponent {
           LEVEL 1
         </Title>
         <HomeAppContainer />
+        <Button
+          primary
+        >
+          TEST TEST
+        </Button>
       </Layout>
     );
   }

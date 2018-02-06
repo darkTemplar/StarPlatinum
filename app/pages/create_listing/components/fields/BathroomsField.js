@@ -9,7 +9,6 @@ function BathroomsSelect(field) {
 
   return (
     <Select
-      name={FORM_FIELD_BATHROOMS}
       id="create-listing-bathrooms"
       label="BATHROOMS"
       options={[{

@@ -9,6 +9,7 @@ import BathroomsField from './fields/BathroomsField';
 import BedroomsField from './fields/BedroomsField';
 import Spacing from '../../../shared/components/Spacing';
 import SquareFeetField from './fields/SquareFeetField';
+import LotSizeField from './fields/LotSizeField';
 import Title from '../../../shared/components/Title';
 
 const propTypes = {
@@ -33,6 +34,9 @@ function BasicListingDetailsSection({
       </div>
       <div {...css(styles.item)}>
         <SquareFeetField borderlessRight />
+      </div>
+      <div {...css(styles.item)}>
+        <LotSizeField />
       </div>
     </div>
   );

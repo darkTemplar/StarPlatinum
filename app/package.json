@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "airbnb-prop-types": "^2.8.1",
     "aphrodite": "^1.2.5",
     "express": "^4.16.2",
     "lodash": "^4.17.4",
