@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { mutuallyExclusiveTrueProps } from 'airbnb-prop-types';
 
 import { css, withStyles, withStylesPropTypes } from '../hocs/withStyles';
 
@@ -8,7 +9,9 @@ const propTypes = {
   size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
   bold: PropTypes.bool,
   inline: PropTypes.bool,
-  muted: PropTypes.bool,
+  muted: mutuallyExclusiveTrueProps('primary', 'inverse', 'muted'),
+  inverse: mutuallyExclusiveTrueProps('primary', 'inverse', 'muted'),
+  primary: mutuallyExclusiveTrueProps('primary', 'inverse', 'muted'),
   ...withStylesPropTypes,
 };
 
@@ -17,6 +20,8 @@ const defaultProps = {
   bold: false,
   inline: false,
   muted: false,
+  primary: false,
+  inverse: false,
 };
 
 export function Text({
@@ -26,12 +31,15 @@ export function Text({
   muted,
   inline,
   styles,
+  inverse,
+  primary,
 }) {
   const Component = inline ? 'span' : 'div';
 
   return (
     <Component
       {...css(
+        styles.text,
         size === 'xs' && styles.xs,
         size === 'sm' && styles.sm,
         size === 'md' && styles.md,
@@ -39,6 +47,8 @@ export function Text({
         bold && styles.bold,
         bold && size === 'md' && styles.mdBold,
         muted && styles.muted,
+        inverse && styles.inverse,
+        primary && styles.primary,
       )}
     >
       {children}
@@ -50,6 +60,10 @@ Text.propTypes = propTypes;
 Text.defaultProps = defaultProps;
 
 export default withStyles(({ font, color, fontFamily }) => ({
+  text: {
+    color: color.core.black,
+  },
+
   bold: {
     fontFamily: fontFamily.bold,
   },
@@ -81,5 +95,13 @@ export default withStyles(({ font, color, fontFamily }) => ({
 
   muted: {
     color: color.greys.cloud,
+  },
+
+  primary: {
+    color: color.core.primary,
+  },
+
+  inverse: {
+    color: color.core.white,
   },
 }), { pureComponent: true })(Text);

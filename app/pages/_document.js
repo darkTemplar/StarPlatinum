@@ -27,7 +27,7 @@ export default class MyDocument extends Document {
           />
           <style dangerouslySetInnerHTML={{ __html: this.props.css.content }} data-aphrodite />
         </Head>
-        <body style={{ background: greys.wind }}>
+        <body style={{ background: greys.wind, padding: 0, margin: 0 }}>
           <script type='text/javascript'
             dangerouslySetInnerHTML={{
               __html: `

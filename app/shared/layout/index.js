@@ -15,21 +15,20 @@ const defaultProps = {
   children: null,
 };
 
-export class Layout extends React.Component {
-  render() {
-    const { children, styles } = this.props;
-
-    return (
-      <div {...css(styles.base, styles.maxPageWidth)}>
-        <Container fluid  >
-          <Header />
-          <div>
-            {children}
-          </div>
-        </Container>
-      </div>
-    );
-  }
+export function Layout({
+  children,
+  styles,
+}) {
+  return (
+    <div {...css(styles.base, styles.maxPageWidth)}>
+      <Container fluid  >
+        <Header />
+        <div>
+          {children}
+        </div>
+      </Container>
+    </div>
+  );
 }
 
 Layout.propTypes = propTypes;
