@@ -4,7 +4,7 @@ import React from 'react';
 import { css, withStyles, withStylesPropTypes } from '../hocs/withStyles';
 
 const propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
   size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
   bold: PropTypes.bool,
   inline: PropTypes.bool,

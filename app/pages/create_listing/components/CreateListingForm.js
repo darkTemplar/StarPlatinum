@@ -6,7 +6,7 @@ import { FORM_NAME } from '../constants/form';
 import { withStyles } from '../../../shared/hocs/withStyles';
 import BasicListingDetailsSection from './BasicListingDetailsSection';
 import Spacing from '../../../shared/components/Spacing';
-import UploadPhotos from './UploadPhotos';
+import UploadPhotosSection from './UploadPhotosSection';
 
 const propTypes = {
   // redux form provided onSubmit handler
@@ -34,7 +34,7 @@ export class CreateListingForm extends React.PureComponent {
           <BasicListingDetailsSection />
         </Spacing>
         <Spacing bottom={4}>
-          <UploadPhotos />
+          <UploadPhotosSection />
         </Spacing>
       </form>
     );

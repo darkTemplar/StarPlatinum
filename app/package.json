@@ -18,6 +18,7 @@
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-dropzone": "^4.2.7",
     "react-grid-system": "^3.1.2",
     "react-redux": "^5.0.6",
     "react-validators": "^0.1.7",
@@ -28,6 +29,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "babel-plugin-inline-react-svg": "^0.5.2",
     "eslint": "^4.16.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
