@@ -5,6 +5,8 @@ import React from 'react';
 import { FORM_NAME } from '../constants/form';
 import { withStyles } from '../../../shared/hocs/withStyles';
 import BasicListingDetailsSection from './BasicListingDetailsSection';
+import Spacing from '../../../shared/components/Spacing';
+import UploadPhotos from './UploadPhotos';
 
 const propTypes = {
   // redux form provided onSubmit handler
@@ -28,7 +30,12 @@ export class CreateListingForm extends React.PureComponent {
   render() {
     return (
       <form onSubmit={this.props.handleSubmit}>
-        <BasicListingDetailsSection />
+        <Spacing bottom={4}>
+          <BasicListingDetailsSection />
+        </Spacing>
+        <Spacing bottom={4}>
+          <UploadPhotos />
+        </Spacing>
       </form>
     );
   }

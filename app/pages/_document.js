@@ -3,6 +3,7 @@ import Document, { Head, Main, NextScript } from 'next/document'
 import React from 'react';
 
 import { APHRODITE_DATA_KEY } from '../shared/constants';
+import { greys } from '../shared/styles/color';
 
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
@@ -24,10 +25,9 @@ export default class MyDocument extends Document {
             }
           `}}
           />
-
           <style dangerouslySetInnerHTML={{ __html: this.props.css.content }} data-aphrodite />
         </Head>
-        <body>
+        <body style={{ background: greys.wind }}>
           <script type='text/javascript'
             dangerouslySetInnerHTML={{
               __html: `

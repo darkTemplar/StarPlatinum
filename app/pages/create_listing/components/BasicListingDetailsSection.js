@@ -7,9 +7,10 @@ import {
 } from '../../../shared/hocs/withStyles';
 import BathroomsField from './fields/BathroomsField';
 import BedroomsField from './fields/BedroomsField';
+import Card from '../../../shared/components/Card';
+import LotSizeField from './fields/LotSizeField';
 import Spacing from '../../../shared/components/Spacing';
 import SquareFeetField from './fields/SquareFeetField';
-import LotSizeField from './fields/LotSizeField';
 import Title from '../../../shared/components/Title';
 
 const propTypes = {
@@ -26,18 +27,21 @@ function BasicListingDetailsSection({
           Basic Listing Details
         </Title>
       </Spacing>
-      <div {...css(styles.item)}>
-        <BedroomsField borderlessRight />
-      </div>
-      <div {...css(styles.item)}>
-        <BathroomsField borderlessRight />
-      </div>
-      <div {...css(styles.item)}>
-        <SquareFeetField borderlessRight />
-      </div>
-      <div {...css(styles.item)}>
-        <LotSizeField />
-      </div>
+      <Card>
+        <div {...css(styles.item)}>
+          <BedroomsField borderlessRight />
+        </div>
+        <div {...css(styles.item)}>
+          <BathroomsField borderlessRight />
+        </div>
+        <div {...css(styles.item)}>
+          <SquareFeetField borderlessRight />
+        </div>
+        <div {...css(styles.item)}>
+          <LotSizeField />
+        </div>
+        <span {...css(styles.clearfix)} />
+      </Card>
     </div>
   );
 }
@@ -48,5 +52,11 @@ export default withStyles(() => ({
   item: {
     float: 'left',
     width: '25%',
+  },
+
+  clearfix: {
+    content: '',
+    display: 'block',
+    clear: 'both',
   },
 }), { pureComponent: true })(BasicListingDetailsSection);

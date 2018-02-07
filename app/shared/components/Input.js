@@ -93,6 +93,7 @@ export default withStyles(({ color, unit, font }) => ({
   inputContainer: {
     border: `1px solid ${color.border}`,
     paddingTop: 0.5 * unit,
+    background: color.core.white,
   },
 
   inputContainerLarge: {
