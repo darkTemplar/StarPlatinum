@@ -3,6 +3,7 @@ import React from 'react';
 
 import { FORM_FIELD_BEDROOMS } from '../../constants/form';
 import Select from '../../../../shared/components/Select';
+import number from '../../../../shared/form/parsers/number';
 
 function BedroomsSelect(field) {
   const { input, meta, ...rest } = field;
@@ -29,6 +30,7 @@ export default function BedroomsField(props) {
     <Field
       name={FORM_FIELD_BEDROOMS}
       component={BedroomsSelect}
+      parse={number}
       {...props}
     />
   );

@@ -6,6 +6,7 @@ import { FORM_NAME } from '../constants/form';
 import { withStyles } from '../../../shared/hocs/withStyles';
 import BasicListingDetailsSection from './BasicListingDetailsSection';
 import Spacing from '../../../shared/components/Spacing';
+import Button from '../../../shared/components/Button';
 import UploadPhotosSection from './UploadPhotosSection';
 
 const propTypes = {
@@ -36,6 +37,9 @@ export class CreateListingForm extends React.PureComponent {
         <Spacing bottom={4}>
           <UploadPhotosSection />
         </Spacing>
+        <Button type="submit">
+          Create
+        </Button>
       </form>
     );
   }

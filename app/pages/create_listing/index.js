@@ -2,7 +2,7 @@ import React from 'react';
 
 import { withRedux } from '../../shared/hocs/withRedux';
 import Layout from '../../shared/layout';
-import CreateListingPageContent from './components/CreateListingPageContent';
+import CreateListingPageContentContainer from './containers/CreateListingPageContentContainer';
 
 export class CreateListing extends React.PureComponent {
   static getInitialProps() {
@@ -14,7 +14,7 @@ export class CreateListing extends React.PureComponent {
   render() {
     return (
       <Layout>
-        <CreateListingPageContent />
+        <CreateListingPageContentContainer />
       </Layout>
     );
   }

@@ -3,6 +3,7 @@ import React from 'react';
 
 import { FORM_FIELD_SQFT } from '../../constants/form';
 import Input from '../../../../shared/components/Input';
+import number from '../../../../shared/form/parsers/number';
 
 function SquareFeetInput(field) {
   const { input, meta, ...rest } = field;
@@ -23,6 +24,7 @@ export default function SquareFeetField(props) {
     <Field
       name={FORM_FIELD_SQFT}
       component={SquareFeetInput}
+      parse={number}
       {...props}
     />
   );

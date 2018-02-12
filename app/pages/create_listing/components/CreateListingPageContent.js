@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import {
@@ -11,6 +12,7 @@ import Text from '../../../shared/components/Text';
 import Title from '../../../shared/components/Title';
 
 const propTypes = {
+  createListing: PropTypes.func.isRequired,
   ...withStylesPropTypes,
 };
 
@@ -21,7 +23,7 @@ export class CreateListingPageContent extends React.PureComponent {
   }
 
   onSubmit(values) {
-    console.log(values);
+    this.props.createListing(values);
   }
 
   render() {
