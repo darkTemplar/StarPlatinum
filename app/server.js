@@ -1,6 +1,10 @@
-const { createServer } = require('http');
-const { parse } = require('url');
-const next = require('next');
+import bodyParser from 'body-parser';
+import express from 'express';
+import next from 'next';
+
+import { parse } from 'url';
+
+import api from './api';
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -8,9 +12,19 @@ const handle = app.getRequestHandler();
 
 app.prepare()
   .then(() => {
-    createServer((req, res) => {
-      // Be sure to pass `true` as the second argument to `url.parse`.
-      // This tells it to parse the query portion of the URL.
+    const server = express();
+
+    // parse application/x-www-form-urlencoded
+    server.use(bodyParser.urlencoded({ extended: false }));
+
+    // parse application/json
+    server.use(bodyParser.json());
+
+    // api routes
+    server.use('/api', api);
+
+    // page routes
+    server.get('*', (req, res) => {
       const parsedUrl = parse(req.url, true);
       const { pathname, query } = parsedUrl;
 
@@ -21,7 +35,9 @@ app.prepare()
       } else {
         handle(req, res, parsedUrl);
       }
-    }).listen(3000, (err) => {
+    });
+
+    server.listen(3000, (err) => {
       if (err) {
         throw err;
       }

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node server.js"
+    "dev": "node index.js",
+    "dev-debug": "node --inspect index.js"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +13,10 @@
   "dependencies": {
     "airbnb-prop-types": "^2.8.1",
     "aphrodite": "^1.2.5",
+    "babel-plugin-inline-react-svg": "^0.5.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "lodash": "^4.17.4",
     "next": "^4.2.3",
@@ -29,7 +34,6 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "babel-plugin-inline-react-svg": "^0.5.2",
     "eslint": "^4.16.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
