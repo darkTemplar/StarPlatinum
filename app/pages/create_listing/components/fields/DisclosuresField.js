@@ -1,39 +1,39 @@
 import { Field } from 'redux-form';
 import React from 'react';
 
-import { FORM_FIELD_PHOTOS } from '../../constants/form';
+import { FORM_FIELD_DISCLOSURES } from '../../constants/form';
 import { css, withStyles } from '../../../../shared/hocs/withStyles';
 import Dropzone from '../../../../shared/components/Dropzone';
-import IllustrationPhotoIcon from '../../../../shared/components/icons/IllustrationPhotoIcon';
+import IllustrationDisclosureIcon from '../../../../shared/components/icons/IllustrationDisclosureIcon';
 import Spacing from '../../../../shared/components/Spacing';
 import Text from '../../../../shared/components/Text';
 
-export function UploadPhotosInput(props) {
+export function UploadDisclosuresInput(props) {
   const { input, styles } = props;
 
   return (
     <Dropzone onFilesUploaded={input.onChange}>
       <div {...css(styles.center)}>
         <Spacing bottom={1}>
-          <IllustrationPhotoIcon />
+          <IllustrationDisclosureIcon />
         </Spacing>
-        <Text muted size="lg">BROWSE PHOTOS OR DRAG THEM INSIDE</Text>
+        <Text muted size="lg">BROWSE DISCLOSURES OR DRAG THEM INSIDE</Text>
       </div>
     </Dropzone>
   );
 }
 
-export const StyledUploadPhotosInput = withStyles(() => ({
+export const StyledUploadDisclosuresInput = withStyles(() => ({
   center: {
     textAlign: 'center',
   },
-}), { pureComponent: true })(UploadPhotosInput);
+}), { pureComponent: true })(UploadDisclosuresInput);
 
-export default function PhotosField(props) {
+export default function DisclosuresField(props) {
   return (
     <Field
-      name={FORM_FIELD_PHOTOS}
-      component={StyledUploadPhotosInput}
+      name={FORM_FIELD_DISCLOSURES}
+      component={StyledUploadDisclosuresInput}
       {...props}
     />
   );
