@@ -78,7 +78,7 @@ export class Dropzone extends React.Component {
 
             resolve({
               ...baseFileData,
-              content: btoa(fileAsBinaryString),
+              data: btoa(fileAsBinaryString),
             });
           };
           reader.onabort = () => {
