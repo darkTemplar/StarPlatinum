@@ -1,24 +1,11 @@
 import React from 'react';
 
-import {
-  css,
-  withStyles,
-  withStylesPropTypes,
-} from '../../../shared/hocs/withStyles';
+import PhotosField from './fields/PhotosField';
 import Card from '../../../shared/components/Card';
-import Dropzone from '../../../shared/components/Dropzone';
-import IllustrationPhotoIcon from '../../../shared/components/icons/IllustrationPhotoIcon';
 import Spacing from '../../../shared/components/Spacing';
 import Title from '../../../shared/components/Title';
-import Text from '../../../shared/components/Text';
 
-const propTypes = {
-  ...withStylesPropTypes,
-};
-
-export function UploadPhotosSection({
-  styles,
-}) {
+export default function UploadPhotosSection() {
   return (
     <div>
       <Spacing bottom={1}>
@@ -27,23 +14,8 @@ export function UploadPhotosSection({
         </Title>
       </Spacing>
       <Card padded>
-        <Dropzone>
-          <div {...css(styles.center)}>
-            <Spacing bottom={1}>
-              <IllustrationPhotoIcon />
-            </Spacing>
-            <Text muted size="lg">BROWSE PHOTOS OR DRAG THEM INSIDE</Text>
-          </div>
-        </Dropzone>
+        <PhotosField />
       </Card>
     </div>
   );
 }
-
-UploadPhotosSection.propTypes= propTypes;
-
-export default withStyles(() => ({
-  center: {
-    textAlign: 'center',
-  },
-}), { pureComponent: true })(UploadPhotosSection);

@@ -1,12 +1,12 @@
 export default function createListingHandler(req, res) {
-  debugger
   const {
     body: {
       sqft,
       bedrooms,
       bathrooms,
       lot,
-    },
+      photos,
+    } = {},
   } = req;
 
   try {
@@ -15,6 +15,7 @@ export default function createListingHandler(req, res) {
       bedrooms,
       bathrooms,
       lot,
+      photos,
     });
   } catch (ex) {
     console.error(ex.message);

@@ -1,3 +1,5 @@
+// polyfill for promises
+import 'es6-promise/auto';
 import { Container } from 'react-grid-system';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -21,7 +23,7 @@ export function Layout({
 }) {
   return (
     <div {...css(styles.base, styles.maxPageWidth)}>
-      <Container fluid  >
+      <Container fluid>
         <Header />
         <div>
           {children}

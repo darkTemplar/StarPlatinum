@@ -14,11 +14,14 @@ app.prepare()
   .then(() => {
     const server = express();
 
-    // parse application/x-www-form-urlencoded
-    server.use(bodyParser.urlencoded({ extended: false }));
-
     // parse application/json
-    server.use(bodyParser.json());
+    server.use('/api', bodyParser.json({ limit: '100mb' }));
+
+    // parse application/x-www-form-urlencoded
+    server.use('/api', bodyParser.urlencoded({ extended: false }));
+
+    // regular non api route
+    server.use('/', bodyParser.json());
 
     // api routes
     server.use('/api', api);

@@ -45,6 +45,10 @@ const defaultProps = {
   },
 };
 
+const filesMap = {
+
+};
+
 export class Dropzone extends React.Component {
   constructor(props) {
     super(props);
@@ -55,18 +59,43 @@ export class Dropzone extends React.Component {
   }
 
   onDrop(acceptedFiles, rejectedFiles) {
-    acceptedFiles.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const fileAsBinaryString = reader.result;
+    const { onFilesUploaded } = this.props;
+    const filesPromises = [];
 
-
+    acceptedFiles.forEach((file) => {
+      const baseFileData = {
+        name: file.name,
+        lastModified: file.lastModified,
+        type: file.type,
+        size: file.size,
       };
-      reader.onabort = () => console.log('file reading was aborted');
-      reader.onerror = () => console.log('file reading has failed');
 
-      reader.readAsBinaryString(file);
+      filesPromises.push(
+        new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const fileAsBinaryString = reader.result;
+
+            resolve({
+              ...baseFileData,
+              content: btoa(fileAsBinaryString),
+            });
+          };
+          reader.onabort = () => {
+            reject(baseFileData);
+          };
+          reader.onerror = () => {
+            reject(baseFileData);
+          };
+          reader.readAsBinaryString(file);
+        }),
+      );
     });
+
+    Promise.all(filesPromises)
+      .then((base64EncodedFiles) => {
+        onFilesUploaded(base64EncodedFiles);
+      });
   }
 
   render() {
