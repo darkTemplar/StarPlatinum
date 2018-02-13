@@ -1,3 +1,4 @@
+import _uniqueId from 'lodash/uniqueId';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDropzone from 'react-dropzone';
@@ -45,16 +46,12 @@ const defaultProps = {
   },
 };
 
-const filesMap = {
-
-};
-
 export class Dropzone extends React.Component {
   constructor(props) {
     super(props);
     this.onDrop = this.onDrop.bind(this);
     this.state = {
-      files: [],
+      isUploading: false,
     };
   }
 
@@ -63,11 +60,14 @@ export class Dropzone extends React.Component {
     const filesPromises = [];
 
     acceptedFiles.forEach((file) => {
+      const { name, lastModified, type, size } = file;
+
       const baseFileData = {
-        name: file.name,
-        lastModified: file.lastModified,
-        type: file.type,
-        size: file.size,
+        name: name,
+        lastModified: lastModified,
+        type: type,
+        size: size,
+        id: _uniqueId(`file-${name}${type}${lastModified}${size}`),
       };
 
       filesPromises.push(
@@ -92,9 +92,15 @@ export class Dropzone extends React.Component {
       );
     });
 
+    this.setState({ isUploading: true });
+
     Promise.all(filesPromises)
       .then((base64EncodedFiles) => {
         onFilesUploaded(base64EncodedFiles);
+        this.setState({ isUploading: false });
+      })
+      .catch((ex) => {
+        this.setState({ isUploading: false });
       });
   }
 
@@ -114,6 +120,9 @@ export class Dropzone extends React.Component {
       maxSize,
       styles,
     } = this.props;
+    const {
+      isUploading,
+    } = this.state;
 
     const accept = [
       acceptImage ? ACCEPT_IMAGE : '',
@@ -124,7 +133,9 @@ export class Dropzone extends React.Component {
 
     return (
       <div {...css(styles.dropzoneContainer)}>
+        {isUploading && <div {...css(styles.loadingOverlay)} />}
         <ReactDropzone
+          disabled={isUploading}
           onDrop={this.onDrop}
           style={style}
           accept={accept}
@@ -148,5 +159,16 @@ Dropzone.defaultProps = defaultProps;
 export default withStyles(() => ({
   dropzoneContainer: {
     cursor: 'pointer',
+    position: 'relative',
+  },
+
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    opacity: '0.2',
+    zIndex: 1,
   },
 }), { pureComponent: true })(Dropzone);

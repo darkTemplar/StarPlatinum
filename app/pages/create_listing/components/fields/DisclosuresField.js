@@ -12,7 +12,10 @@ export function UploadDisclosuresInput(props) {
   const { input, styles } = props;
 
   return (
-    <Dropzone onFilesUploaded={input.onChange}>
+    <Dropzone
+      onFilesUploaded={input.onChange}
+      acceptApplication
+    >
       <div {...css(styles.center)}>
         <Spacing bottom={1}>
           <IllustrationDisclosureIcon />

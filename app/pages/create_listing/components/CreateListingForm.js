@@ -22,7 +22,6 @@ const contextTypes = {
   store: PropTypes.object,
 };
 
-
 export class CreateListingForm extends React.PureComponent {
   constructor(props, context) {
     super(props, context);
