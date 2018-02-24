@@ -35,7 +35,12 @@ export class CreateListingPageContent extends React.PureComponent {
           <Title level={1}>Let's Get Started</Title>
           <Text muted>You'll be sharing disclosures and collecting offers in no time</Text>
         </Spacing>
-        <CreateListingForm onSubmit={this.onSubmit} />
+        <CreateListingForm
+          onSubmit={this.onSubmit}
+          initialValues={{
+            shareDisclosure: true,
+          }}
+        />
       </div>
     );
   }

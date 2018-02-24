@@ -30,7 +30,7 @@ const defaultProps = {
 };
 
 // TODO add mobile touch support
-export function Button({
+export function UnstyledButton({
   primary,
   secondary,
   loading,
@@ -63,8 +63,8 @@ export function Button({
   );
 }
 
-Button.propTypes = propTypes;
-Button.defaultProps = defaultProps;
+UnstyledButton.propTypes = propTypes;
+UnstyledButton.defaultProps = defaultProps;
 
 export default withStyles(({ color, unit }) => ({
   button: {
@@ -113,4 +113,4 @@ export default withStyles(({ color, unit }) => ({
   lg: {
 
   },
-}), { pureComponent: true })(Button);
+}), { pureComponent: true })(UnstyledButton);

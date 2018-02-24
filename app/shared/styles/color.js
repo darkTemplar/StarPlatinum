@@ -30,7 +30,7 @@ const border = greys.haze;
 const color = {
   core,
   greys,
-  border: border,
+  border,
 };
 
 export default color;

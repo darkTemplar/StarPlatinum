@@ -20,7 +20,7 @@ const levelToComponentMap = {
   3: 'h3',
 };
 
-export function Title({
+export function UnstyledTitle({
   level,
   children,
   styles,
@@ -43,8 +43,8 @@ export function Title({
   );
 }
 
-Title.propTypes = propTypes;
-Title.defaultProps = defaultProps;
+UnstyledTitle.propTypes = propTypes;
+UnstyledTitle.defaultProps = defaultProps;
 
 export default withStyles(({ font, fontFamily }) => ({
   default: {
@@ -68,4 +68,4 @@ export default withStyles(({ font, fontFamily }) => ({
   level3: {
     fontSize: font.h3,
   },
-}), { pureComponent: true })(Title);
+}), { pureComponent: true })(UnstyledTitle);

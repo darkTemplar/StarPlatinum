@@ -29,7 +29,7 @@ const defaultProps = {
   lg: false,
 };
 
-export function Select({
+export function UnstyledSelect({
   onChange,
   label,
   name,
@@ -84,8 +84,8 @@ export function Select({
   );
 }
 
-Select.propTypes = propTypes;
-Select.defaultProps = defaultProps;
+UnstyledSelect.propTypes = propTypes;
+UnstyledSelect.defaultProps = defaultProps;
 
 export default withStyles(({ unit, color, font }) => ({
   selectContainer: {
@@ -132,4 +132,4 @@ export default withStyles(({ unit, color, font }) => ({
     width: 4 * unit,
     height: '100%',
   },
-}), { pureComponent: true })(Select);
+}), { pureComponent: true })(UnstyledSelect);

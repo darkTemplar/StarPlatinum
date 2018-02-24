@@ -5,10 +5,10 @@ import React from 'react';
 import { FORM_NAME } from '../constants/form';
 import { withStyles } from '../../../shared/hocs/withStyles';
 import BasicListingDetailsSection from './BasicListingDetailsSection';
-import Spacing from '../../../shared/components/Spacing';
 import Button from '../../../shared/components/Button';
-import UploadPhotosSection from './UploadPhotosSection';
+import Spacing from '../../../shared/components/Spacing';
 import UploadDisclosuresSection from './UploadDisclosuresSection';
+import UploadPhotosSection from './UploadPhotosSection';
 
 const propTypes = {
   // redux form provided onSubmit handler
@@ -22,7 +22,7 @@ const contextTypes = {
   store: PropTypes.object,
 };
 
-export class CreateListingForm extends React.PureComponent {
+export class UnstyledListingForm extends React.PureComponent {
   constructor(props, context) {
     super(props, context);
     this.context.store.injectAll({ form: formReducer });
@@ -48,12 +48,13 @@ export class CreateListingForm extends React.PureComponent {
   }
 }
 
-CreateListingForm.propTypes = propTypes;
-CreateListingForm.contextTypes = contextTypes;
+UnstyledListingForm.propTypes = propTypes;
+UnstyledListingForm.contextTypes = contextTypes;
 
 export default withStyles(() => ({
   item: {
   },
 }), { pureComponent: true })(reduxForm({
   form: FORM_NAME,
-})(CreateListingForm));
+  reenableInitialize: true,
+})(UnstyledListingForm));

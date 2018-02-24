@@ -29,12 +29,12 @@ const defaultProps = {
   borderlessRight: false,
   borderlessBottom: false,
   borderlessLeft: false,
-  value: '',
+  value: undefined,
   name: '',
   inputRef() {},
 };
 
-export function Input({
+export function UnstyledInput({
   type,
   label,
   id,
@@ -86,8 +86,8 @@ export function Input({
   );
 }
 
-Input.propTypes = propTypes;
-Input.defaultProps = defaultProps;
+UnstyledInput.propTypes = propTypes;
+UnstyledInput.defaultProps = defaultProps;
 
 export default withStyles(({ color, unit, font }) => ({
   inputContainer: {
@@ -119,4 +119,4 @@ export default withStyles(({ color, unit, font }) => ({
   label: {
     padding: `0 ${1 * unit}px`,
   },
-}), { pureComponent: true })(Input);
+}), { pureComponent: true })(UnstyledInput);

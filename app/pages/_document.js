@@ -1,5 +1,5 @@
-import { StyleSheetServer } from 'aphrodite'
-import Document, { Head, Main, NextScript } from 'next/document'
+import { StyleSheetServer } from 'aphrodite';
+import Document, { Head, Main, NextScript } from 'next/document';
 import React from 'react';
 
 import { APHRODITE_DATA_KEY } from '../shared/constants';

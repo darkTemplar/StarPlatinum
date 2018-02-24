@@ -13,7 +13,7 @@ const defaultProps = {
   padded: false,
 };
 
-export function Card({
+export function UnstyledCard({
   styles,
   padded,
   children,
@@ -25,8 +25,8 @@ export function Card({
   );
 }
 
-Card.propTypes = propTypes;
-Card.defaultProps = defaultProps;
+UnstyledCard.propTypes = propTypes;
+UnstyledCard.defaultProps = defaultProps;
 
 export default withStyles(({ unit, color }) => ({
   card: {
@@ -37,4 +37,4 @@ export default withStyles(({ unit, color }) => ({
   padded: {
     padding: 2 * unit,
   },
-}), { pureComponent: true })(Card);
+}), { pureComponent: true })(UnstyledCard);

@@ -6,6 +6,8 @@ export default function createListingHandler(req, res) {
       bathrooms,
       lot,
       photos,
+      shareDisclosure,
+      disclosures,
     } = {},
   } = req;
 
@@ -16,6 +18,8 @@ export default function createListingHandler(req, res) {
       bathrooms,
       lot,
       photos,
+      disclosures,
+      shareDisclosure,
     });
   } catch (ex) {
     console.error(ex.message);

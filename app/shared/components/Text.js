@@ -24,7 +24,7 @@ const defaultProps = {
   inverse: false,
 };
 
-export function Text({
+export function UnstyledText({
   children,
   size,
   bold,
@@ -56,8 +56,8 @@ export function Text({
   );
 }
 
-Text.propTypes = propTypes;
-Text.defaultProps = defaultProps;
+UnstyledText.propTypes = propTypes;
+UnstyledText.defaultProps = defaultProps;
 
 export default withStyles(({ font, color, fontFamily }) => ({
   text: {
@@ -104,4 +104,4 @@ export default withStyles(({ font, color, fontFamily }) => ({
   inverse: {
     color: color.core.white,
   },
-}), { pureComponent: true })(Text);
+}), { pureComponent: true })(UnstyledText);

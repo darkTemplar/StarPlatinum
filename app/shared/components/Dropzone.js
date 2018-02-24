@@ -46,7 +46,7 @@ const defaultProps = {
   },
 };
 
-export class Dropzone extends React.Component {
+export class UnstyledDropzone extends React.Component {
   constructor(props) {
     super(props);
     this.onDrop = this.onDrop.bind(this);
@@ -153,8 +153,8 @@ export class Dropzone extends React.Component {
   }
 }
 
-Dropzone.propTypes = propTypes;
-Dropzone.defaultProps = defaultProps;
+UnstyledDropzone.propTypes = propTypes;
+UnstyledDropzone.defaultProps = defaultProps;
 
 export default withStyles(() => ({
   dropzoneContainer: {
@@ -171,4 +171,4 @@ export default withStyles(() => ({
     opacity: '0.2',
     zIndex: 1,
   },
-}), { pureComponent: true })(Dropzone);
+}), { pureComponent: true })(UnstyledDropzone);
