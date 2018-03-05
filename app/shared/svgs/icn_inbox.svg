@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="18px" viewBox="0 0 20 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>icn_inbox</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M17.2222222,15.75 L2.77777778,15.75 C2.47111111,15.75 2.22222222,15.4985625 2.22222222,15.1875 L2.22222222,10.125 L5.70111111,10.125 C6.195,12.0645 7.92944444,13.5 10,13.5 C12.0705556,13.5 13.805,12.0645 14.2988889,10.125 L17.7777778,10.125 L17.7777778,15.1875 C17.7777778,15.4985625 17.5294444,15.75 17.2222222,15.75 Z M6.36888889,2.25 L13.6311111,2.25 L16.8055556,7.875 L12.7777778,7.875 C12.4705556,7.875 12.2222222,8.127 12.2222222,8.4375 L12.2222222,8.899875 C12.2222222,10.074375 11.3766667,11.1245625 10.2216667,11.23875 C8.89722222,11.3698125 7.77777778,10.315125 7.77777778,9 L7.77777778,8.4375 C7.77777778,8.127 7.52888889,7.875 7.22222222,7.875 L3.19444444,7.875 L6.36888889,2.25 Z M15.5555556,1.125 C15.5555556,0.504 15.0577778,0 14.4444444,0 L5.55555556,0 C4.94222222,0 4.44444444,0.504 4.44444444,1.125 L0,9 L0,16.875 C0,17.496 0.497777778,18 1.11111111,18 L18.8888889,18 C19.5022222,18 20,17.496 20,16.875 L20,9 L15.5555556,1.125 Z" id="path-1"></path>
+    </defs>
+    <g id="MyListings" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-863.000000, -28.000000)">
+        <g id="Group-3">
+            <g id="!-Item/Icon/Inbox" transform="translate(861.000000, 25.000000)">
+                <g id="!-Basic/Color/10-Haze" transform="translate(2.000000, 3.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Mask" fill="#424B4E" xlink:href="#path-1"></use>
+                    <g id="!-Item/Color/08-Fog" mask="url(#mask-2)" fill="#939C9E">
+                        <g transform="translate(-2.000000, -3.000000)" id="Fog">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>icn_mylistings</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M10.002,0 L0,9.992 L1.411,11.406 L2,10.813 L2,20 L9,20 L9,16 L11,16 L11,20 L18,20 L18,19.996 L18,10.831 L18.585,11.416 L20.001,10.002 L18,8.004 L18,8 L10.002,0 Z M4,8.812 L9.99,2.822 L16.001,8.832 L16.001,18 L13,18 L13,13.999 L7.001,13.999 L7.001,18 L4,18 L4,8.812 Z" id="path-1"></path>
+    </defs>
+    <g id="ListProperty---Default" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-77.000000, -178.000000)">
+        <g id="Group-10">
+            <g id="Group-16" transform="translate(0.000000, 91.000000)">
+                <g id="Group-4">
+                    <g id="Group-8">
+                        <g id="!-Item/Icon/Listing" transform="translate(75.000000, 85.000000)">
+                            <g id="!-Basic/Color/09-Cloud" transform="translate(2.000000, 2.000000)">
+                                <mask id="mask-2" fill="white">
+                                    <use xlink:href="#path-1"></use>
+                                </mask>
+                                <use id="Mask" fill="#757E7F" xlink:href="#path-1"></use>
+                                <g id="!-Item/Color/08-Fog" mask="url(#mask-2)" fill="#939C9E">
+                                    <g transform="translate(-2.000000, -2.000000)" id="Fog">
+                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

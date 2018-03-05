@@ -7,9 +7,15 @@ import React from 'react';
 
 import { NAVBAR_WIDTH } from '../constants/ui';
 import { css, withStyles, withStylesPropTypes } from '../hocs/withStyles';
+import BrowsePropertiesIcon from '../components/icons/BrowsePropertiesIcon';
 import Header from '../header';
+import IllustrationPhotoIcon from '../components/icons/IllustrationPhotoIcon';
+import IllustrationDisclosureIcon from '../components/icons/IllustrationDisclosureIcon';
+import MyListingsIcon from '../components/icons/MyListingsIcon';
+import MyOffersIcon from '../components/icons/MyOffersIcon';
 import Navbar from '../components/Navbar';
 import PageContainer from '../components/PageContainer';
+import WatchlistsIcon from '../components/icons/WatchlistsIcon';
 
 const propTypes = {
   children: PropTypes.node,
@@ -23,15 +29,39 @@ const defaultProps = {
 const STATIC_SIGNED_IN_NAVBAR_ITEMS = [
   {
     id: 'nav-listing-create',
-    icon: null,
+    icon: MyListingsIcon,
     label: 'List a Property',
     url: '/listing/new',
   },
   {
     id: 'nav-my-listings',
-    icon: null,
+    icon: IllustrationPhotoIcon,
     label: 'My Listings',
-    url: '/my-listings',
+    url: '/',
+  },
+  {
+    id: 'nav-offer-create',
+    icon: IllustrationDisclosureIcon,
+    label: 'Make an Offer',
+    url: '/',
+  },
+  {
+    id: 'nav-my-offers',
+    icon: MyOffersIcon,
+    label: 'My Offers',
+    url: '/',
+  },
+  {
+    id: 'nav-watchlists',
+    icon: WatchlistsIcon,
+    label: 'Watchlists',
+    url: '/',
+  },
+  {
+    id: 'nav-browse-properties',
+    icon: BrowsePropertiesIcon,
+    label: 'Browse Properties',
+    url: '/',
   },
 ];
 

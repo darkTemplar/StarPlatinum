@@ -5,6 +5,7 @@ import { withNavbarItemPropTypes } from './NavbarItemShape';
 import Link from '../Link';
 import Spacing from '../Spacing';
 import Text from '../Text';
+import { core as coreColors } from '../../styles/color';
 
 const propTypes = {
   ...withNavbarItemPropTypes,
@@ -14,7 +15,7 @@ const propTypes = {
 export function UnstyledNavbarItem({
   id,
   active,
-  icon,
+  icon: IconComponent,
   label,
   url,
   styles,
@@ -23,9 +24,9 @@ export function UnstyledNavbarItem({
     <div {...css(styles.navbarItem, active && styles.active)}>
       <Link href={url} id={id}>
         <Spacing bottom={2}>
-          {icon}
+          <IconComponent size={24} color={active ? coreColors.primary : undefined} />
         </Spacing>
-        <Text>
+        <Text size="lg">
           {label}
         </Text>
       </Link>

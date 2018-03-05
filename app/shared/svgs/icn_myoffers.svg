@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>icn_myoffers</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M13,9 C13,9.553 12.552,10 12,10 L8,10 C7.448,10 7,9.553 7,9 C7,8.447 7.448,8 8,8 L12,8 C12.552,8 13,8.447 13,9 Z M8,4 L12,4 C12.552,4 13,4.447 13,5 C13,5.553 12.552,6 12,6 L8,6 C7.448,6 7,5.553 7,5 C7,4.447 7.448,4 8,4 Z M16,4 L16,2 C17.103,2 18,2.897 18,4 L16,4 Z M14,16 C14,17.103 13.103,18 12,18 L12,16 C12,14.896 11.104,14 10,14 L6,14 L6,4 C6,2.896 6.896,2 8,2 L14,2 L14,16 Z M10,18 L4,18 C2.897,18 2,17.103 2,16 L9,16 C9.552,16 10,16.447 10,17 L10,18 Z M16,0 L8,0 C5.791,0 4,1.791 4,4 L4,14 L1,14 C0.448,14 0,14.447 0,15 L0,16 C0,18.209 1.791,20 4,20 L12,20 C14.209,20 16,18.209 16,16 L16,6 L19,6 C19.552,6 20,5.553 20,5 L20,4 C20,1.791 18.209,0 16,0 Z" id="path-1"></path>
+    </defs>
+    <g id="ListProperty---Default" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-77.000000, -348.000000)">
+        <g id="Group-10">
+            <g id="Group-16" transform="translate(0.000000, 91.000000)">
+                <g id="Group-4">
+                    <g id="Group-8">
+                        <g id="!-Item/Icon/Offers" transform="translate(75.000000, 255.000000)">
+                            <g id="!-Basic/Color/09-Cloud" transform="translate(2.000000, 2.000000)">
+                                <mask id="mask-2" fill="white">
+                                    <use xlink:href="#path-1"></use>
+                                </mask>
+                                <use id="Mask" fill="#757E7F" xlink:href="#path-1"></use>
+                                <g id="!-Item/Color/08-Fog" mask="url(#mask-2)" fill="#939C9E">
+                                    <g transform="translate(-2.000000, -2.000000)" id="Fog">
+                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
