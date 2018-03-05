@@ -8,9 +8,9 @@ import React from 'react';
 import { NAVBAR_WIDTH } from '../constants/ui';
 import { css, withStyles, withStylesPropTypes } from '../hocs/withStyles';
 import BrowsePropertiesIcon from '../components/icons/BrowsePropertiesIcon';
-import Header from '../header';
-import IllustrationPhotoIcon from '../components/icons/IllustrationPhotoIcon';
+import HeaderContainer from '../components/Header/HeaderContainer';
 import IllustrationDisclosureIcon from '../components/icons/IllustrationDisclosureIcon';
+import IllustrationPhotoIcon from '../components/icons/IllustrationPhotoIcon';
 import MyListingsIcon from '../components/icons/MyListingsIcon';
 import MyOffersIcon from '../components/icons/MyOffersIcon';
 import Navbar from '../components/Navbar';
@@ -18,11 +18,13 @@ import PageContainer from '../components/PageContainer';
 import WatchlistsIcon from '../components/icons/WatchlistsIcon';
 
 const propTypes = {
+  isNavExpanded: PropTypes.bool,
   children: PropTypes.node,
   ...withStylesPropTypes,
 };
 
 const defaultProps = {
+  isNavExpanded: false,
   children: null,
 };
 
@@ -73,16 +75,18 @@ function getNavbarItems() {
   }));
 }
 
-export function Layout({
+export function UnstyledLayout({
+  isNavExpanded,
   children,
   styles,
 }) {
+  console.log(isNavExpanded);
   return (
     <div {...css(styles.base)}>
       <PageContainer>
         <Container fluid>
           <Row>
-            <Header />
+            <HeaderContainer />
           </Row>
           <Row>
             <div>
@@ -100,8 +104,8 @@ export function Layout({
   );
 }
 
-Layout.propTypes = propTypes;
-Layout.defaultProps = defaultProps;
+UnstyledLayout.propTypes = propTypes;
+UnstyledLayout.defaultProps = defaultProps;
 
 export default withStyles(({
   unit,
@@ -136,4 +140,4 @@ export default withStyles(({
       display: 'block',
     },
   },
-}), { pureComponent: true })(Layout);
+}), { pureComponent: true })(UnstyledLayout);

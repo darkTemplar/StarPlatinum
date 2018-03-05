@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { withRedux } from '../../shared/hocs/withRedux';
-import Layout from '../../shared/layout';
+import LayoutContainer from '../../shared/layout/LayoutContainer';
 import CreateListingPageContentContainer from './containers/CreateListingPageContentContainer';
 
 export class CreateListing extends React.PureComponent {
@@ -13,9 +13,9 @@ export class CreateListing extends React.PureComponent {
 
   render() {
     return (
-      <Layout>
+      <LayoutContainer>
         <CreateListingPageContentContainer />
-      </Layout>
+      </LayoutContainer>
     );
   }
 }

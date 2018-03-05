@@ -3,11 +3,9 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { createInjectableStore } from 'redux-injectable-store';
 import thunk from 'redux-thunk';
 
-const enhancer = composeWithDevTools(
-  applyMiddleware(
-    thunk,
-  ),
-);
+import navReducer from '../reducers/navReducer';
+
+const enhancer = composeWithDevTools(applyMiddleware(thunk));
 
 let store;
 
@@ -19,6 +17,8 @@ export default function configureStore() {
         enhancer,
       );
     }
+
+    store.injectAll({ nav: navReducer });
 
     return store;
   }
