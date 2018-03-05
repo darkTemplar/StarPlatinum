@@ -44,6 +44,7 @@ export function UnstyledText({
         size === 'sm' && styles.sm,
         size === 'md' && styles.md,
         size === 'lg' && styles.lg,
+        size === 'xl' && styles.xl,
         bold && styles.bold,
         bold && size === 'md' && styles.mdBold,
         muted && styles.muted,

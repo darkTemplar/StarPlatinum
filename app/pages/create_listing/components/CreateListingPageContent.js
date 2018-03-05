@@ -1,11 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {
-  css,
-  withStyles,
-  withStylesPropTypes,
-} from '../../../shared/hocs/withStyles';
+import { withStylesPropTypes } from '../../../shared/hocs/withStyles';
 import CreateListingForm from './CreateListingForm';
 import Spacing from '../../../shared/components/Spacing';
 import Text from '../../../shared/components/Text';
@@ -13,10 +9,9 @@ import Title from '../../../shared/components/Title';
 
 const propTypes = {
   createListing: PropTypes.func.isRequired,
-  ...withStylesPropTypes,
 };
 
-export class CreateListingPageContent extends React.PureComponent {
+export default class CreateListingPageContent extends React.PureComponent {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
@@ -27,10 +22,8 @@ export class CreateListingPageContent extends React.PureComponent {
   }
 
   render() {
-    const { styles } = this.props;
-
     return (
-      <div {...css(styles.page)}>
+      <div>
         <Spacing top={1} bottom={2}>
           <Title level={1}>Let's Get Started</Title>
           <Text muted>You'll be sharing disclosures and collecting offers in no time</Text>
@@ -47,9 +40,3 @@ export class CreateListingPageContent extends React.PureComponent {
 }
 
 CreateListingPageContent.propTypes = propTypes;
-
-export default withStyles(({ unit }) => ({
-  page: {
-    padding: unit * 2,
-  },
-}), { pureComponent: true })(CreateListingPageContent);

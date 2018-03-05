@@ -1,6 +1,6 @@
 import React from 'react';
-import { Row } from 'react-grid-system';
 
+import { NAVBAR_WIDTH } from '../constants/ui';
 import { css, withStyles, withStylesPropTypes } from '../hocs/withStyles';
 import Link from '../components/Link';
 import Text from '../components/Text';
@@ -9,28 +9,28 @@ const propTypes = {
   ...withStylesPropTypes,
 };
 
-export function Header({
+export function UnstyledHeader({
   styles,
 }) {
   return (
-    <Row>
-      <nav {...css(styles.header)}>
-        <Link href="/">
-          <div {...css(styles.logo)}>
-            <Text size="lg" inverse>OfferDate</Text>
-          </div>
-        </Link>
-      </nav>
-    </Row>
+    <nav {...css(styles.header)}>
+      <Link href="/">
+        <div {...css(styles.logo)}>
+          <Text size="xl" inverse>OfferDate</Text>
+        </div>
+      </Link>
+    </nav>
   );
 }
 
-Header.propTypes = propTypes;
+UnstyledHeader.propTypes = propTypes;
 
 export default withStyles(({ color, unit }) => ({
   logo: {
+    textAlign: 'center',
     background: color.core.primary,
     display: 'inline-block',
     padding: 3 * unit,
+    width: NAVBAR_WIDTH,
   },
-}), { pureComponent: true })(Header);
+}), { pureComponent: true })(UnstyledHeader);

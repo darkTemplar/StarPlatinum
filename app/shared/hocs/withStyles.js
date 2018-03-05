@@ -7,6 +7,7 @@ import _uniqueId from 'lodash/uniqueId';
 import { APHRODITE_DATA_KEY } from '../constants';
 import { unit, font } from '../styles/size';
 import color from '../styles/color';
+import responsive from '../styles/responsive';
 import fontFamily, { fontSource } from '../styles/fontFamily';
 import isBrowser from '../utils/isBrowser';
 
@@ -31,6 +32,7 @@ export function withStyles(styles, options = {}) {
     unit,
     color,
     font,
+    responsive,
     fontFamily,
     fontSource,
   }));
@@ -48,10 +50,10 @@ export function withStyles(styles, options = {}) {
           />
         );
       }
-    }
+    };
 
     WithStyles.displayName = `withStyles(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
-  }
+  };
 }
 
 export function css() {
@@ -73,7 +75,7 @@ export function css() {
   }).filter(rule => !!rule);
 
   return {
-    className: aphroditeCSS.apply(null, aphroditeCssProperties),
+    className: aphroditeCSS(...aphroditeCssProperties),
   };
 }
 
