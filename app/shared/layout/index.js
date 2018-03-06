@@ -80,7 +80,6 @@ export function UnstyledLayout({
   children,
   styles,
 }) {
-  console.log(isNavExpanded);
   return (
     <div {...css(styles.base)}>
       <PageContainer>
@@ -90,11 +89,20 @@ export function UnstyledLayout({
           </Row>
           <Row>
             <div>
-              <div {...css(styles.navbarContainer)}>
-                <Navbar navbarItems={getNavbarItems()} />
-              </div>
-              <div {...css(styles.contentContainer)}>
-                {children}
+              {isNavExpanded && (
+                <div {...css(styles.navbarContainerMobile)}>
+                  <Navbar navbarItems={getNavbarItems()} />
+                </div>
+              )}
+              <div {...css(styles.webContentTable)}>
+                <div {...css(styles.webContentTableRow)}>
+                  <div {...css(styles.navbarContainer)}>
+                    <Navbar navbarItems={getNavbarItems()} />
+                  </div>
+                  <div {...css(styles.contentContainer)}>
+                    {children}
+                  </div>
+                </div>
               </div>
             </div>
           </Row>
@@ -128,16 +136,41 @@ export default withStyles(({
 
   contentContainer: {
     padding: `0 ${2 * unit}px`,
-    overflow: 'hidden',
+    display: 'table-cell',
+  },
+
+  webContentTable: {
+    display: 'table',
+  },
+
+  webContentTableRow: {
+    display: 'table-row',
+  },
+
+  navbarContainerMobile: {
+    background: color.greys.white,
+    position: 'absolute',
+    left: 0,
+    width: '60%',
+    height: '100%',
+    zIndex: 1,
+
+    [responsive.smallAndAbove]: {
+      width: NAVBAR_WIDTH,
+    },
+
+    [responsive.mediumAndAbove]: {
+      display: 'none',
+    },
   },
 
   navbarContainer: {
     display: 'none',
+    width: NAVBAR_WIDTH,
+    background: color.greys.white,
 
     [responsive.mediumAndAbove]: {
-      width: NAVBAR_WIDTH,
-      float: 'left',
-      display: 'block',
+      display: 'table-cell',
     },
   },
 }), { pureComponent: true })(UnstyledLayout);
