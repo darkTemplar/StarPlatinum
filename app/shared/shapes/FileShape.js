@@ -1,6 +1,6 @@
 import { Shape, Types } from 'react-validators';
 
-export default Shape({
+export const withFilePropTypes = {
   id: Types.string.isRequired,
   // b64 data of uploaded file
   data: Types.string,
@@ -8,4 +8,8 @@ export default Shape({
   src: Types.string,
   // name of file/image
   name: Types.string,
-});
+  // mime type of file
+  tyep: Types.string,
+};
+
+export default Shape(withFilePropTypes);

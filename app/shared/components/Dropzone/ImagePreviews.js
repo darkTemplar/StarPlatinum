@@ -6,30 +6,33 @@ import ImagePreview from './ImagePreview';
 
 const propTypes = {
   files: PropTypes.arrayOf(FileShape),
+  onRemove: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
   files: [],
 };
 
-export default class ImagePreviews extends React.PureComponent {
-  render() {
-    const { files } = this.props;
-
-    if (!files.length) {
-      return null;
-    }
-
-    return (
-      <Row>
-        {files.map(file => (
-          <Col md={4} sm={2} lg={3} key={file.id}>
-            <ImagePreview />
-          </Col>
-        ))}
-      </Row>
-    );
+export default function ImagePreviews({
+  files,
+  onRemove,
+}) {
+  if (!files.length) {
+    return null;
   }
+
+  return (
+    <Row>
+      {files.map(file => (
+        <Col md={4} sm={6} lg={3} key={file.id}>
+          <ImagePreview
+            onRemove={onRemove}
+            {...file}
+          />
+        </Col>
+      ))}
+    </Row>
+  );
 }
 
 ImagePreviews.propTypes = propTypes;

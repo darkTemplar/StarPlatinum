@@ -1,92 +1,177 @@
-/**
- * Controller for dropzone
- */
-import React from 'react';
 import PropTypes from 'prop-types';
-import Dropzone from '../Dropzone';
-import ImagePreviews from './ImagePreviews';
-import FileShape from '../../shapes/FileShape';
+import React from 'react';
+import ReactDropzone from 'react-dropzone';
+import _uniqueId from 'lodash/uniqueId';
+
+import { css, withStyles, withStylesPropTypes } from '../../hocs/withStyles';
+import { greys } from '../../styles/color';
+import { unit } from '../../styles/size';
+
+const ACCEPT_AUDIO = 'audio/*';
+const ACCEPT_VIDEO = 'video/*';
+const ACCEPT_IMAGE = 'image/*';
+const ACCEPT_FILES = 'application/*';
 
 const propTypes = {
-  previewImages: PropTypes.bool,
-  previewFiles: PropTypes.bool,
-  initialFiles: PropTypes.arrayOf(FileShape),
-  onChange: PropTypes.func.isRequired,
+  // Required props
+  onFilesUploaded: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+
+  // Optional props for dropzone to configure to your needs
+  acceptAudio: PropTypes.bool,
+  acceptVideo: PropTypes.bool,
+  acceptImage: PropTypes.bool,
+  acceptApplication: PropTypes.bool,
+  multiple: PropTypes.bool,
+  maxSize: PropTypes.number,
+  style: PropTypes.any,
+  activeStyle: PropTypes.any,
+  acceptStyle: PropTypes.any,
+  rejectStyle: PropTypes.any,
+  disabledStyle: PropTypes.any,
+  ...withStylesPropTypes,
 };
 
 const defaultProps = {
-  initialFiles: [],
-  previewImages: false,
-  previewFiles: false,
+  multiple: true,
+  acceptAudio: false,
+  acceptVideo: false,
+  acceptApplication: false,
+  acceptImage: true,
+  maxSize: undefined,
+  style: {
+    width: '100%',
+    border: `${unit / 4}px dashed ${greys.haze}`,
+    padding: 2 * unit,
+  },
 };
 
-function getFilesMap(files) {
-  return files.reduce((result, file) => ({
-    ...result,
-    [file.id]: file,
-  }), {});
-}
+const existingIds = {};
 
-export default class DropzoneController extends React.PureComponent {
+export class UnstyledDropzone extends React.Component {
   constructor(props) {
     super(props);
-    this.onFilesUploaded = this.onFilesUploaded.bind(this);
-    this.onReorder = this.onReorder.bind(this);
+    this.onDrop = this.onDrop.bind(this);
     this.state = {
-      files: this.props.initialFiles,
+      isUploading: false,
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.files !== prevState.files) {
-      this.props.onChange(this.state.files);
-    }
-  }
+  onDrop(acceptedFiles, rejectedFiles) {
+    const { onFilesUploaded } = this.props;
+    const filesPromises = [];
 
-  onReorder(idOrder) {
-    const filesMap = getFilesMap(this.state.files);
+    acceptedFiles.forEach((file) => {
+      const { name, lastModified, type, size } = file;
+      const fileSignature = `file-${name}${type}${lastModified}${size}`;
 
-    const orderedFiles = idOrder.filter(id => !!filesMap[id]).map((id) => {
-      const returnValue = filesMap[id];
-      delete filesMap[id];
+      const baseFileData = {
+        name: name,
+        lastModified: lastModified,
+        type: type,
+        size: size,
+        id: fileSignature,
+      };
 
-      return returnValue;
+      filesPromises.push(
+        new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const fileAsBinaryString = reader.result;
+
+            resolve({
+              ...baseFileData,
+              data: btoa(fileAsBinaryString),
+            });
+          };
+          reader.onabort = () => {
+            reject(baseFileData);
+          };
+          reader.onerror = () => {
+            reject(baseFileData);
+          };
+          reader.readAsBinaryString(file);
+        }),
+      );
     });
 
-    const allOrderedFiles = orderedFiles.concat(Object.values(filesMap));
-    this.setState({ files: allOrderedFiles });
-  }
+    this.setState({ isUploading: true });
 
-  onFilesUploaded(files) {
-    const existingFilesMap = getFilesMap(this.state.files);
-
-    files.forEach((file) => {
-      existingFilesMap[file.id] = file;
-    });
-
-    this.setState({ files: Object.values(files) });
+    Promise.all(filesPromises)
+      .then((base64EncodedFiles) => {
+        onFilesUploaded(base64EncodedFiles);
+        this.setState({ isUploading: false });
+      })
+      .catch((ex) => {
+        this.setState({ isUploading: false });
+      });
   }
 
   render() {
-    const { previewImages, previewFiles, ...otherProps } = this.props;
-    const { files } = this.state;
+    const {
+      children,
+      multiple,
+      style,
+      activeStyle,
+      acceptStyle,
+      rejectStyle,
+      disabledStyle,
+      acceptImage,
+      acceptAudio,
+      acceptApplication,
+      acceptVideo,
+      maxSize,
+      styles,
+    } = this.props;
+    const {
+      isUploading,
+    } = this.state;
+
+    const accept = [
+      acceptImage ? ACCEPT_IMAGE : '',
+      acceptAudio ? ACCEPT_AUDIO : '',
+      acceptVideo ? ACCEPT_VIDEO : '',
+      acceptApplication ? ACCEPT_FILES : '',
+    ].filter(m => !!m).join(', ');
 
     return (
-      <div>
-        <Dropzone
-          onFilesUploaded={this.onFilesUploaded}
-          {...otherProps}
-        />
-        {previewImages && (
-          <ImagePreviews
-            files={files}
-            onReorder={this.onReorder}
-          />
-        )}
+      <div {...css(styles.dropzoneContainer)}>
+        {isUploading && <div {...css(styles.loadingOverlay)} />}
+        <ReactDropzone
+          disabled={isUploading}
+          onDrop={this.onDrop}
+          style={style}
+          accept={accept}
+          activeStyle={activeStyle}
+          acceptStyle={acceptStyle}
+          rejectStyle={rejectStyle}
+          disabledStyle={disabledStyle}
+          multiple={multiple}
+          maxSize={maxSize}
+        >
+          {children}
+        </ReactDropzone>
       </div>
     );
   }
 }
 
-DropzoneController.propTypes = propTypes;
-DropzoneController.defaultProps = defaultProps;
+UnstyledDropzone.propTypes = propTypes;
+UnstyledDropzone.defaultProps = defaultProps;
+
+export default withStyles(() => ({
+  dropzoneContainer: {
+    cursor: 'pointer',
+    position: 'relative',
+  },
+
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    opacity: '0.2',
+    zIndex: 1,
+  },
+}), { pureComponent: true })(UnstyledDropzone);
