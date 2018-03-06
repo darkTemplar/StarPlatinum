@@ -19,29 +19,47 @@ const defaultProps = {
   checked: undefined,
 };
 
-export function UnstyledCheckbox({
-  id,
-  label,
-  name,
-  onChange,
-  checked,
-  styles,
-}) {
-  return (
-    <label htmlFor={id}>
-      <input
-        type="checkbox"
-        name={name}
-        id={id}
-        onChange={onChange}
-        checked={checked}
-        {...css(styles.input)}
-      />
-      <Spacing left={1} inline>
-        <Text inline>{label}</Text>
-      </Spacing>
-    </label>
-  );
+export class UnstyledCheckbox extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.checkboxRef = this.checkboxRef.bind(this);
+  }
+
+  componentDidMount() {
+    this.checkbox.checked = this.props.checked;
+  }
+
+  checkboxRef(checkbox) {
+    this.checkbox = checkbox;
+  }
+
+  render() {
+    const {
+      id,
+      label,
+      name,
+      onChange,
+      checked,
+      styles,
+    } = this.props;
+
+    return (
+      <label htmlFor={id}>
+        <input
+          type="checkbox"
+          name={name}
+          id={id}
+          onChange={onChange}
+          checked={checked}
+          ref={this.checkboxRef}
+          {...css(styles.input)}
+        />
+        <Spacing left={1} inline>
+          <Text inline>{label}</Text>
+        </Spacing>
+      </label>
+    );
+  }
 }
 
 UnstyledCheckbox.propTypes = propTypes;
