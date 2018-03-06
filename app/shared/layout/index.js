@@ -9,8 +9,6 @@ import { NAVBAR_WIDTH } from '../constants/ui';
 import { css, withStyles, withStylesPropTypes } from '../hocs/withStyles';
 import BrowsePropertiesIcon from '../components/icons/BrowsePropertiesIcon';
 import HeaderContainer from '../components/Header/HeaderContainer';
-import IllustrationDisclosureIcon from '../components/icons/IllustrationDisclosureIcon';
-import IllustrationPhotoIcon from '../components/icons/IllustrationPhotoIcon';
 import MyListingsIcon from '../components/icons/MyListingsIcon';
 import MyOffersIcon from '../components/icons/MyOffersIcon';
 import Navbar from '../components/Navbar';
@@ -37,13 +35,13 @@ const STATIC_SIGNED_IN_NAVBAR_ITEMS = [
   },
   {
     id: 'nav-my-listings',
-    icon: IllustrationPhotoIcon,
+    icon: MyListingsIcon,
     label: 'My Listings',
     url: '/',
   },
   {
     id: 'nav-offer-create',
-    icon: IllustrationDisclosureIcon,
+    icon: MyListingsIcon,
     label: 'Make an Offer',
     url: '/',
   },

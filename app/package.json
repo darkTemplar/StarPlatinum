@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "rimraf node_modules/.cache/babel-loader && next build",
     "dev": "node index.js",
     "dev-debug": "node --inspect index.js"
   },

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MyListingIconSvg from '../../svgs/icn_mylistings.svg';
+import MyListingIconSvg from '../../svgs/myListings.svg';
 
 const propTypes = {
   size: PropTypes.number,
