@@ -23,11 +23,11 @@ export function UnstyledHeader({
           X
         </Button>
       </div>
-      <div {...css(styles.leftLogo)}>
-        <Link href="/">
-          <Text size="xl" inverse>OfferDate</Text>
-        </Link>
-      </div>
+      <Link href="/">
+        <div {...css(styles.leftLogo)}>
+            <Text size="xl" inverse>OfferDate</Text>
+        </div>
+      </Link>
     </nav>
   );
 }
