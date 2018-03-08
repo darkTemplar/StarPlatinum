@@ -1,6 +1,7 @@
 defmodule Offerdate.Property do
   use Offerdate.Web, :model
   alias __MODULE__
+  alias Offerdate.Repo
 
   schema "properties" do
     field(:street_address, :string)
@@ -12,8 +13,8 @@ defmodule Offerdate.Property do
     field(:lat, :string)
     field(:long, :string)
     field(:address_hash, :string)
-    has_many(:property_images, Offerdate.PropertyImage)
-    has_many(:listings, Offerdate.Listing)
+    has_many(:property_images, Offerdate.PropertyImage, on_delete: :delete_all)
+    has_many(:listings, Offerdate.Listing, on_delete: :delete_all)
 
     timestamps
   end
