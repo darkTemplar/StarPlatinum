@@ -12,8 +12,8 @@ defmodule Offerdate.Router do
 
   pipeline :api do
     plug(:accepts, ["json"])
-    plug(:fetch_session)
-    plug(:fetch_flash)
+    plug(Guardian.Plug.VerifyHeader)
+    plug(Guardian.Plug.LoadResource)
   end
 
   pipeline :api_auth do
@@ -22,7 +22,10 @@ defmodule Offerdate.Router do
   end
 
   scope "/api", Offerdate do
-    pipe_through([:api, :api_auth])
+    pipe_through(:api)
+
+    # restrict unauthenticated access for routes below
+    pipe_through(:authenticated)
     resources("/users", UserApiController, only: [:index, :show, :new, :create])
     resources("/listings", ListingController, only: [:new, :show, :edit, :delete])
   end
