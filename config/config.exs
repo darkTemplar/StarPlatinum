@@ -21,7 +21,7 @@ config :logger, :console,
   metadata: [:request_id]
 
 config :guardian, Guardian,
-  allowed_algos: ["ES512"],
+  allowed_algos: ["HS512"],
   verify_module: Guardian.JWT,
   secret_key: "2+0TlcEP3286M/svrILhZNGer7+URHjnm7awCMMbhV7DRSYCC+VccOk2FFX5NO8s",
   issuer: "Offerdate",
