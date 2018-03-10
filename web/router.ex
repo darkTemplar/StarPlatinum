@@ -24,9 +24,12 @@ defmodule Offerdate.Router do
   scope "/api", Offerdate do
     pipe_through(:api)
 
+    post("/signup", UserController, :signup)
+    post("/login", SessionController, :login)
+
     # restrict unauthenticated access for routes below
     pipe_through(:authenticated)
-    resources("/users", UserApiController, only: [:index, :show, :new, :create])
+    resources("/users", UserController, only: [:index, :show])
     resources("/listings", ListingController, only: [:new, :show, :edit, :delete])
   end
 
@@ -36,9 +39,4 @@ defmodule Offerdate.Router do
     resources("/users", UserController, only: [:index, :show, :new, :create])
     resources("/sessions", SessionController, only: [:new, :create, :delete])
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", Offerdate do
-  #   pipe_through :api
-  # end
 end

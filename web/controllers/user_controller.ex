@@ -1,45 +1,46 @@
 defmodule Offerdate.UserController do
   use Offerdate.Web, :controller
-  plug :authenticate_user when action in [:index, :show]
   alias Offerdate.User
-  alias Offerdate.Auth
-
 
   def index(conn, _params) do
-  	users = Repo.all(User)
-    render conn, "index.json", users: users
+    users = Repo.all(User)
+    render(conn, "index.json", users: users)
   end
 
   def show(conn, %{"id" => user_id}) do
-  	user = Repo.get(User, String.to_integer(user_id))
-  	render conn, "show.json", user: user
+    user = Repo.get(User, String.to_integer(user_id))
+    render(conn, "show.json", user: user)
   end
 
   def new(conn, _params) do
-  	changeset = User.changeset(%User{})
-  	render conn, "new.json", changeset: changeset
+    changeset = User.changeset(%User{})
+    render(conn, "new.json", changeset: changeset)
   end
 
-  def create(conn, %{"user" => user_params}) do
-  	changeset = User.changeset(%User{}, user_params)
-  	case Repo.insert(changeset) do
-  		{:ok, user} -> 
-  			conn
-  			|> Auth.login(user)
-  			|> put_flash(:info, "#{user.first_name <> " " <> user.last_name} created!")
-  			|> redirect(to: user_path(conn, :index))
-  		{:error, changeset} -> 
-  			render conn, "new.json", changeset: changeset
-  	end
+  def signup(conn, %{"user" => user_params}) do
+    changeset = User.changeset(%User{}, user_params)
+
+    case Repo.insert(changeset) do
+      {:ok, user} ->
+        conn
+        |> put_status(:created)
+        |> put_resp_header("location", user_path(conn, :show, user))
+        |> render("success.json" user: user)
+
+      {:error, changeset} ->
+        |> put_status(:unprocessable_entity)
+        |> render(Offerdate.ChangesetView, "error.json", changeset: changeset)
+    end
   end
 
   def update(conn, %{"id" => user_id, "user" => user_params}) do
-  	user = Repo.get(User, String.to_integer(user_id))
+    user = Repo.get(User, String.to_integer(user_id))
     changeset = User.changeset(user, user_params)
 
     case Repo.update(changeset) do
       {:ok, user} ->
         render(conn, "show.json", user: user)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -56,5 +57,4 @@ defmodule Offerdate.UserController do
 
     send_resp(conn, :no_content, "")
   end
-
 end

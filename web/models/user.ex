@@ -40,6 +40,20 @@ defmodule Offerdate.User do
     end
   end
 
+  def find_and_confirm_password(email, password) do
+    case Repo.get_by(User, email: email) do
+      nil ->
+        {:error, :not_found}
+
+      user ->
+        if Comeonin.Bcrypt.checkpw(password, user.password_hash) do
+          {:ok, user}
+        else
+          {:error, :unauthorized}
+        end
+    end
+  end
+
   def create_user(attrs \\ %{}) do
     %User{}
     |> changeset(attrs)
