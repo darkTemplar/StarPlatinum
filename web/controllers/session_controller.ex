@@ -11,9 +11,9 @@ defmodule Offerdate.SessionController do
       {:ok, user} ->
         {:ok, jwt, _full_claims} = Guardian.encode_and_sign(user, :api)
 
+        # |> put_resp_header("x-expires", "#{exp}")
         conn
         |> put_resp_header("authorization", "Bearer #{jwt}")
-        |> put_resp_header("x-expires", "#{exp}")
         |> render("login.json", user: user, jwt: jwt)
 
       {:error, _reason} ->

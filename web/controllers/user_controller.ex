@@ -25,9 +25,10 @@ defmodule Offerdate.UserController do
         conn
         |> put_status(:created)
         |> put_resp_header("location", user_path(conn, :show, user))
-        |> render("success.json" user: user)
+        |> render("success.json", user: user)
 
       {:error, changeset} ->
+        conn
         |> put_status(:unprocessable_entity)
         |> render(Offerdate.ChangesetView, "error.json", changeset: changeset)
     end

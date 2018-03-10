@@ -16,9 +16,8 @@ defmodule Offerdate.Router do
     plug(Guardian.Plug.LoadResource)
   end
 
-  pipeline :api_auth do
-    plug(Guardian.Plug.VerifyHeader, realm: "Bearer")
-    plug(Guardian.Plug.LoadResource)
+  pipeline :authenticated do
+    plug(Guardian.Plug.EnsureAuthenticated)
   end
 
   scope "/api", Offerdate do
