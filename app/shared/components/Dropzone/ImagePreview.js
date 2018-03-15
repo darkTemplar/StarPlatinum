@@ -13,7 +13,7 @@ const propTypes = {
   ...withStylesPropTypes,
 };
 
-export function ImagePreview({
+export function UnstyledImagePreview({
   id,
   data,
   src,
@@ -40,7 +40,7 @@ export function ImagePreview({
   );
 }
 
-ImagePreview.propTypes = propTypes;
+UnstyledImagePreview.propTypes = propTypes;
 
 export default withStyles(({ color, unit }) => ({
   imagePreview: {
@@ -56,4 +56,4 @@ export default withStyles(({ color, unit }) => ({
     borderRadius: '50%',
     backgroundColor: color.greys.white,
   },
-}))(ImagePreview);
+}))(UnstyledImagePreview);

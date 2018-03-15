@@ -14,7 +14,9 @@ export function UploadDisclosuresInput(props) {
   return (
     <DropzoneController
       onChange={input.onChange}
+      previewFiles
       acceptApplication
+      acceptImage
     >
       <div {...css(styles.center)}>
         <Spacing bottom={1}>

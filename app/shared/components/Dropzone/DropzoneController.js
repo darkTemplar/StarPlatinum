@@ -7,6 +7,7 @@ import React from 'react';
 import Dropzone from './';
 import FileShape from '../../shapes/FileShape';
 import ImagePreviews from './ImagePreviews';
+import FilePreviews from './FilePreviews';
 import Spacing from '../Spacing';
 
 const propTypes = {
@@ -89,6 +90,15 @@ export default class DropzoneController extends React.PureComponent {
         {!!(previewImages && files.length) && (
           <Spacing top={2}>
             <ImagePreviews
+              files={files}
+              onRemove={this.onRemove}
+              onReorder={this.onReorder}
+            />
+          </Spacing>
+        )}
+        {!!(previewFiles && files.length) && (
+          <Spacing top={2}>
+            <FilePreviews
               files={files}
               onRemove={this.onRemove}
               onReorder={this.onReorder}
