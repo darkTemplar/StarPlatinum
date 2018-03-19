@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import _omit from 'lodash/omit';
 
+import { css, withStyles, withStylesPropTypes } from '../../hocs/withStyles';
 import Input from '../Input';
 
 const propTypes = {
@@ -15,10 +16,13 @@ const propTypes = {
   fetchSuggestions: PropTypes.func.isRequired,
   // eslint-disable-next-line
   inputProps: PropTypes.object,
+  alwaysRenderSuggestions: PropTypes.bool,
+  ...withStylesPropTypes,
 };
 
 const defaultProps = {
   suggestions: [],
+  alwaysRenderSuggestions: false,
   inputProps: {},
 };
 
@@ -27,7 +31,7 @@ const SUGGESTIONS_FETCH_REASON = {
   INPUT_CHANGED: 'input-changed',
 };
 
-export default class Autocomplete extends React.PureComponent {
+export class Autocomplete extends React.PureComponent {
   constructor(props) {
     super(props);
     this.renderInputComponent = this.renderInputComponent.bind(this);
@@ -72,9 +76,17 @@ export default class Autocomplete extends React.PureComponent {
     );
   }
 
+  renderSuggestionsContainer({ containerProps, children }) {
+  }
+
   render() {
     const { suggestions, value } = this.state;
-    const { renderSuggestion, getSuggestionValue } = this.props;
+    const {
+      renderSuggestion,
+      getSuggestionValue,
+      alwaysRenderSuggestions,
+      styles,
+    } = this.props;
     const inputProps = {
       value,
       onChange: this.onChange,
@@ -89,6 +101,12 @@ export default class Autocomplete extends React.PureComponent {
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
         inputProps={inputProps}
+        alwaysRenderSuggestions={alwaysRenderSuggestions}
+        theme={{
+          suggestionsContainer: css(styles.suggestionsContainer).className,
+          suggestionsList: css(styles.suggestionsList).className,
+          suggestion: css(styles.suggestion).className,
+        }}
       />
     );
   }
@@ -96,3 +114,31 @@ export default class Autocomplete extends React.PureComponent {
 
 Autocomplete.propTypes = propTypes;
 Autocomplete.defaultProps = defaultProps;
+
+export default withStyles(({ unit, color }) => ({
+  suggestionsContainer: {
+    position: 'relative',
+    width: '100%',
+  },
+
+  suggestionsList: {
+    position: 'absolute',
+    zIndex: 1,
+    background: color.greys.white,
+    width: '100%',
+    margin: 0,
+    padding: 0,
+    borderLeft: `1px solid ${color.border}`,
+    borderRight: `1px solid ${color.border}`,
+  },
+
+  suggestion: {
+    listStyle: 'none',
+    padding: unit,
+    borderTop: `1px solid ${color.border}`,
+
+    'last-child': {
+      borderBottom: `1px solid ${color.border}`,
+    },
+  },
+}))(Autocomplete);

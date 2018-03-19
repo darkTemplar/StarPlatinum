@@ -31,6 +31,7 @@ export default class Geocomplete extends React.PureComponent {
         getSuggestionValue={suggestion => suggestion.label}
         fetchSuggestions={() => null}
         inputProps={inputProps}
+        alwaysRenderSuggestions
       />
     );
   }
