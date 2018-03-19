@@ -11,6 +11,8 @@ import BrowsePropertiesIcon from '../components/icons/BrowsePropertiesIcon';
 import HeaderContainer from '../components/Header/HeaderContainer';
 import MyListingsIcon from '../components/icons/MyListingsIcon';
 import MyOffersIcon from '../components/icons/MyOffersIcon';
+import ListPropertyIcon from '../components/icons/ListPropertyIcon';
+import CreateOfferIcon from '../components/icons/CreateOfferIcon';
 import Navbar from '../components/Navbar';
 import PageContainer from '../components/PageContainer';
 import WatchlistsIcon from '../components/icons/WatchlistsIcon';
@@ -29,7 +31,7 @@ const defaultProps = {
 const STATIC_SIGNED_IN_NAVBAR_ITEMS = [
   {
     id: 'nav-listing-create',
-    icon: MyListingsIcon,
+    icon: ListPropertyIcon,
     label: 'List a Property',
     url: '/listing/new',
   },
@@ -41,7 +43,7 @@ const STATIC_SIGNED_IN_NAVBAR_ITEMS = [
   },
   {
     id: 'nav-offer-create',
-    icon: MyListingsIcon,
+    icon: CreateOfferIcon,
     label: 'Make an Offer',
     url: '/',
   },

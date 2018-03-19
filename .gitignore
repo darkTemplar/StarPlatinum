@@ -7,6 +7,8 @@ web/elm/elm-stuff/*
 !web/elm/elm-stuff/exact-dependencies.json
 web/static/js/main.js
 web/static/js/elm.js
+web/node_modules
+*.DS_Store
 
 # Generated on crash by the VM
 erl_crash.dump
