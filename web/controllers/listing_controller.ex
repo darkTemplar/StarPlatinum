@@ -23,7 +23,7 @@ defmodule Offerdate.ListingController do
         |> redirect(to: listing_path(conn, :index))
 
       {:error, changeset} ->
-        render(conn, "new.json", changeset: changeset)
+        render(conn, "error.json", changeset: changeset)
     end
   end
 
