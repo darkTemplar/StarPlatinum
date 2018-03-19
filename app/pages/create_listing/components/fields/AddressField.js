@@ -2,13 +2,14 @@ import { Field } from 'redux-form';
 import React from 'react';
 
 import { FORM_FIELD_GEO } from '../../constants/form';
-import Geocomplete from '../../../../shared/components/Geocomplete';
+import GeocompleteContainer from
+  '../../../../shared/components/Geocomplete/containers/GeocompleteContainer';
 
 function AddressInput(field) {
   const { input, meta, ...rest } = field;
 
   return (
-    <Geocomplete
+    <GeocompleteContainer
       inputProps={{
         ...input,
         ...rest,

@@ -5,6 +5,7 @@ import GeoAutocompleteItemShape from './GeoAutocompleteItemShape';
 
 const propTypes = {
   suggestions: PropTypes.arrayOf(GeoAutocompleteItemShape),
+  fetchSuggestions: PropTypes.func.isRequired,
   // eslint-disable-next-line
   inputProps: PropTypes.object,
 };
@@ -15,21 +16,14 @@ const defaultProps = {
 
 export default class Geocomplete extends React.PureComponent {
   render() {
-    const { inputProps } = this.props;
+    const { inputProps, suggestions, fetchSuggestions } = this.props;
 
     return (
       <Autocomplete
-        suggestions={[
-          { label: 'foo' },
-          { label: 'bar' },
-        ]}
-        renderSuggestion={suggestion => (
-          <div>
-            {suggestion.label}
-          </div>
-        )}
-        getSuggestionValue={suggestion => suggestion.label}
-        fetchSuggestions={() => null}
+        suggestions={suggestions}
+        renderSuggestion={suggestion => suggestion.description}
+        getSuggestionValue={suggestion => suggestion.description}
+        fetchSuggestions={fetchSuggestions}
         inputProps={inputProps}
         alwaysRenderSuggestions
       />

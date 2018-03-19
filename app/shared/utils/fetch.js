@@ -15,7 +15,12 @@ export function post(url, options) {
     },
     body: JSON.stringify(options.body || {}),
   })
-    .then(response => response.json())
+    .then(
+      response => response.json(),
+      (error) => {
+        throw error;
+      },
+    )
     .catch((ex) => {
       // TODO need to log error
       throw new Error(ex.message);

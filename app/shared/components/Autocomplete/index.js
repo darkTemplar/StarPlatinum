@@ -31,7 +31,7 @@ const SUGGESTIONS_FETCH_REASON = {
   INPUT_CHANGED: 'input-changed',
 };
 
-export class Autocomplete extends React.PureComponent {
+export class UnstyledAutocomplete extends React.PureComponent {
   constructor(props) {
     super(props);
     this.renderInputComponent = this.renderInputComponent.bind(this);
@@ -112,8 +112,8 @@ export class Autocomplete extends React.PureComponent {
   }
 }
 
-Autocomplete.propTypes = propTypes;
-Autocomplete.defaultProps = defaultProps;
+UnstyledAutocomplete.propTypes = propTypes;
+UnstyledAutocomplete.defaultProps = defaultProps;
 
 export default withStyles(({ unit, color }) => ({
   suggestionsContainer: {
@@ -137,8 +137,8 @@ export default withStyles(({ unit, color }) => ({
     padding: unit,
     borderTop: `1px solid ${color.border}`,
 
-    'last-child': {
+    ':last-child': {
       borderBottom: `1px solid ${color.border}`,
     },
   },
-}))(Autocomplete);
+}))(UnstyledAutocomplete);
