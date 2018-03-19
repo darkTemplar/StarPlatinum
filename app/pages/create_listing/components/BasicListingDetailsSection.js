@@ -5,6 +5,7 @@ import {
   withStyles,
   withStylesPropTypes,
 } from '../../../shared/hocs/withStyles';
+import AddressField from './fields/AddressField';
 import BathroomsField from './fields/BathroomsField';
 import BedroomsField from './fields/BedroomsField';
 import Card from '../../../shared/components/Card';
@@ -28,17 +29,20 @@ function BasicListingDetailsSection({
         </Title>
       </Spacing>
       <Card>
-        <div {...css(styles.item)}>
-          <BedroomsField borderlessRight />
-        </div>
-        <div {...css(styles.item)}>
-          <BathroomsField borderlessRight />
-        </div>
-        <div {...css(styles.item)}>
-          <SquareFeetField borderlessRight />
-        </div>
-        <div {...css(styles.item)}>
-          <LotSizeField />
+        <AddressField borderlessBottom />
+        <div {...css(styles.bfc)}>
+          <div {...css(styles.item)}>
+            <BedroomsField borderlessRight />
+          </div>
+          <div {...css(styles.item)}>
+            <BathroomsField borderlessRight />
+          </div>
+          <div {...css(styles.item)}>
+            <SquareFeetField borderlessRight />
+          </div>
+          <div {...css(styles.item)}>
+            <LotSizeField />
+          </div>
         </div>
         <span {...css(styles.clearfix)} />
       </Card>
@@ -58,5 +62,9 @@ export default withStyles(() => ({
     content: '',
     display: 'block',
     clear: 'both',
+  },
+
+  bfc: {
+    overflow: 'hidden',
   },
 }), { pureComponent: true })(BasicListingDetailsSection);

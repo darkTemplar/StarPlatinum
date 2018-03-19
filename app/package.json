@@ -24,6 +24,7 @@
     "next": "^4.2.3",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
+    "react-autosuggest": "^9.3.4",
     "react-dom": "^16.2.0",
     "react-dropzone": "^4.2.7",
     "react-grid-system": "^3.1.2",

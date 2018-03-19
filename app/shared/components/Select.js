@@ -42,7 +42,7 @@ export function UnstyledSelect({
   lg,
   styles,
   options,
-  ...otherProps,
+  ...otherProps
 }) {
   return (
     <div

@@ -1,3 +1,4 @@
+import _omit from 'lodash/omit';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -5,20 +6,20 @@ import { css, withStyles, withStylePropTypes } from '../hocs/withStyles';
 import Text from './Text';
 
 const propTypes = {
-  type: PropTypes.oneOf(['text', 'email', 'tel']).isRequired,
+  type: PropTypes.oneOf(['text', 'email', 'search', 'tel']).isRequired,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   inputRef: PropTypes.func,
   name: PropTypes.string,
   value: PropTypes.string,
-  autoFocus: PropTypes.bool,
   lg: PropTypes.bool,
   inline: PropTypes.bool,
   borderlessTop: PropTypes.bool,
   borderlessRight: PropTypes.bool,
   borderlessBottom: PropTypes.bool,
   borderlessLeft: PropTypes.bool,
+  nativeOnChange: PropTypes.bool,
   ...withStylePropTypes,
 };
 
@@ -31,6 +32,7 @@ const defaultProps = {
   borderlessLeft: false,
   value: undefined,
   name: '',
+  nativeOnChange: false,
   inputRef() {},
 };
 
@@ -49,8 +51,8 @@ export function UnstyledInput({
   styles,
   name,
   inputRef,
-  autoFocus,
-  ...rest,
+  nativeOnChange,
+  ...rest
 }) {
   return (
     <div
@@ -74,13 +76,12 @@ export function UnstyledInput({
         id={id}
         name={name || id}
         type={type}
-        onChange={(e) => {
+        onChange={nativeOnChange ? onChange : (e) => {
           onChange(e.target.value);
         }}
         value={value}
-        autoFocus={autoFocus}
         {...css(styles.input, lg && styles.inputLarge)}
-        {...rest}
+        {..._omit(rest, 'className')}
       />
     </div>
   );
