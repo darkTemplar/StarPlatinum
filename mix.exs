@@ -59,7 +59,8 @@ defmodule Offerdate.Mixfile do
       {:guardian, "~> 0.14"},
       {:poison, " ~> 2.2"},
       {:httpoison, "~> 0.9"},
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+      {:distillery, "~> 1.0"}
     ]
   end
 
