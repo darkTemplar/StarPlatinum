@@ -52,10 +52,14 @@ function BasicListingDetailsSection({
 
 BasicListingDetailsSection.propTypes = propTypes;
 
-export default withStyles(() => ({
+export default withStyles(({ responsive }) => ({
   item: {
     float: 'left',
-    width: '25%',
+    width: '100%',
+
+    [responsive.mediumAndAbove]: {
+      width: '25%',
+    },
   },
 
   clearfix: {

@@ -6,6 +6,7 @@ import { FORM_NAME } from '../constants/form';
 import { withStyles } from '../../../shared/hocs/withStyles';
 import BasicListingDetailsSection from './BasicListingDetailsSection';
 import Button from '../../../shared/components/Button';
+import OtherInformationSection from './OtherInformationSection';
 import Spacing from '../../../shared/components/Spacing';
 import UploadDisclosuresSection from './UploadDisclosuresSection';
 import UploadPhotosSection from './UploadPhotosSection';
@@ -39,6 +40,9 @@ export class UnstyledListingForm extends React.PureComponent {
         </Spacing>
         <Spacing bottom={4}>
           <UploadDisclosuresSection />
+        </Spacing>
+        <Spacing bottom={4}>
+          <OtherInformationSection />
         </Spacing>
         <Button type="submit">
           Create

@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@zeit/next-css": "^0.1.5",
     "airbnb-prop-types": "^2.8.1",
     "aphrodite": "^1.2.5",
     "babel-plugin-inline-react-svg": "^0.5.2",
@@ -21,11 +22,13 @@
     "es6-promise": "^4.2.4",
     "express": "^4.16.2",
     "lodash": "^4.17.4",
-    "next": "^4.2.3",
+    "moment": "^2.21.0",
+    "next": "^5.0.0",
     "node-fetch": "^2.1.1",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-autosuggest": "^9.3.4",
+    "react-datetime": "^2.14.0",
     "react-dom": "^16.2.0",
     "react-dropzone": "^4.2.7",
     "react-grid-system": "^3.1.2",
@@ -45,5 +48,6 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.6.1"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }
