@@ -29,10 +29,11 @@ defmodule Offerdate.Mixfile do
         :logger,
         :gettext,
         :phoenix_ecto,
-        :mariaex,
+        :postgrex,
         :comeonin,
         :httpoison,
         :poison,
+        :guardian,
         :exredis
       ]
     ]
@@ -50,7 +51,7 @@ defmodule Offerdate.Mixfile do
       {:phoenix, "~> 1.2.4"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.0"},
-      {:mariaex, ">= 0.0.0"},
+      {:postgrex, ">= 0.0.0"},
       {:exredis, ">= 0.2.4"},
       {:phoenix_html, "~> 2.6"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
@@ -60,7 +61,8 @@ defmodule Offerdate.Mixfile do
       {:poison, " ~> 2.2"},
       {:httpoison, "~> 0.9"},
       {:cowboy, "~> 1.0"},
-      {:distillery, "~> 1.0"}
+      {:distillery, "~> 1.0", override: true},
+      {:mix_docker, "~> 0.3.0"}
     ]
   end
 

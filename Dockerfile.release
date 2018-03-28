@@ -1,0 +1,9 @@
+# Dockerfile.release
+FROM elixir:1.4.2
+ENV DEBIAN_FRONTEND=noninteractive
+EXPOSE 4000
+ENV PORT=4000 MIX_ENV=prod REPLACE_OS_VARS=true SHELL=/bin/bash
+WORKDIR /app
+COPY ./offerdate.tar.gz ./
+RUN tar xfz offerdate.tar.gz
+ENTRYPOINT ["bin/offerdate"]
