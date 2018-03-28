@@ -1,8 +1,10 @@
 # App artifacts
 /_build
+*.env
 /db
 /deps
 /*.ez
+/*.tar*
 web/elm/elm-stuff/*
 !web/elm/elm-stuff/exact-dependencies.json
 web/static/js/main.js
