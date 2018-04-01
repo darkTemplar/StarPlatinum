@@ -19,11 +19,17 @@ spec:
             - name: HOST
               value: "offerdate.com"
             - name: SECRET_KEY_BASE
-              value: "boodog23"
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: secret_key_base
             - name: DB_USERNAME
               value: "jotaro"
             - name: DB_PASSWORD
-              value: "stardust_crusaders"
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: db_password
             - name: DB_NAME
               value: "star_platinum"
             - name: DB_HOSTNAME
