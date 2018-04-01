@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: offerdate-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: offerdate
+    spec:
+      containers:
+        - name: offerdate
+          image: offerdate:release
+          ports:
+            - containerPort: 8000
+          args: ["foreground"]
+          env:
+            - name: HOST
+              value: "offerdate.com"
+            - name: SECRET_KEY_BASE
+              value: "boodog23"
+            - name: DB_USERNAME
+              value: "jotaro"
+            - name: DB_PASSWORD
+              value: "stardust_crusaders"
+            - name: DB_NAME
+              value: "star_platinum"
+            - name: DB_HOSTNAME
+              value: "10.0.2.2"

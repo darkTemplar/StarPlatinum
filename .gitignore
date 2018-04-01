@@ -1,5 +1,6 @@
 # App artifacts
 /_build
+/k8s
 *.env
 /db
 /deps
