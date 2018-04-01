@@ -1,6 +1,6 @@
 # App artifacts
+k8s/offerdate-secret.yaml
 /_build
-/k8s
 *.env
 /db
 /deps
