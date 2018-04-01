@@ -30,6 +30,7 @@ defmodule Offerdate.Router do
     pipe_through(:authenticated)
     resources("/users", UserController, only: [:index, :show])
     resources("/listings", ListingController, only: [:new, :show, :edit, :delete])
+    post("/getSignature", S3Controller, :create)
   end
 
   scope "/", Offerdate do

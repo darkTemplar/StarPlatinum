@@ -34,7 +34,8 @@ defmodule Offerdate.Mixfile do
         :httpoison,
         :poison,
         :guardian,
-        :exredis
+        :exredis,
+        :timex
       ]
     ]
   end
@@ -62,7 +63,7 @@ defmodule Offerdate.Mixfile do
       {:httpoison, "~> 0.9"},
       {:cowboy, "~> 1.0"},
       {:distillery, "~> 1.0", override: true},
-      {:mix_docker, "~> 0.3.0"}
+      {:timex, "~> 3.1"}
     ]
   end
 

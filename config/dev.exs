@@ -42,6 +42,12 @@ config :offerdate, Offerdate.Repo,
   hostname: "localhost",
   pool_size: 10
 
+# s3 config
+config :s3,
+  aws_access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
+  aws_secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
+  image_bucket_name: System.get_env("S3_IMAGE_BUCKET_NAME")
+
 # Bing API Services
 config :offerdate, Offerdate.Bing,
   maps_api_key: "Air2dQkNqDck-auUQQXKRleBoDP_JB2ynxgRhQVzql2s3bqKoPADfPtPpQ4V4KeL"

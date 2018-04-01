@@ -28,6 +28,12 @@ config :offerdate, Offerdate.Repo,
 # Do not print debug messages in production
 config :logger, level: :info
 
+# s3 config
+config :s3,
+  aws_access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
+  aws_secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
+  image_bucket_name: System.get_env("S3_IMAGE_BUCKET_NAME")
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
