@@ -27,7 +27,7 @@
     "next": "^5.0.0",
     "node-fetch": "^2.1.1",
     "prop-types": "^15.6.0",
-    "react": "^16.2.0",
+    "react": "^16.3.0",
     "react-autosuggest": "^9.3.4",
     "react-datetime": "^2.14.0",
     "react-dom": "^16.2.0",
