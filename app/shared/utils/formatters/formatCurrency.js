@@ -1,4 +1,4 @@
 export default function formatCurrency(number, options) {
-  // default
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', ...options}).format(number);
+  // default, grouping causes issues
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', useGrouping: false, ...options }).format(number);
 }

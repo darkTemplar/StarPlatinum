@@ -1,3 +1,5 @@
+import Api from '../../lib/Api';
+
 export default function createListingHandler(req, res) {
   const {
     body: {
@@ -11,16 +13,21 @@ export default function createListingHandler(req, res) {
     } = {},
   } = req;
 
+  const api = new Api();
+
   try {
-    res.json({
-      sqft,
-      bedrooms,
-      bathrooms,
-      lot,
-      photos,
-      disclosures,
-      shareDisclosure,
-    });
+    api.post('/api/listing')
+      .then(() => {
+        res.json({
+          sqft,
+          bedrooms,
+          bathrooms,
+          lot,
+          photos,
+          disclosures,
+          shareDisclosure,
+        });
+      });
   } catch (ex) {
     console.error(ex.message);
 

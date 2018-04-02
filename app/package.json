@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf node_modules/.cache/babel-loader && next build",
-    "dev": "node index.js",
+    "dev": "NODE_ENV=development node index.js",
+    "prod": "NODE_ENV=production node index.js",
     "dev-debug": "node --inspect index.js"
   },
   "keywords": [],
@@ -48,6 +49,5 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.6.1"
-  },
-  "proxy": "http://localhost:4000"
+  }
 }
