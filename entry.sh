@@ -4,7 +4,7 @@
 # Docker entry script.
 
 # Wait until Postgres is ready
-while ! pg_isready -q -h $DB_HOSTNAME -p $DB_PORT -U $DB_USERNAME
+while ! pg_isready -h $DB_HOSTNAME -U $DB_USERNAME
 do
   echo "$(date) - waiting for database to start"
   sleep 2
@@ -19,4 +19,4 @@ if [[ -z `psql -Atqc "\\list $DB_NAME"` ]]; then
   echo "Database $DB_NAME created."
 fi
 
-exec mix phx.server
+exec mix phoenix.server
