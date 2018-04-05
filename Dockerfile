@@ -19,5 +19,5 @@ RUN mix deps.get
 COPY config ./config
 RUN mix deps.compile
 COPY . .
-#RUN mix release --env=prod
+RUN mix release --env=prod
 CMD ["/app/entry.sh"]
