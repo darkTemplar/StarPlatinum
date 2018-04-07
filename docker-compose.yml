@@ -12,12 +12,12 @@ services:
       context: .
     environment:
       # Variables to connect to our Postgres server
-      PGUSER: ${DB_USERNAME}
-      PGPASSWORD: ${DB_PASSWORD}
-      PGDATABASE: ${DB_NAME}
-      PGPORT: ${DB_PORT}
+      PG_USER: ${DB_USERNAME}
+      PG_PASSWORD: ${DB_PASSWORD}
+      PG_DATABASE: ${DB_NAME}
+      PG_PORT: ${DB_PORT}
       # Hostname of our Postgres container
-      PGHOST: db
+      PG_HOST: db
     ports:
       # Mapping the port to make the Phoenix app accessible outside of the container
       - "4000:4000"
@@ -31,8 +31,8 @@ services:
     image: postgres:10.3
     environment:
       # Set user/password for Postgres
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      PG_USER: ${DB_USERNAME}
+      PG_PASSWORD: ${DB_PASSWORD}
       # Set a path where Postgres should store the data
       PGDATA: /var/lib/postgresql/data/pgdata
     restart: always
