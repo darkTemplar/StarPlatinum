@@ -17,12 +17,14 @@ const propTypes = {
   // eslint-disable-next-line
   inputProps: PropTypes.object,
   alwaysRenderSuggestions: PropTypes.bool,
+  onSelect: PropTypes.func,
   ...withStylesPropTypes,
 };
 
 const defaultProps = {
   suggestions: [],
   alwaysRenderSuggestions: false,
+  onSelect: () => null,
   inputProps: {},
 };
 
@@ -37,6 +39,7 @@ export class UnstyledAutocomplete extends React.PureComponent {
     this.renderInputComponent = this.renderInputComponent.bind(this);
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
+    this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
     this.onChange = this.onChange.bind(this);
     this.state = {
       value: '',
@@ -50,6 +53,11 @@ export class UnstyledAutocomplete extends React.PureComponent {
 
   onChange(event, { newValue, method }) {
     this.setState({ value: newValue });
+
+    const { inputProps } = this.props;
+    if (inputProps.onChange) {
+      inputProps.onChange(newValue);
+    }
   }
 
   onSuggestionsClearRequested() {
@@ -60,6 +68,10 @@ export class UnstyledAutocomplete extends React.PureComponent {
     if (reason === SUGGESTIONS_FETCH_REASON.INPUT_CHANGED) {
       this.props.fetchSuggestions(value);
     }
+  }
+
+  onSuggestionSelected(_, suggestion) {
+    this.props.onSelect(suggestion);
   }
 
   renderInputComponent(props) {
@@ -98,10 +110,12 @@ export class UnstyledAutocomplete extends React.PureComponent {
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         renderInputComponent={this.renderInputComponent}
+        onSuggestionSelected={this.onSuggestionSelected}
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
         inputProps={inputProps}
         alwaysRenderSuggestions={alwaysRenderSuggestions}
+        highlightFirstSuggestion
         theme={{
           suggestionsContainer: css(styles.suggestionsContainer).className,
           suggestionsList: css(styles.suggestionsList).className,

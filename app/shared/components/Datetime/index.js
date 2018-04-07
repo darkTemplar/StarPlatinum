@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDateTime from 'react-datetime';
 import moment from 'moment';
 
@@ -8,6 +9,14 @@ import './datetime.css';
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
 export const TIME_FORMAT = 'h:mm:ss a';
+
+const propTypes = {
+  onChange: PropTypes.func,
+};
+
+const defaultProps = {
+  onChange: () => null,
+};
 
 export default class DateTime extends React.PureComponent {
   constructor(props) {
@@ -60,3 +69,6 @@ export default class DateTime extends React.PureComponent {
     );
   }
 }
+
+DateTime.propTypes = propTypes;
+DateTime.defaultProps = defaultProps;

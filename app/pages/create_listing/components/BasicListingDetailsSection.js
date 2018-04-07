@@ -1,18 +1,23 @@
 import React from 'react';
 
 import {
+  FORM_FIELD_BATHROOMS,
+  FORM_FIELD_BEDROOMS,
+  FORM_FIELD_LOT_SIZE,
+  FORM_FIELD_SQFT,
+} from '../constants/form';
+import {
   css,
   withStyles,
   withStylesPropTypes,
 } from '../../../shared/hocs/withStyles';
 import AddressField from './fields/AddressField';
-import BathroomsField from './fields/BathroomsField';
-import BedroomsField from './fields/BedroomsField';
 import Card from '../../../shared/components/Card';
-import LotSizeField from './fields/LotSizeField';
+import InputField from './fields/InputField';
+import SelectField from './fields/SelectField';
 import Spacing from '../../../shared/components/Spacing';
-import SquareFeetField from './fields/SquareFeetField';
 import Title from '../../../shared/components/Title';
+import number from '../../../shared/form/parsers/number';
 
 const propTypes = {
   ...withStylesPropTypes,
@@ -32,16 +37,40 @@ function BasicListingDetailsSection({
         <AddressField borderlessBottom />
         <div {...css(styles.bfc)}>
           <div {...css(styles.item)}>
-            <BedroomsField borderlessRight />
+            <SelectField
+              id="create-listing-bathrooms"
+              label="BATHROOMS"
+              name={FORM_FIELD_BEDROOMS}
+              parse={number}
+              options={[]}
+              borderlessRight
+            />
           </div>
           <div {...css(styles.item)}>
-            <BathroomsField borderlessRight />
+            <SelectField
+              id="create-listing-bathrooms"
+              label="BATHROOMS"
+              name={FORM_FIELD_BATHROOMS}
+              parse={number}
+              options={[]}
+              borderlessRight
+            />
           </div>
           <div {...css(styles.item)}>
-            <SquareFeetField borderlessRight />
+            <InputField
+              id="create-listing-sqft"
+              type="text"
+              label="SQFT"
+              name={FORM_FIELD_SQFT}
+            />
           </div>
           <div {...css(styles.item)}>
-            <LotSizeField />
+            <InputField
+              id="create-listing-lot"
+              type="text"
+              label="LOT SIZE"
+              name={FORM_FIELD_LOT_SIZE}
+            />
           </div>
         </div>
         <span {...css(styles.clearfix)} />
