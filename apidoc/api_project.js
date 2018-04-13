@@ -1,0 +1,1 @@
+define({  "name": "Offerdate",  "version": "0.1.0",  "description": "Phoenix api documentation",  "title": "Offerdate api methods",  "url": "localhost:4000/",  "sampleUrl": false,  "defaultVersion": "0.0.0",  "apidoc": "0.3.0",  "generator": {    "name": "apidoc",    "time": "2018-04-13T09:36:15.921Z",    "url": "http://apidocjs.com",    "version": "0.17.6"  }});

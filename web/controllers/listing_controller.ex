@@ -14,6 +14,13 @@ defmodule Offerdate.ListingController do
     render(conn, "new.json", changeset: changeset)
   end
 
+  @apidoc """
+  @api {post} /listing/create Create new listing
+  @apiName CreateListing
+  @apiGroup Listing
+
+  @apiParam {Map} listing listing parameters.
+  """
   def create(conn, %{"listing" => listing_params}) do
     changeset = Listing.changeset(%Listing{}, listing_params)
 
