@@ -13,4 +13,5 @@ EXPOSE 3000
 COPY package.json /app/package.json
 RUN npm install
 # start app
-CMD ["npm", "prod"]
+RUN rimraf node_modules/.cache/babel-loader && next build
+RUN NODE_ENV=production node index.js
