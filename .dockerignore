@@ -7,3 +7,8 @@ test
 tmp
 erl_crash.dump
 *.ez
+Dockerfile
+.dockerignore
+.gitignore
+README.md
+node_modules
