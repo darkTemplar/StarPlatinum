@@ -1,0 +1,2 @@
+-name offerdate@${MY_POD_IP}
+-setcookie magician
