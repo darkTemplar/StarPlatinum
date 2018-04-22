@@ -40,12 +40,13 @@ app.prepare()
       }
     });
 
-    server.listen(3000, (err) => {
+    const s = server.listen(3000, (err) => {
       if (err) {
         throw err;
       }
-
-      console.log('> Ready on http://localhost:3000');
+      const host = s.address().address;
+      const port = s.address().port;
+      console.log('> Ready on http://%s:%s', host, port);
     });
   })
   .catch((ex) => {

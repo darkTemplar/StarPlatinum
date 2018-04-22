@@ -14,4 +14,4 @@ COPY package.json /app/package.json
 RUN npm install
 # start app
 RUN rimraf node_modules/.cache/babel-loader && next build
-RUN NODE_ENV=production node index.js
+CMD NODE_ENV=production node index.js

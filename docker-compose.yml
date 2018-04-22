@@ -1,5 +1,5 @@
 # Version of docker-compose
-version: '3.6'
+version: '3'
 
 # Containers we are going to run
 services:
@@ -9,7 +9,9 @@ services:
       context: ./app
       dockerfile: Dockerfile.web
     ports:
-      - "3000:3000"  
+      - "3000:3000"
+    image:
+      react-client  
   # Our Phoenix container
   phoenix:
     env_file: .env
