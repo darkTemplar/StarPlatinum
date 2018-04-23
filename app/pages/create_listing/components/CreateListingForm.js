@@ -7,6 +7,7 @@ import { withStyles } from '../../../shared/hocs/withStyles';
 import BasicListingDetailsSection from './BasicListingDetailsSection';
 import Button from '../../../shared/components/Button';
 import OtherInformationSection from './OtherInformationSection';
+import PreferencesSectionContainer from '../containers/PreferencesSectionContainer';
 import Spacing from '../../../shared/components/Spacing';
 import UploadDisclosuresSection from './UploadDisclosuresSection';
 import UploadPhotosSection from './UploadPhotosSection';
@@ -43,6 +44,18 @@ export class UnstyledListingForm extends React.PureComponent {
         </Spacing>
         <Spacing bottom={4}>
           <OtherInformationSection />
+        </Spacing>
+        <Spacing bottom={4}>
+          <PreferencesSectionContainer
+            preferencesOptions={[
+              { value: '', label: 'Select One' },
+              { value: 0, label: 'foo' },
+              { value: 1, label: 'foobar' },
+              { value: 2, label: 'foobat' },
+              { value: 3, label: 'barfoo' },
+              { value: 4, label: 'foofoo' },
+            ]}
+          />
         </Spacing>
         <Button type="submit">
           Create

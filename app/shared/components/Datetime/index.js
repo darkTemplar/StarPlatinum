@@ -1,10 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import ReactDateTime from 'react-datetime';
-import moment from 'moment';
 
 import Input from '../Input';
 import OutsideClickHandler from '../OutsideClickHandler';
+import noop from '../../utils/noop';
+
 import './datetime.css';
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
@@ -18,7 +19,7 @@ const defaultProps = {
   onChange: () => null,
 };
 
-export default class DateTime extends React.PureComponent {
+export default class Datetime extends React.PureComponent {
   constructor(props) {
     super(props);
     this.renderInput = this.renderInput.bind(this);
@@ -48,7 +49,7 @@ export default class DateTime extends React.PureComponent {
         type="text"
         {...this.props}
         {...props}
-        onChange={this.onChange}
+        onChange={noop}
         onFocus={this.onFocus}
       />
     );
@@ -63,6 +64,7 @@ export default class DateTime extends React.PureComponent {
           open={isOpen}
           dateFormat={DATE_FORMAT}
           timeFormat={TIME_FORMAT}
+          onChange={this.onChange}
           renderInput={this.renderInput}
         />
       </OutsideClickHandler>
@@ -70,5 +72,5 @@ export default class DateTime extends React.PureComponent {
   }
 }
 
-DateTime.propTypes = propTypes;
-DateTime.defaultProps = defaultProps;
+Datetime.propTypes = propTypes;
+Datetime.defaultProps = defaultProps;

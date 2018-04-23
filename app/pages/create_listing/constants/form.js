@@ -11,6 +11,9 @@ export const FORM_FIELD_SHARE_DISCLOSURES = 'shareDisclosure';
 export const FORM_FIELD_OFFER_DEADLINE = 'offerDeadline';
 export const FORM_FIELD_LIST_PRICE = 'listPrice';
 export const FORM_FIELD_TARGET_SALE_PRICE = 'salePrice';
+export const FORM_FIELD_PREFERENCES_1 = 'pref_1';
+export const FORM_FIELD_PREFERENCES_2 = 'pref_2';
+export const FORM_FIELD_PREFERENCES_3 = 'pref_3';
 
 export const SHARE_DISCLOSURES_NO = 1;
 export const SHARE_DISCLOSURES_YES = 1;
