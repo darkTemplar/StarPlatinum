@@ -9,9 +9,14 @@ ENV HOME=/app/ TERM=xterm
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 EXPOSE 3000
+# install s3cmd to interact with amazon s3
+RUN git clone https://github.com/s3tools/s3cmd.git /app/s3cmd
+RUN ln -s /app/s3cmd/s3cmd /usr/bin/s3cmd
+
 # install and cache app dependencies
 COPY package.json /app/package.json
 RUN npm install
 # start app
 RUN rimraf node_modules/.cache/babel-loader && next build
+
 CMD NODE_ENV=production node index.js
