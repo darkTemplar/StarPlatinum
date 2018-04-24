@@ -8,7 +8,7 @@ router.use('/places', places);
 
 const API = process.env.REACT_APP_API_URL;
 
-headers = () => {
+function headers() {
   const token = JSON.parse(localStorage.getItem('token'));
 
   return {
@@ -18,7 +18,7 @@ headers = () => {
   };
 }
 
-parseResponse = (response) => {
+function parseResponse(response) {
   return response.json().then((json) => {
     if (!response.ok) {
       return Promise.reject(json);
@@ -27,7 +27,7 @@ parseResponse = (response) => {
   });
 }
 
-queryString = function(params) {
+function queryString(params) {
   const query = Object.keys(params)
                       .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
                       .join('&');
