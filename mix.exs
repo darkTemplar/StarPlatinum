@@ -63,7 +63,8 @@ defmodule Offerdate.Mixfile do
       {:httpoison, "~> 0.9"},
       {:cowboy, "~> 1.0"},
       {:distillery, "~> 1.0", override: true},
-      {:timex, "~> 3.1"}
+      {:timex, "~> 3.1"},
+      {:cors_plug, "~> 1.1"}
     ]
   end
 
