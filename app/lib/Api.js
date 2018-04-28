@@ -1,11 +1,11 @@
 import fetch from 'node-fetch';
 
 function getHost() {
-  if (!process.env.API_URL) {
-    throw new Error('missing API URL');
+  if (!process.env.API_HOST) {
+    throw new Error('missing API HOST');
   }
 
-  return process.env.API_URL;
+  return process.env.API_HOST;
 }
 
 function getPort() {
@@ -20,7 +20,7 @@ export default class Api {
   constructor() {
     this.host = getHost();
     this.port = getPort();
-    this.baseUrl = `${this.host}${this.port ? `:${this.port}` : ''}`;
+    this.baseUrl = `${this.host}${this.port ? `:${this.port}/api` : ''}`;
     this.defaultHeaders = {
       'Content-Type': 'application/json',
     };
