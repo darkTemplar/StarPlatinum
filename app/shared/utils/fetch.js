@@ -1,4 +1,24 @@
 import 'whatwg-fetch';
+import urlParser from 'url';
+
+function getHost() {
+  return process.env.API_HOST;
+}
+
+function getPort() {
+  return process.env.API_PORT;
+}
+
+function getUrl(url) {
+  const parsedUrlObject = urlParser.parse(url, true);
+
+  return urlParser.format({
+    hostname: getHost(),
+    port: getPort(),
+    pathname: `/api/${parsedUrlObject.pathname}`,
+    query: parsedUrlObject.query,
+  });
+}
 
 /**
  * utility for posting to an url
@@ -8,7 +28,7 @@ import 'whatwg-fetch';
  * @return {Promise}
  */
 export function post(url, options) {
-  return fetch(`/api/${url}`, {
+  return fetch(getUrl(url), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
