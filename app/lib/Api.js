@@ -1,29 +1,25 @@
 import fetch from 'node-fetch';
 
 function getHost() {
-  if (process.env.NODE_ENV === 'development') {
-    return 'http://localhost';
-  } else if (process.env.NODE_ENV === 'production') {
-    return '';
+  if (!process.env.API_URL) {
+    throw new Error('missing API URL');
   }
 
-  throw new Error('No specified API host');
+  return process.env.API_URL;
 }
 
 function getPort() {
-  if (process.env.NODE_ENV === 'development') {
-    return 4000;
-  } else if (process.env.NODE_ENV === 'production') {
-    return '';
+  if (!process.env.API_PORT) {
+    throw new Error('missing API PORT');
   }
 
-  throw new Error('No specified API port');
+  return process.env.API_PORT;
 }
 
 export default class Api {
-  constructor({ host, port } = {}) {
-    this.host = host || getHost();
-    this.port = port || getPort();
+  constructor() {
+    this.host = getHost();
+    this.port = getPort();
     this.baseUrl = `${this.host}${this.port ? `:${this.port}` : ''}`;
     this.defaultHeaders = {
       'Content-Type': 'application/json',
