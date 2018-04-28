@@ -25,10 +25,10 @@ services:
       context: .
     environment:
       # Variables to connect to our Postgres server
-      PG_USER: ${DB_USERNAME}
-      PG_PASSWORD: ${DB_PASSWORD}
-      PG_DATABASE: ${DB_NAME}
-      PG_PORT: ${DB_PORT}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DATABASE: ${DB_NAME}
+      POSTGRES_PORT: ${DB_PORT}
       GUARDIAN_SECRET_KEY: ${GUARDIAN_SECRET_KEY}
       AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
       AWS_SECRET_KEY: ${AWS_SECRET_KEY}
@@ -48,8 +48,8 @@ services:
     image: postgres:10.3
     environment:
       # Set user/password for Postgres
-      PG_USER: ${DB_USERNAME}
-      PG_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       # Set a path where Postgres should store the data
       PGDATA: /var/lib/postgresql/data/pgdata
     restart: always

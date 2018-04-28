@@ -21,10 +21,10 @@ config :offerdate, Offerdate.Endpoint,
 
 config :offerdate, Offerdate.Repo,
   adapter: Ecto.Adapters.Postgres,
-  hostname: System.get_env("PG_HOST"),
-  username: System.get_env("PG_USER"),
-  password: System.get_env("PG_PASSWORD"),
-  database: System.get_env("PG_DATABASE"),
+  hostname: System.get_env("POSTRES_HOST"),
+  username: System.get_env("POSTGRES_USER"),
+  password: System.get_env("POSTGRES_PASSWORD"),
+  database: System.get_env("POSTGRES_DATABASE"),
   pool_size: 20
 
 # Do not print debug messages in production

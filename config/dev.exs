@@ -36,10 +36,10 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :offerdate, Offerdate.Repo,
   adapter: Ecto.Adapters.Postgres,
-  hostname: System.get_env("PG_HOST"),
-  username: System.get_env("PG_USER"),
-  password: System.get_env("PG_PASSWORD"),
-  database: System.get_env("PG_DATABASE"),
+  hostname: System.get_env("POSTGRES_HOST"),
+  username: System.get_env("POSTGRES_USER"),
+  password: System.get_env("POSTGRES_PASSWORD"),
+  database: System.get_env("POSTGRES_DATABASE"),
   pool_size: 10
 
 # s3 config
