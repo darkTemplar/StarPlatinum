@@ -29,12 +29,11 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DATABASE: ${DB_NAME}
       POSTGRES_PORT: ${DB_PORT}
+      POSTGRES_HOST: ${DB_HOST}
       GUARDIAN_SECRET_KEY: ${GUARDIAN_SECRET_KEY}
       AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
       AWS_SECRET_KEY: ${AWS_SECRET_KEY}
       S3_IMAGE_BUCKET_NAME: ${S3_IMAGE_BUCKET_NAME}
-      # Hostname of our Postgres container
-      PG_HOST: db
     ports:
       # Mapping the port to make the Phoenix app accessible outside of the container
       - "4000:4000"
