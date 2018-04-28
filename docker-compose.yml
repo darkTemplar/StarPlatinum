@@ -8,6 +8,10 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile.web
+    environment:
+      AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
+      AWS_SECRET_KEY: ${AWS_SECRET_KEY}
+      S3_STATIC_BUCKET: ${S3_STATIC_BUCKET}
     ports:
       - "3000:3000"
     image:
@@ -26,8 +30,8 @@ services:
       PG_DATABASE: ${DB_NAME}
       PG_PORT: ${DB_PORT}
       GUARDIAN_SECRET_KEY: ${GUARDIAN_SECRET_KEY}
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
+      AWS_SECRET_KEY: ${AWS_SECRET_KEY}
       S3_IMAGE_BUCKET_NAME: ${S3_IMAGE_BUCKET_NAME}
       # Hostname of our Postgres container
       PG_HOST: db

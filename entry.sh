@@ -1,5 +1,5 @@
 #!/bin/bash
-# entrypoint.sh
+# entry.sh
 
 # Docker entry script.
 
