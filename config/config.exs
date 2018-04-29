@@ -12,7 +12,7 @@ config :offerdate, ecto_repos: [Offerdate.Repo]
 config :offerdate, Offerdate.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "o0mxuUyfsnhKZDxgr/vN17X2yR2rQevQpqxbR9ixmePKSSiYE7aX/yL/RyfQoUxi",
-  render_errors: [view: Offerdate.ErrorView, accepts: ~w(html json)],
+  render_errors: [view: Offerdate.ErrorView, format: "json", accepts: ~w(json)],
   pubsub: [name: Offerdate.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
