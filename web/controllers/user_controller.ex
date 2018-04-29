@@ -17,6 +17,13 @@ defmodule Offerdate.UserController do
     render(conn, "new.json", changeset: changeset)
   end
 
+  @apidoc """
+  @api {post} /user/signup Create new user
+  @apiName CreateUser
+  @apiGroup User
+
+  @apiParam {Map} User containing fields for email, password and first_name.
+  """
   def signup(conn, %{"user" => user_params}) do
     changeset = User.changeset(%User{}, user_params)
 
