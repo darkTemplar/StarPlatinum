@@ -45,7 +45,7 @@ defmodule Offerdate.UserController do
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(JwtExample.ChangesetView, "error.json", changeset: changeset)
+        |> render(Offerdate.ChangesetView, "error.json", changeset: changeset)
     end
   end
 
