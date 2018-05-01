@@ -26,11 +26,13 @@ export default function OtherInformationSection() {
       />
       <CurrencyField
         label="LIST PRICE"
+        type="text"
         name={FORM_FIELD_LIST_PRICE}
         id="create-listing-list-price"
         borderlessBottom
       />
       <CurrencyField
+        type="text"
         label="TARGET SALES PRICE"
         name={FORM_FIELD_TARGET_SALE_PRICE}
         id="create-listing-sale-price"

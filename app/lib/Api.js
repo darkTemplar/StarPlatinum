@@ -1,3 +1,4 @@
+import _omit from 'lodash/omit';
 import fetch from 'node-fetch';
 
 function getHost() {
@@ -17,13 +18,14 @@ function getPort() {
 }
 
 export default class Api {
-  constructor() {
+  constructor(options = {}) {
     this.host = getHost();
     this.port = getPort();
     this.baseUrl = `${this.host}${this.port ? `:${this.port}/api` : ''}`;
     this.defaultHeaders = {
       'Content-Type': 'application/json',
     };
+    this.options = options || {};
   }
 
   get(url, options = {}) {
@@ -34,13 +36,15 @@ export default class Api {
     return this._fetch(url, 'POST', options);
   }
 
-  _fetch(url, method, options = {}, headers = {}) {
-    return fetch(`${this.baseUrl}${url}`, options, {
+  _fetch(url, method, options = {}) {
+    return fetch(`${this.baseUrl}${url}`, {
+      ...this.options,
       method,
       headers: {
         ...this.defaultHeaders,
-        ...headers,
+        ...(options.headers || {}),
       },
+      ..._omit(options, 'headers'),
     });
   }
 }

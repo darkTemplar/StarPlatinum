@@ -10,6 +10,7 @@ import color from '../styles/color';
 import responsive from '../styles/responsive';
 import fontFamily, { fontSource } from '../styles/fontFamily';
 import isBrowser from '../utils/isBrowser';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 
 let isHydrated = false;
 
@@ -54,6 +55,7 @@ export function withStyles(styles, options = {}) {
     }
 
     WithStyles.displayName = `withStyles(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
+    hoistNonReactStatics(WithStyles, WrappedComponent);
 
     return WithStyles;
   };

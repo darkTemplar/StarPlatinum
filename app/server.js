@@ -1,10 +1,9 @@
+import { parse } from 'url';
 import bodyParser from 'body-parser';
 import express from 'express';
 import next from 'next';
 
-import { parse } from 'url';
-
-import api from './api';
+import apiMiddleware from './middlewares/api';
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -14,17 +13,10 @@ app.prepare()
   .then(() => {
     const server = express();
 
-    // parse application/json
-    server.use('/api', bodyParser.json({ limit: '100mb' }));
+    // add api object to request
+    server.use(apiMiddleware);
 
-    // parse application/x-www-form-urlencoded
-    server.use('/api', bodyParser.urlencoded({ extended: false }));
-
-    // regular non api route
     server.use('/', bodyParser.json());
-
-    // api routes
-    server.use('/api', api);
 
     // page routes
     server.get('*', (req, res) => {

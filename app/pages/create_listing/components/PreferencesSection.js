@@ -55,6 +55,7 @@ export default function PreferencesSection({
       <div>
         <SelectField
           id="preferences-1"
+          label="FIRST PRIORITY"
           name={FORM_FIELD_PREFERENCES_1}
           options={preferences1Options}
           parse={number}
@@ -62,6 +63,7 @@ export default function PreferencesSection({
         />
         <SelectField
           id="preferences-2"
+          label="SECOND PRIORITY"
           name={FORM_FIELD_PREFERENCES_2}
           options={preferences2Options}
           parse={number}
@@ -69,6 +71,7 @@ export default function PreferencesSection({
         />
         <SelectField
           id="preferences-3"
+          label="THIRD PRIORITY"
           name={FORM_FIELD_PREFERENCES_3}
           parse={number}
           options={preferences3Options}
