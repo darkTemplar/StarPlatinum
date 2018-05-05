@@ -3,7 +3,7 @@ version: '3'
 
 # Containers we are going to run
 services:
-  react-client:
+  web-client:
     env_file: .env
     build:
       context: ./app
@@ -15,7 +15,7 @@ services:
     ports:
       - "3000:3000"
     image:
-      react-client  
+        web-client:release
   # Our Phoenix container
   phoenix:
     env_file: .env
@@ -41,7 +41,7 @@ services:
       # The db container needs to be started before we start this container
       - db
     image:
-      offerdate:release
+      phoenix:release
   db:
     # We use the predefined Postgres image
     image: postgres:10.3
