@@ -15,7 +15,7 @@ services:
     ports:
       - "3000:3000"
     image:
-        web-client:release
+        web-client:latest
   # Our Phoenix container
   phoenix:
     env_file: .env
@@ -41,7 +41,7 @@ services:
       # The db container needs to be started before we start this container
       - db
     image:
-      phoenix:release
+      phoenix:latest
   db:
     # We use the predefined Postgres image
     image: postgres:10.3
