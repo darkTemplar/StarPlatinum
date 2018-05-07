@@ -4,7 +4,7 @@ import CreateListingApp from './app';
 
 export default class CreateListing extends React.PureComponent {
   static getInitialProps() {
-    return {};
+    return CreateListingApp.getInitialProps.apply(CreateListingApp, Array.prototype.slice.call(arguments));
   }
 
   render() {

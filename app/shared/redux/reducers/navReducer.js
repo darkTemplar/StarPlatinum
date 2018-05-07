@@ -1,6 +1,4 @@
-import {
-  TOGGLE_NAV_EXPAND,
-} from '../actions/actionTypes';
+import { TOGGLE_NAV_EXPAND } from '../actions/actionTypes';
 
 const initialState = {
   isNavExpanded: false,

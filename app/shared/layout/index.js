@@ -16,15 +16,18 @@ import CreateOfferIcon from '../components/icons/CreateOfferIcon';
 import Navbar from '../components/Navbar';
 import PageContainer from '../components/PageContainer';
 import WatchlistsIcon from '../components/icons/WatchlistsIcon';
+import UserShape from '../shapes/UserShape';
 
 const propTypes = {
   isNavExpanded: PropTypes.bool,
+  currentUser: UserShape,
   children: PropTypes.node,
   ...withStylesPropTypes,
 };
 
 const defaultProps = {
   isNavExpanded: false,
+  currentUser: null,
   children: null,
 };
 
@@ -67,9 +70,20 @@ const STATIC_SIGNED_IN_NAVBAR_ITEMS = [
   },
 ];
 
+const STATIC_SIGNED_OUT_NAVBAR_ITEMS = [
+  {
+    id: 'nav-browse-properties',
+    icon: BrowsePropertiesIcon,
+    label: 'Browse Properties',
+    url: '/',
+  },
+];
+
 // TODO, update active logic and move this to request level
-function getNavbarItems() {
-  return STATIC_SIGNED_IN_NAVBAR_ITEMS.map((item, idx) => ({
+function getNavbarItems(currentUser = null) {
+  const items = currentUser ? STATIC_SIGNED_IN_NAVBAR_ITEMS : STATIC_SIGNED_OUT_NAVBAR_ITEMS;
+
+  return items.map((item, idx) => ({
     ...item,
     active: idx === 0,
   }));
@@ -77,6 +91,7 @@ function getNavbarItems() {
 
 export function UnstyledLayout({
   isNavExpanded,
+  currentUser,
   children,
   styles,
 }) {
@@ -91,13 +106,13 @@ export function UnstyledLayout({
             <div>
               {isNavExpanded && (
                 <div {...css(styles.navbarContainerMobile)}>
-                  <Navbar navbarItems={getNavbarItems()} />
+                  <Navbar navbarItems={getNavbarItems(currentUser)} />
                 </div>
               )}
               <div {...css(styles.webContentTable)}>
                 <div {...css(styles.webContentTableRow)}>
                   <div {...css(styles.navbarContainer)}>
-                    <Navbar navbarItems={getNavbarItems()} />
+                    <Navbar navbarItems={getNavbarItems(currentUser)} />
                   </div>
                   <div {...css(styles.contentContainer)}>
                     {children}

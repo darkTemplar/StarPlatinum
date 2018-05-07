@@ -2,16 +2,17 @@ import { StyleSheetServer } from 'aphrodite';
 import Document, { Head, Main, NextScript } from 'next/document';
 import React from 'react';
 
-import { APHRODITE_DATA_KEY } from '../shared/constants';
+import { APHRODITE_DATA_KEY, CURRENT_USER_DATA_KEY } from '../shared/constants';
 import { greys } from '../shared/styles/color';
 
 export default class MyDocument extends Document {
-  static getInitialProps({ renderPage }) {
+  static getInitialProps({ renderPage, req }) {
     const { html, css } = StyleSheetServer.renderStatic(() => renderPage());
 
     return {
       ...html,
       css,
+      user: req.user,
     };
   }
 
@@ -33,7 +34,8 @@ export default class MyDocument extends Document {
             dangerouslySetInnerHTML={{
               __html: `
                 window.${APHRODITE_DATA_KEY} = ${JSON.stringify(this.props.css.renderedClassNames)};
-              `
+                window.${CURRENT_USER_DATA_KEY} = ${this.props.user ? JSON.stringify(this.props.user) : null};
+              `,
             }}
           />
           <Main />
