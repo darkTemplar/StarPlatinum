@@ -1,18 +1,20 @@
 #!/bin/bash
 echo "********************************************************"
-echo "COPY UPDATE SCRIPTS TO EC2-INSTANCE"
+echo "Build and push docker images to Amazon Container Registry"
 echo "********************************************************"
-scp -i ~/.ssh/offerdate-production.pem  deploy/update_and_restart.sh \
-deploy/restart_docker.sh \
-ec2-13-56-233-163.us-west-1.compute.amazonaws.com:./
-
+echo "Build images"
+`dc build`
 echo "********************************************************"
-echo "UPDATE EC2-INSTANCE"
+echo "login to registry"
+`aws ecr get-login --no-include-email`
 echo "********************************************************"
-ssh -i ~/.ssh/offerdate-production.pem \
- ec2-13-56-233-163.us-west-1.compute.amazonaws.com \
- sudo ./update_and_restart.sh
-
+echo "tag images"
+docker tag phoenix:latest 103126352378.dkr.ecr.us-west-1.amazonaws.com/phoenix:latest
+docker tag web-client:latest 103126352378.dkr.ecr.us-west-1.amazonaws.com/web-client:latest
 echo "********************************************************"
-echo "DEPLOYED `date`"
+echo "push images"
+docker push 103126352378.dkr.ecr.us-west-1.amazonaws.com/phoenix:latest
+docker push 103126352378.dkr.ecr.us-west-1.amazonaws.com/web-client:latest
+echo "********************************************************"
+echo "Done"
 echo "********************************************************"
