@@ -11,10 +11,12 @@ echo "********************************************************"
 echo "tag images"
 docker tag phoenix:latest 103126352378.dkr.ecr.us-west-1.amazonaws.com/offerdate:phoenix-latest
 docker tag web-client:latest 103126352378.dkr.ecr.us-west-1.amazonaws.com/offerdate:web-latest
+docker tag loadbalancer:latest 103126352378.dkr.ecr.us-west-1.amazonaws.com/offerdate:loadbalancer-latest
 echo "********************************************************"
 echo "push images"
 docker push 103126352378.dkr.ecr.us-west-1.amazonaws.com/offerdate:phoenix-latest
 docker push 103126352378.dkr.ecr.us-west-1.amazonaws.com/offerdate:web-latest
+docker push 103126352378.dkr.ecr.us-west-1.amazonaws.com/offerdate:loadbalancer-latest
 echo "********************************************************"
 echo "Done"
 echo "********************************************************"
