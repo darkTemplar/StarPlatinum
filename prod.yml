@@ -29,7 +29,7 @@ services:
     build:
       # Here we define that it should build from the current directory
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     environment:
       # Variables to connect to our Postgres server
       POSTGRES_USER: ${DB_USERNAME}
@@ -51,11 +51,6 @@ services:
       phoenix:latest
     restart:
         on-failure
-    volumes:
-      - ./web:/app/web
-      - ./lib:/app/lib
-      - ./priv:/app/priv
-      - ./test:/app/test
   db:
     # We use the predefined Postgres image
     image: postgres:10.3
@@ -82,7 +77,7 @@ services:
       image:
         loadbalancer:latest
       restart:
-        on-failure
+        always
 # Define the volumes
 volumes:
   pgdata:

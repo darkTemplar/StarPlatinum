@@ -1,0 +1,21 @@
+# Dockerfile
+FROM elixir:1.4.2
+ENV DEBIAN_FRONTEND=noninteractive
+RUN mkdir /app
+COPY . /app
+# only copy web, lib, priv and test
+WORKDIR /app
+# Install postgres-client to check if postgres is running
+RUN apt-get update && \
+  apt-get install -y postgresql-client
+# Install Hex+Rebar
+RUN mix local.hex --force && \
+    mix local.rebar --force
+EXPOSE 4000
+# Cache elixir deps
+COPY mix.exs mix.lock ./
+RUN mix deps.get
+COPY . .
+RUN mix deps.compile
+#CMD ["/app/entry.sh"]
+CMD mix phoenix.server
