@@ -2,11 +2,10 @@ defmodule Offerdate.SessionView do
   use Offerdate.Web, :view
   alias Offerdate.User
 
-  def render("login.json", %{user: user, jwt: jwt}) do
+  def render("login.json", %{user: user}) do
     %{
       status: :ok,
       data: %{
-        token: jwt,
         email: user.email
       },
       message:

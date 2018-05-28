@@ -39,7 +39,7 @@ defmodule Offerdate.Auth do
 
     cond do
       user && checkpw(password, user.password_hash) ->
-        {:ok, user}
+        {:ok, login(conn, user)}
 
       user ->
         {:error, :unauthorized}

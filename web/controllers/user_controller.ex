@@ -26,10 +26,10 @@ defmodule Offerdate.UserController do
   """
   def signup(conn, %{"user" => user_params}) do
     changeset = User.changeset(%User{}, user_params)
-
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
+        |> Offerdate.Auth.login(user)
         |> put_status(:created)
         |> put_resp_header("location", user_path(conn, :show, user))
         |> render("success.json", user: user)

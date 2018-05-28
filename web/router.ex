@@ -1,5 +1,6 @@
 defmodule Offerdate.Router do
   use Offerdate.Web, :router
+  import Offerdate.Auth, only: [authenticate_user: 2]
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -11,13 +12,12 @@ defmodule Offerdate.Router do
   end
 
   pipeline :api do
+    plug :fetch_session
     plug :accepts, ["json"]
-    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
-    plug Guardian.Plug.LoadResource
   end
 
   pipeline :authenticated do
-    plug Guardian.Plug.EnsureAuthenticated
+    plug Offerdate.Auth, repo: Offerdate.Repo
   end
 
   scope "/api", Offerdate do
@@ -31,6 +31,7 @@ defmodule Offerdate.Router do
     resources "/users", UserController, only: [:index, :show]
     resources "/listings", ListingController, only: [:new, :show, :edit, :delete]
     post "/getSignature", S3Controller, :create
+    delete "/logout", SessionController, :delete
   end
 
   scope "/", Offerdate do
