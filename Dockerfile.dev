@@ -18,4 +18,3 @@ RUN mix deps.get
 COPY . .
 RUN mix deps.compile
 CMD ["/app/entry.sh"]
-#CMD mix phoenix.server
