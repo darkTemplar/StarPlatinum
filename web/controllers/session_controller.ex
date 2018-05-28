@@ -10,12 +10,12 @@ defmodule Offerdate.SessionController do
 
   def login(conn, %{"session" => %{"email" => email, "password" => password}}) do
     case Auth.login_by_email(conn, email, password, repo: Repo) do
-      {:ok, user} ->
+      {:ok, conn} ->
         conn
         |> put_status(:ok)
-        |> render("login.json", user: user)
+        |> render("login.json", user: conn.assigns.current_user)
 
-      {:error, _reason} ->
+      {:error, _reason, conn} ->
         conn
         |> put_status(401)
         |> render("error.json", message: "Could not login")

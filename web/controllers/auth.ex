@@ -42,11 +42,11 @@ defmodule Offerdate.Auth do
         {:ok, login(conn, user)}
 
       user ->
-        {:error, :unauthorized}
+        {:error, :unauthorized, conn}
 
       true ->
         dummy_checkpw()
-        {:error, :not_found}
+        {:error, :not_found, conn}
     end
   end
 
