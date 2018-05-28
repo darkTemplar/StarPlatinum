@@ -56,6 +56,7 @@ services:
       - ./lib:/app/lib
       - ./priv:/app/priv
       - ./test:/app/test
+      - ./config:/app/config
   db:
     # We use the predefined Postgres image
     image: postgres:10.3
