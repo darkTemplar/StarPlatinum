@@ -33,7 +33,6 @@ defmodule Offerdate.Mixfile do
         :comeonin,
         :httpoison,
         :poison,
-        :guardian,
         :exredis,
         :timex
       ]
@@ -58,13 +57,13 @@ defmodule Offerdate.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:comeonin, "~> 2.0"},
-      {:guardian, "~> 0.14"},
       {:poison, " ~> 2.2"},
       {:httpoison, "~> 0.9"},
       {:cowboy, "~> 1.0"},
       {:distillery, "~> 1.0", override: true},
       {:timex, "~> 3.1"},
-      {:cors_plug, "~> 1.1"}
+      {:cors_plug, "~> 1.1"},
+      {:logger_file_backend, ">=0.0.4"}
     ]
   end
 

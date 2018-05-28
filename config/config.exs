@@ -20,16 +20,6 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :guardian, Guardian,
-  allowed_algos: ["HS512"],
-  verify_module: Guardian.JWT,
-  secret_key: System.get_env("GUARDIAN_SECRET_KEY"),
-  issuer: "Offerdate",
-  verify_issuer: true,
-  ttl: {30, :days},
-  allowed_drift: 2000,
-  serializer: Offerdate.GuardianSerializer
-
 config :mix_docker, image: "offerdate"
 
 # Import environment specific config. This must remain at the bottom

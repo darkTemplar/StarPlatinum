@@ -8,7 +8,7 @@ use Mix.Config
 # with brunch.io to recompile .js and .css sources.
 config :offerdate, Offerdate.Endpoint,
   http: [port: 4000],
-  debug_errors: false,
+  debug_errors: true,
   code_reloader: true,
   check_origin: false,
   watchers: [
@@ -27,7 +27,12 @@ config :offerdate, Offerdate.Endpoint,
   ]
 
 # Do not include metadata nor timestamps in development logs
-config :logger, :console, format: "[$level] $message\n"
+config :logger, format: "[$level] $message\n",
+  backends: [{LoggerFileBackend, :error_log}, :console]
+
+config :logger, :error_log,
+  path: "log/error.log",
+  level: :error
 
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.
@@ -47,7 +52,3 @@ config :s3,
   aws_access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
   aws_secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
   image_bucket_name: System.get_env("S3_IMAGE_BUCKET_NAME")
-
-# Bing API Services
-config :offerdate, Offerdate.Bing,
-  maps_api_key: "Air2dQkNqDck-auUQQXKRleBoDP_JB2ynxgRhQVzql2s3bqKoPADfPtPpQ4V4KeL"
