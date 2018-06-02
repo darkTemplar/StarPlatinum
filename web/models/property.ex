@@ -30,13 +30,17 @@ defmodule Offerdate.Property do
     |> unique_constraint(:address_hash)
   end
 
+  def create_hash(address \\ %{}) do
+    :crypto.hash(:sha256, Map.values(address)) |> Base.encode16()
+  end
+
   defp put_address_hash(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: changes} ->
         put_change(
           changeset,
           :address_hash,
-          :crypto.hash(:sha256, Map.values(changes)) |> Base.encode16()
+          create_hash(changes)
         )
 
       _ ->

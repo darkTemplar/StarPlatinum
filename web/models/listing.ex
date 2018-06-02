@@ -2,6 +2,7 @@ defmodule Offerdate.Listing do
   use Offerdate.Web, :model
   alias __MODULE__
   alias Offerdate.Repo
+  alias Offerdate.Property
 
   schema "listings" do
     field(:listing_price, :float)
@@ -27,6 +28,23 @@ defmodule Offerdate.Listing do
     |> assoc_constraint(:property)
     |> validate_required([:listing_price, :initial_expiry, :beds, :baths, :area])
   end
+
+  
+  def to_multi(params \\ %{}) do
+    property_changeset = Property.changeset(%Property{}, params)
+    multi = Ecto.Multi.new()
+    case Repo.get_by(Property, address_hash: get_field(property_changeset, :address_hash)) do
+      nil -> 
+        multi
+        |> Ecto.Multi.insert(:property, property_changeset)
+      {:ok, property} ->
+        params = Map.put(params, "property_id", property.id)  
+    end
+
+    multi
+    |> Ecto.Multi.insert(:listing, Listing.changeset(%Listing{}, params))
+  end
+
 
   def create_listing(attrs \\ %{}) do
     %Listing{}

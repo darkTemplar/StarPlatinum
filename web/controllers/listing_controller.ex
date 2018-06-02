@@ -22,18 +22,32 @@ defmodule Offerdate.ListingController do
   @apiParam {Map} listing listing parameters.
   """
   def create(conn, %{"listing" => listing_params}) do
-    changeset = Listing.changeset(%Listing{}, listing_params)
-
-    case Repo.insert(changeset) do
-      {:ok, listing} ->
+    # add current session user_id to params
+    user_id = get_session(conn, :user_id)
+    params = Map.put(listing_params, "user_id", user_id)
+    multi = Listing.to_multi(listing_params)
+      
+    case Repo.transaction(multi) do
+      {:ok, %{listing: listing}} ->
         conn
-        |> redirect(to: listing_path(conn, :index))
-
-      {:error, changeset} ->
-        render(conn, "error.json", changeset: changeset)
+        |> put_status(:created)
+        |> render("success.json", listing: listing)
+      {:error, _operation, repo_changeset, _changes} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        #changeset = copy_errors(repo_changeset, Listing.changeset)
+        |> render(Offerdate.ChangesetView, "error.json", changeset: repo_changeset)
     end
   end
 
+  @apidoc """
+  @api {post} /listing/update Update existing listing
+  @apiName UpdateListing
+  @apiGroup Listing
+
+  @apiParam {Int} listing id to be updated.
+  @apiParam {Map} listing listing parameters.
+  """
   def update(conn, %{"id" => listing_id, "listing" => listing_params}) do
     listing = Repo.get(Listing, String.to_integer(listing_id))
     changeset = Listing.changeset(listing, listing_params)
@@ -49,6 +63,13 @@ defmodule Offerdate.ListingController do
     end
   end
 
+  @apidoc """
+  @api {post} /listing/delete Update existing listing
+  @apiName DeleteListing
+  @apiGroup Listing
+
+  @apiParam {Int} listing id to be deleted.
+  """
   def delete(conn, %{"id" => listing_id}) do
     listing = Repo.get!(Listing, String.to_integer(listing_id))
 
