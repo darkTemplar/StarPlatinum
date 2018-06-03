@@ -19,6 +19,8 @@ import SignupLoginContainer from '../components/SignupLogin/SignupLoginContainer
 import UserShape from '../shapes/UserShape';
 import WatchlistsIcon from '../components/icons/WatchlistsIcon';
 
+export const MODAL_SLOT_DOCUMENT_ID = 'modal-slot';
+
 const propTypes = {
   isNavExpanded: PropTypes.bool,
   currentUser: UserShape,
@@ -96,6 +98,7 @@ export function UnstyledLayout({
   children,
   styles,
 }) {
+  // todo, move font styles onto body
   return (
     <div {...css(styles.base)}>
       <PageContainer>
@@ -124,6 +127,7 @@ export function UnstyledLayout({
           </Row>
         </Container>
       </PageContainer>
+      <div id={MODAL_SLOT_DOCUMENT_ID} />
       <SignupLoginContainer />
     </div>
   );

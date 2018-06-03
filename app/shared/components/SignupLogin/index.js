@@ -17,6 +17,7 @@ const propTypes = forbidExtraProps({
   mode: PropTypes.oneOf(Object.values(MODES)),
   currentUser: UserShape,
   hideSignupLogin: PropTypes.func.isRequired,
+  error: PropTypes.string,
   isVisible: PropTypes.bool,
   isLoading: PropTypes.bool,
   signup: PropTypes.func.isRequired,
@@ -24,8 +25,10 @@ const propTypes = forbidExtraProps({
 
 const defaultProps = {
   mode: MODES.SIGNUP,
+  error: '',
   currentUser: null,
   isVisible: false,
+  isLoading: false,
 };
 
 export default class SignupLogin extends React.PureComponent {
@@ -38,6 +41,12 @@ export default class SignupLogin extends React.PureComponent {
       email: '',
       password: '',
     };
+  }
+
+  componentWillReceiveProps({ isLoading, error }) {
+    if (this.props.isLoading && !isLoading && !error) {
+      this.props.hideSignupLogin();
+    }
   }
 
   onSubmit() {
