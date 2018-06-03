@@ -34,6 +34,7 @@ export function post(url, options) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(options.body || {}),
+    credentials: 'include',
   })
     .then(
       response => response.json(),

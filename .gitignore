@@ -4,6 +4,7 @@ k8s/offerdate-secret.yaml
 *.env
 /db
 /deps
+/log
 /*.ez
 /*.tar*
 web/elm/elm-stuff/*

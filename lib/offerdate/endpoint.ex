@@ -38,7 +38,7 @@ defmodule Offerdate.Endpoint do
     key: "_offerdate_key",
     signing_salt: "+nkHgAQN"
 
-  plug CORSPlug, origin: ["http://localhost:3000"]
+  plug CORSPlug, origin: ["http://localhost:3000"], expose: ['set-cookie']
   
   plug Offerdate.Router
 end
