@@ -29,7 +29,8 @@ defmodule Offerdate.Router do
     # restrict unauthenticated access for routes below
     pipe_through :authenticated
     resources "/users", UserController, only: [:index, :show]
-    resources "/listings", ListingController, only: [:new, :show, :edit, :delete]
+    resources "/listings", ListingController, only: [:new, :show, :create, :edit, :delete]
+    #resources "/listings", ListingController, only: [:new, :show, :create, :edit, :delete]
     post "/getSignature", S3Controller, :create
     delete "/logout", SessionController, :delete
   end
