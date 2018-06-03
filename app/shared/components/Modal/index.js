@@ -33,7 +33,7 @@ export function Modal({ styles,onClose, children, ...otherProps }) {
 
 Modal.propTypes = propTypes;
 
-export default withStyles(({ responsive, unit }) => ({
+export default withStyles(({ responsive, unit, color }) => ({
   modal: {
     position: 'absolute',
     top: 0,
@@ -41,6 +41,7 @@ export default withStyles(({ responsive, unit }) => ({
     right: 0,
     bottom: 0,
     padding: 2 * unit,
+    background: color.core.white,
 
     [responsive.mediumAndAbove]: {
       width: 63 * unit,
@@ -50,6 +51,10 @@ export default withStyles(({ responsive, unit }) => ({
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
+    },
+
+    ':focus': {
+      outline: 'none',
     },
   },
 }))(Modal);
