@@ -6,14 +6,25 @@ import { css, withStyles, withStylesPropTypes } from '../../hocs/withStyles';
 import Button from '../Button';
 import Link from '../Link';
 import Text from '../Text';
+import UserShape from '../../shapes/UserShape';
 
 const propTypes = {
   toggleNavExpand: PropTypes.func.isRequired,
+  onSignup: PropTypes.func.isRequired,
+  onLogin: PropTypes.func.isRequired,
+  currentUser: UserShape,
+  showSignupLogin: PropTypes.func.isRequired,
   ...withStylesPropTypes,
+};
+
+const defaultProps = {
+  currentUser: null,
 };
 
 export function UnstyledHeader({
   toggleNavExpand,
+  currentUser,
+  showSignupLogin,
   styles,
 }) {
   return (
@@ -25,14 +36,20 @@ export function UnstyledHeader({
       </div>
       <Link href="/">
         <div {...css(styles.leftLogo)}>
-            <Text size="xl" inverse>OfferDate</Text>
+          <Text size="xl" inverse>OfferDate</Text>
         </div>
       </Link>
+      {!currentUser && (
+        <Button onPress={showSignupLogin}>
+          Signup
+        </Button>
+      )}
     </nav>
   );
 }
 
 UnstyledHeader.propTypes = propTypes;
+UnstyledHeader.defaultProps = defaultProps;
 
 export default withStyles(({ color, unit, responsive }) => ({
   header: {

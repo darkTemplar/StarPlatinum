@@ -8,15 +8,16 @@ import React from 'react';
 import { NAVBAR_WIDTH } from '../constants/ui';
 import { css, withStyles, withStylesPropTypes } from '../hocs/withStyles';
 import BrowsePropertiesIcon from '../components/icons/BrowsePropertiesIcon';
+import CreateOfferIcon from '../components/icons/CreateOfferIcon';
 import HeaderContainer from '../components/Header/HeaderContainer';
+import ListPropertyIcon from '../components/icons/ListPropertyIcon';
 import MyListingsIcon from '../components/icons/MyListingsIcon';
 import MyOffersIcon from '../components/icons/MyOffersIcon';
-import ListPropertyIcon from '../components/icons/ListPropertyIcon';
-import CreateOfferIcon from '../components/icons/CreateOfferIcon';
 import Navbar from '../components/Navbar';
 import PageContainer from '../components/PageContainer';
-import WatchlistsIcon from '../components/icons/WatchlistsIcon';
+import SignupLoginContainer from '../components/SignupLogin/SignupLoginContainer';
 import UserShape from '../shapes/UserShape';
+import WatchlistsIcon from '../components/icons/WatchlistsIcon';
 
 const propTypes = {
   isNavExpanded: PropTypes.bool,
@@ -123,6 +124,7 @@ export function UnstyledLayout({
           </Row>
         </Container>
       </PageContainer>
+      <SignupLoginContainer />
     </div>
   );
 }

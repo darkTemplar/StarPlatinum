@@ -6,7 +6,7 @@ import { css, withStyles, withStylePropTypes } from '../hocs/withStyles';
 import Text from './Text';
 
 const propTypes = {
-  type: PropTypes.oneOf(['text', 'email', 'search', 'tel', 'date']).isRequired,
+  type: PropTypes.oneOf(['text', 'email', 'search', 'tel', 'date', 'password']).isRequired,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,

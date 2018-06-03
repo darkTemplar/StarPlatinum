@@ -1,8 +1,13 @@
 import {
-  SIGN_IN_REQUEST,
-  SIGN_IN_SUCCESS,
-  SIGN_IN_ERROR,
   BOOTSTRAP_CURRENT_USER,
+  HIDE_SIGNUP_LOGIN,
+  LOGIN_ERROR,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  SHOW_SIGNUP_LOGIN,
+  SIGNUP_ERROR,
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
 } from '../actions/actionTypes';
 
 function getInitialState() {
@@ -11,6 +16,8 @@ function getInitialState() {
     // signing up or logging in
     isLoading: false,
     error: '',
+    // modal visible
+    isVisible: false,
   };
 }
 
@@ -22,23 +29,39 @@ export default function authReducer(state = getInitialState, action = {}) {
         currentUser: action.payload.user,
       };
     }
-    case SIGN_IN_REQUEST: {
+    case LOGIN_REQUEST:
+    case SIGNUP_REQUEST: {
       return {
         ...state,
         error: '',
         isLoading: true,
       };
     }
-    case SIGN_IN_SUCCESS: {
+    case LOGIN_SUCCESS:
+    case SIGNUP_SUCCESS: {
       return {
         ...state,
         isLoading: false,
       };
     }
-    case SIGN_IN_ERROR: {
+    case LOGIN_ERROR:
+    case SIGNUP_ERROR: {
       return {
         ...state,
         isLoading: false,
+        error: action.payload.error,
+      };
+    }
+    case SHOW_SIGNUP_LOGIN: {
+      return {
+        ...state,
+        isVisible: true,
+      };
+    }
+    case HIDE_SIGNUP_LOGIN: {
+      return {
+        ...state,
+        isVisible: false,
       };
     }
     default: {

@@ -1,9 +1,9 @@
+import { CREATE_LISTING_API_ENDPOINT } from '../constants/api';
 import {
   CREATE_LISTING_REQUEST,
   CREATE_LISTING_SUCCESS,
   CREATE_LISTING_ERROR,
 } from './actionTypes';
-import { CREATE_LISTING_API_ENDPOINT } from '../constants/api';
 import { post } from '../../../shared/utils/fetch';
 
 export function createListingRequest() {
@@ -37,6 +37,6 @@ export function createListing(listing) {
       .then((response) => {
         console.log(response);
       })
-      .catch((ex) => dispatch(createListingError(ex.message)));
+      .catch(ex => dispatch(createListingError(ex.message)));
   };
 }
