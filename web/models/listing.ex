@@ -14,19 +14,20 @@ defmodule Offerdate.Listing do
     field(:beds, :integer)
     field(:baths, :integer)
     field(:area, :float)
+    field(:status, :integer, default: 1)
     has_many(:participants, Offerdate.Participant)
 
     timestamps()
   end
 
-  @allowed_fields ~w(listing_price sale_price user_id property_id initial_expiry final_expiry beds baths area)
+  @allowed_fields ~w(listing_price sale_price user_id property_id initial_expiry final_expiry beds baths area status)
 
   def changeset(%Listing{} = model, params \\ :invalid) do
     model
     |> cast(params, @allowed_fields)
     |> assoc_constraint(:user)
     |> assoc_constraint(:property)
-    |> validate_required([:listing_price, :initial_expiry, :beds, :baths, :area])
+    |> validate_required([:listing_price, :initial_expiry, :final_expiry, :beds, :baths, :area])
   end
 
   
@@ -37,12 +38,17 @@ defmodule Offerdate.Listing do
       nil -> 
         multi
         |> Ecto.Multi.insert(:property, property_changeset)
-      {:ok, property} ->
-        params = Map.put(params, "property_id", property.id)  
+        |> Ecto.Multi.run(:listing, fn %{property: property} -> 
+          params = Map.put(params, "property_id", property.id)
+          multi
+          |> Ecto.Multi.insert(:listing, Listing.changeset(%Listing{}, params))
+          {:ok, nil}
+        end)
+      property ->
+        params = Map.put(params, "property_id", property.id)
+        multi
+        |> Ecto.Multi.insert(:listing, Listing.changeset(%Listing{}, params)) 
     end
-
-    multi
-    |> Ecto.Multi.insert(:listing, Listing.changeset(%Listing{}, params))
   end
 
 

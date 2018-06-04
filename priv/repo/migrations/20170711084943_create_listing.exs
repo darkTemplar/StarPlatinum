@@ -12,6 +12,7 @@ defmodule Offerdate.Repo.Migrations.CreateListing do
       add(:beds, :integer)
       add(:baths, :integer)
       add(:area, :float)
+      add(:status, :integer)
       timestamps()
     end
 
