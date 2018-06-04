@@ -14,10 +14,11 @@ defmodule Offerdate.Router do
   pipeline :api do
     plug :fetch_session
     plug :accepts, ["json"]
+    plug Offerdate.Auth, repo: Offerdate.Repo
   end
 
   pipeline :authenticated do
-    plug Offerdate.Auth, repo: Offerdate.Repo
+    plug :authenticate_user
   end
 
   scope "/api", Offerdate do
@@ -29,6 +30,7 @@ defmodule Offerdate.Router do
     # restrict unauthenticated access for routes below
     pipe_through :authenticated
     resources "/users", UserController, only: [:index, :show]
+    get "/getCurrentUser", UserController, :get_current_user
     resources "/listings", ListingController, only: [:new, :show, :create, :edit, :delete]
     #resources "/listings", ListingController, only: [:new, :show, :create, :edit, :delete]
     post "/getSignature", S3Controller, :create

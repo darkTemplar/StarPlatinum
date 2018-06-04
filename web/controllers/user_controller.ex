@@ -41,6 +41,11 @@ defmodule Offerdate.UserController do
     end
   end
 
+  def get_current_user(conn, _params) do
+    user = Offerdate.Auth.get_current_user(conn)
+    render("current_user.json", user: user)
+  end
+
   def update(conn, %{"id" => user_id, "user" => user_params}) do
     user = Repo.get(User, String.to_integer(user_id))
     changeset = User.changeset(user, user_params)

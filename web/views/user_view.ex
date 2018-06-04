@@ -10,9 +10,17 @@ defmodule Offerdate.UserView do
     %{
       status: :ok,
       message: """
-        Now you can sign in using your email and password at /api/sign_in. You will receive JWT token.
+        Now you can sign in using your email and password at /api/login. You will receive JWT token.
         Please put this token into Authorization header for all authorized requests.
       """
     }
   end
+
+  def render("current_user.json", %{user: user}) do
+    %{
+      status: :ok,
+      user: user
+    }
+  end
+
 end

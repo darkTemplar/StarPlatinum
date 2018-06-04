@@ -20,10 +20,14 @@ defmodule Offerdate.Auth do
       conn
     else
       conn
-      |> put_flash(:error, "You must be logged in to access that page.")
-      |> redirect(to: Helpers.page_path(conn, :index))
+      |> put_status(401)
+      |> render(Offerdate.ErrorView, :"401", message: "You are not authorized to view this page")
       |> halt()
     end
+  end
+
+  def get_current_user(conn) do
+    conn.assigns[:current_user]
   end
 
   def login(conn, user) do
