@@ -19,6 +19,7 @@ defmodule Offerdate.UserView do
   def render("current_user.json", %{user: user}) do
     %{
       status: :ok,
+      message: "Current user successful",
       user: user
     }
   end

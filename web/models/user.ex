@@ -4,6 +4,7 @@ defmodule Offerdate.User do
   alias __MODULE__
   alias Offerdate.Repo
 
+  @derive {Poison.Encoder, only: [:email, :first_name, :last_name, :license_number, :user_type]}
   schema "users" do
     field(:email, :string)
     field(:password, :string, virtual: true)
