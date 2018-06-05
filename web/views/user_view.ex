@@ -12,7 +12,8 @@ defmodule Offerdate.UserView do
       message: """
         Now you can sign in using your email and password at /api/login. You will receive JWT token.
         Please put this token into Authorization header for all authorized requests.
-      """
+      """,
+      user: user
     }
   end
 

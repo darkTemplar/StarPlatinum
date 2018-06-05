@@ -5,9 +5,7 @@ defmodule Offerdate.SessionView do
   def render("login.json", %{user: user}) do
     %{
       status: :ok,
-      data: %{
-        email: user.email
-      },
+      user: user,
       message:
         "You are successfully logged in! Add this token to authorization header to make authorized requests."
     }
