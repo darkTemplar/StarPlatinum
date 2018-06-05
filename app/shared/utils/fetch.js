@@ -20,6 +20,14 @@ function getUrl(url) {
   });
 }
 
+/**
+ * utility for posting to an url
+ * @param  {String} url
+ * @param  {String} method HTTP method: 'POST', 'GET', 'PUT', 'DELETE'
+ * @param  {Object} options
+ * @param  {Object} options.body
+ * @return {Promise}
+ */
 function _fetch(url, method, options = {}) {
   return fetch(getUrl(url), {
     method,
@@ -41,13 +49,6 @@ function _fetch(url, method, options = {}) {
     });
 }
 
-/**
- * utility for posting to an url
- * @param  {String} url
- * @param  {Object} options
- * @param  {Object} options.body
- * @return {Promise}
- */
 export function post(url, options ={}) {
   return _fetch(url, 'POST', options);
 }
@@ -55,3 +56,12 @@ export function post(url, options ={}) {
 export function del(url, options = {}) {
   return _fetch(url, 'DELETE', options);
 }
+
+export function get(url, options = {}) {
+  return _fetch(url, 'GET', options);
+}
+
+export function put(url, options) {
+  return _fetch(url, 'PUT', options);
+}
+
