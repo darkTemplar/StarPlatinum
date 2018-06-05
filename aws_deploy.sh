@@ -3,7 +3,7 @@ echo "********************************************************"
 echo "Build and push docker images to Amazon Container Registry"
 echo "********************************************************"
 echo "Build images"
-docker-compose build
+docker-compose -f prod.yml build
 echo "********************************************************"
 echo "login to registry"
 `aws ecr get-login --no-include-email`
