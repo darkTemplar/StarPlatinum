@@ -1,5 +1,7 @@
 import _omit from 'lodash/omit';
+import _get from 'lodash/get';
 import fetch from 'node-fetch';
+import urlParser from 'url';
 
 function getHost() {
   if (!process.env.API_HOST) {
@@ -17,15 +19,16 @@ function getPort() {
   return process.env.API_PORT;
 }
 
+const DEFAULT_HTTP_PROTOCOL = 'http';
+
 export default class Api {
   constructor(options = {}) {
     this.host = getHost();
     this.port = getPort();
-    this.baseUrl = `${this.host}${this.port ? `:${this.port}/api` : ''}`;
+    this.protocol = _get(options, 'protocol', DEFAULT_HTTP_PROTOCOL);
     this.defaultHeaders = {
       'Content-Type': 'application/json',
     };
-    this.options = options || {};
   }
 
   get(url, options = {}) {
@@ -36,9 +39,20 @@ export default class Api {
     return this._fetch(url, 'POST', options);
   }
 
+  _getUrl(url) {
+    const parsedUrlObject = urlParser.parse(url, true);
+
+    return urlParser.format({
+      protocol: this.protocol,
+      hostname: this.host,
+      port: this.port,
+      pathname: `/api/${parsedUrlObject.pathname}`,
+      query: parsedUrlObject.query,
+    });
+  }
+
   _fetch(url, method, options = {}) {
-    return fetch(`${this.baseUrl}${url}`, {
-      ...this.options,
+    return fetch(this._getUrl(url), {
       method,
       headers: {
         ...this.defaultHeaders,

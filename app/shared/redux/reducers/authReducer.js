@@ -42,6 +42,7 @@ export default function authReducer(state = getInitialState, action = {}) {
       return {
         ...state,
         isLoading: false,
+        currentUser: action.payload.user,
       };
     }
     case LOGIN_ERROR:

@@ -4,6 +4,7 @@ import express from 'express';
 import next from 'next';
 
 import apiMiddleware from './middlewares/api';
+import currentUserMiddleware from './middlewares/currentUser';
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -15,6 +16,8 @@ app.prepare()
 
     // add api object to request
     server.use(apiMiddleware);
+    // auth middleware to get user
+    server.use(currentUserMiddleware);
 
     server.use('/', bodyParser.json());
 

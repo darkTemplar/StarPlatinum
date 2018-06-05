@@ -26,11 +26,11 @@ defmodule Offerdate.Router do
 
     post "/signup", UserController, :signup
     post "/login", SessionController, :login
+    get "/getCurrentUser", UserController, :get_current_user
 
     # restrict unauthenticated access for routes below
     pipe_through :authenticated
     resources "/users", UserController, only: [:index, :show]
-    get "/getCurrentUser", UserController, :get_current_user
     resources "/listings", ListingController, only: [:new, :show, :create, :edit, :delete]
     #resources "/listings", ListingController, only: [:new, :show, :create, :edit, :delete]
     post "/getSignature", S3Controller, :create

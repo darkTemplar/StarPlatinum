@@ -1,6 +1,7 @@
 import { SIGNUP_ENDPOINT } from '../../../constants/api/auth';
-import { SIGNUP_ERROR, SIGNUP_REQUEST } from '../actionTypes';
+import { SIGNUP_ERROR, SIGNUP_REQUEST, SIGNUP_SUCCESS } from '../actionTypes';
 import { post } from '../../../utils/fetch';
+import hideSignupLogin from './hideSignupLogin';
 
 export function signupRequest() {
   return {
@@ -13,6 +14,15 @@ export function signupError(error) {
     type: SIGNUP_ERROR,
     payload: {
       error,
+    },
+  };
+}
+
+export function signupSuccess(user) {
+  return {
+    type: SIGNUP_SUCCESS,
+    payload: {
+      user,
     },
   };
 }
@@ -40,7 +50,8 @@ export default function signup({
       })
         .then(
           (response) => {
-            console.log(response);
+            dispatch(signupSuccess(response.user));
+            dispatch(hideSignupLogin());
           },
           (ex) => {
             dispatch(signupError(ex.message));

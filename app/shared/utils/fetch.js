@@ -20,16 +20,9 @@ function getUrl(url) {
   });
 }
 
-/**
- * utility for posting to an url
- * @param  {String} url
- * @param  {Object} options
- * @param  {Object} options.body
- * @return {Promise}
- */
-export function post(url, options) {
+function _fetch(url, method, options = {}) {
   return fetch(getUrl(url), {
-    method: 'POST',
+    method,
     headers: {
       'Content-Type': 'application/json',
     },
@@ -46,4 +39,19 @@ export function post(url, options) {
       // TODO need to log error
       throw new Error(ex.message);
     });
+}
+
+/**
+ * utility for posting to an url
+ * @param  {String} url
+ * @param  {Object} options
+ * @param  {Object} options.body
+ * @return {Promise}
+ */
+export function post(url, options ={}) {
+  return _fetch(url, 'POST', options);
+}
+
+export function del(url, options = {}) {
+  return _fetch(url, 'DELETE', options);
 }

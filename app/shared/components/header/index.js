@@ -14,6 +14,7 @@ const propTypes = {
   onLogin: PropTypes.func.isRequired,
   currentUser: UserShape,
   showSignupLogin: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
   ...withStylesPropTypes,
 };
 
@@ -25,6 +26,7 @@ export function UnstyledHeader({
   toggleNavExpand,
   currentUser,
   showSignupLogin,
+  logout,
   styles,
 }) {
   return (
@@ -42,6 +44,11 @@ export function UnstyledHeader({
       {!currentUser && (
         <Button onPress={showSignupLogin}>
           Signup
+        </Button>
+      )}
+      {currentUser && (
+        <Button onPress={logout}>
+          Logout
         </Button>
       )}
     </nav>

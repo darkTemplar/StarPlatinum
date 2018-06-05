@@ -1,6 +1,4 @@
-import {
-  HIDE_SIGNUP_LOGIN,
-} from '../actionTypes';
+import { HIDE_SIGNUP_LOGIN } from '../actionTypes';
 
 export default function hideSignupLogin() {
   return {
