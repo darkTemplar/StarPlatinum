@@ -1,6 +1,4 @@
-import {
-  SHOW_SIGNUP_LOGIN,
-} from '../actionTypes';
+import { SHOW_SIGNUP_LOGIN } from '../actionTypes';
 
 export default function showSignupLogin() {
   return {
