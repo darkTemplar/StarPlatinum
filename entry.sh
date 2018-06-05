@@ -15,7 +15,7 @@ if [[ -z `psql -Atqc "\\list $DB_NAME"` ]]; then
   echo "Database $DB_NAME does not exist. Creating..."
   createdb -E UTF8 $POSTGRES_DATABASE -l en_US.UTF-8 -T template0
   mix ecto.migrate
-  mix run priv/repo/seeds.exs
+  #mix run priv/repo/seeds.exs
   echo "Database $DB_NAME created."
 fi
 
