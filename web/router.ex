@@ -32,7 +32,8 @@ defmodule Offerdate.Router do
     pipe_through :authenticated
     resources "/users", UserController, only: [:index, :show]
     resources "/listings", ListingController, only: [:new, :show, :create, :edit, :delete]
-    #resources "/listings", ListingController, only: [:new, :show, :create, :edit, :delete]
+
+    get "/getAddressSuggestions", GoogleController, :get_address_suggestions
     post "/getSignature", S3Controller, :create
     delete "/logout", SessionController, :delete
   end
