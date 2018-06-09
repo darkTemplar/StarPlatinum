@@ -9,14 +9,13 @@ defmodule Offerdate.Repo.Migrations.CreateProperty do
       add(:state, :string)
       add(:country, :string)
       add(:zip, :string)
-      add(:lat, :string)
-      add(:long, :string)
+      add(:place_id, :string)
       add(:address_hash, :string, null: false)
 
       timestamps()
     end
 
-    create(unique_index(:properties, [:address_hash]))
+    create(unique_index(:properties, [:place_id]))
 
     create table(:property_images) do
       add(:url, :string, null: false)
