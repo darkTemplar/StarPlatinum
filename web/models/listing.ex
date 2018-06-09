@@ -4,6 +4,7 @@ defmodule Offerdate.Listing do
   alias Offerdate.Repo
   alias Offerdate.Property
 
+  @derive {Poison.Encoder, only: [:listing_price, :sale_price, :initial_expiry, :final_expiry, :beds, :baths, :area, :status]}
   schema "listings" do
     field(:listing_price, :float)
     field(:sale_price, :float)
@@ -40,9 +41,7 @@ defmodule Offerdate.Listing do
         |> Ecto.Multi.insert(:property, property_changeset)
         |> Ecto.Multi.run(:listing, fn %{property: property} -> 
           params = Map.put(params, "property_id", property.id)
-          multi
-          |> Ecto.Multi.insert(:listing, Listing.changeset(%Listing{}, params))
-          {:ok, nil}
+          Repo.insert(Listing.changeset(%Listing{}, params))
         end)
       property ->
         params = Map.put(params, "property_id", property.id)

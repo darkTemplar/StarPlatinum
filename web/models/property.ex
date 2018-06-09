@@ -3,6 +3,7 @@ defmodule Offerdate.Property do
   alias __MODULE__
   alias Offerdate.Repo
 
+  @derive {Poison.Encoder, only: [:street_address, :unit_number, :city, :state, :country, :zip, :place_id]}
   schema "properties" do
     field(:street_address, :string)
     field(:unit_number, :string)
