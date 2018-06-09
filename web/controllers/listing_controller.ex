@@ -26,8 +26,6 @@ defmodule Offerdate.ListingController do
     user_id = get_session(conn, :user_id)
     listing_params = Map.put(listing_params, "user_id", user_id)
     multi = Listing.to_multi(listing_params)
-    IO.inspect "multi"
-    IO.inspect multi
       
     case Repo.transaction(multi) do
       {:ok, %{listing: listing}} ->
