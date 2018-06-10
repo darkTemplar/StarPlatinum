@@ -34,7 +34,11 @@ defmodule Offerdate.Mixfile do
         :httpoison,
         :poison,
         :exredis,
-        :timex
+        :timex,
+        :ex_aws,
+        :ex_aws_s3,
+        :hackney,
+        :uuid
       ]
     ]
   end
@@ -63,7 +67,11 @@ defmodule Offerdate.Mixfile do
       {:distillery, "~> 1.0", override: true},
       {:timex, "~> 3.1"},
       {:cors_plug, "~> 1.1"},
-      {:logger_file_backend, ">=0.0.4"}
+      {:logger_file_backend, ">=0.0.4"},
+      {:ex_aws, "~> 2.0.2"},
+      {:ex_aws_s3, "~> 2.0.0"},
+      {:hackney, "~> 1.8.6"},
+      { :uuid, "~> 1.1" }
     ]
   end
 

@@ -34,7 +34,6 @@ defmodule Offerdate.Router do
     resources "/listings", ListingController, only: [:new, :show, :create, :edit, :delete]
 
     get "/getAddressSuggestions", GoogleController, :get_address_suggestions
-    post "/getSignature", S3Controller, :create
     delete "/logout", SessionController, :delete
   end
 

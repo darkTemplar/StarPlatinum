@@ -1,60 +1,22 @@
 defmodule Offerdate.S3Controller do
   use Offerdate.Web, :controller
+  use UUID
+  alias ExAws
 
-  def create(conn, %{"filename" => filename, "mimetype" => mimetype}) do
-    conn
-    |> put_status(:created)
-    |> render("create.json", signature: sign(filename, mimetype))
-  end
+  def upload(%{file => file}) do
+  file_extension = Path.extname(file.filename)
+  file_uuid = UUID.uuid4(:hex)
+  s3_filename = "#{file_uuid}.#{file_extension}"
+  s3_bucket = System.get.env("S3_IMAGE_BUCKET_NAME")
+  # Load the file into memory
+  {:ok, file_binary} = File.read(file.path)
 
-  defp sign(filename, mimetype) do
-    policy = policy(filename, mimetype)
+  # Upload the file to S3
+  {:ok, _} = 
+    ExAws.S3.put_object(s3_bucket, s3_filename, file_binary)
+    |> ExAws.request()
 
-    %{
-      key: filename,
-      "Content-Type": mimetype,
-      acl: "public-read",
-      success_action_status: "201",
-      action: "https://s3.amazonaws.com/#{Application.get_env(:s3, :image_bucket_name)}",
-      AWSAccessKeyId: Application.get_env(:s3, :aws_access_key_id),
-      policy: policy,
-      signature: hmac_sha1(Application.get_env(:s3, :aws_secret_access_key), policy)
-    }
-  end
-
-  defp now_plus(minutes) do
-    import Timex
-
-    now
-    |> shift(minutes: minutes)
-    |> format!("{ISO:Extended:Z}")
-  end
-
-  defp hmac_sha1(secret, msg) do
-    :crypto.hmac(:sha, secret, msg)
-    |> Base.encode64()
-  end
-
-  defp policy(key, mimetype, expiration_window \\ 60) do
-    %{
-      # This policy is valid for an hour by default.
-      expiration: now_plus(expiration_window),
-      conditions: [
-        # You can only upload to the bucket we specify.
-        %{bucket: System.get_env("S3_BUCKET_NAME")},
-        # The uploaded file must be publicly readable.
-        %{acl: "public-read"},
-        # You have to upload the mime type you said you would upload.
-        ["starts-with", "$Content-Type", mimetype],
-        # You have to upload the file name you said you would upload.
-        ["starts-with", "$key", key],
-        # When things work out ok, AWS should send a 201 response.
-        %{success_action_status: "201"}
-      ]
-    }
-    # Let's make this into JSON.
-    |> Poison.encode!()
-    # We also need to base64 encode it.
-    |> Base.encode64()
+  put_flash(:success, "File uploaded successfully!")
+  |> render("upload.html")
   end
 end
