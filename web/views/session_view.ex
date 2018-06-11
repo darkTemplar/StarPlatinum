@@ -12,7 +12,7 @@ defmodule Offerdate.SessionView do
   end
 
   def render("error.json", _) do
-    %{error: "Invalid email or password"}
+    %{errors: "Invalid email or password"}
   end
 
   def render("delete.json", _) do
