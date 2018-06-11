@@ -9,6 +9,7 @@ const propTypes = {
   secondary: mutuallyExclusiveTrueProps('primary', 'secondary'),
   type: PropTypes.oneOf(['submit', 'button']),
   size: PropTypes.oneOf(['xs', 'md', 'lg']),
+  block: PropTypes.bool,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
   onPress: PropTypes.func,
@@ -22,6 +23,7 @@ const defaultProps = {
   secondary: false,
   type: 'button',
   size: 'md',
+  block: false,
   loading: false,
   disabled: false,
   onPress: () => null,
@@ -40,6 +42,7 @@ export function UnstyledButton({
   buttonRef,
   styles,
   type,
+  block,
   size,
 }) {
   return (
@@ -53,6 +56,7 @@ export function UnstyledButton({
         secondary && styles.secondary,
         loading && styles.loading,
         disabled && styles.disabled,
+        block && styles.block,
         size === 'xs' && styles.xs,
         size === 'md' && styles.md,
         size === 'lg' && styles.lg,
@@ -66,7 +70,7 @@ export function UnstyledButton({
 UnstyledButton.propTypes = propTypes;
 UnstyledButton.defaultProps = defaultProps;
 
-export default withStyles(({ color, unit }) => ({
+export default withStyles(({ color, unit, font }) => ({
   button: {
     '-webkit-appearance': 'none',
 
@@ -102,6 +106,10 @@ export default withStyles(({ color, unit }) => ({
 
   },
 
+  block: {
+    width: '100%',
+  },
+
   xs: {
 
   },
@@ -111,6 +119,7 @@ export default withStyles(({ color, unit }) => ({
   },
 
   lg: {
-
+    height: 50,
+    fontSize: font.large,
   },
 }), { pureComponent: true })(UnstyledButton);

@@ -61,6 +61,10 @@ export default class SignupLogin extends React.PureComponent {
     this.setState({ password: value });
   }
 
+  renderFooter() {
+    return 'foobar';
+  }
+
   render() {
     const { currentUser, isVisible, hideSignupLogin, isLoading } = this.props;
 
@@ -72,6 +76,7 @@ export default class SignupLogin extends React.PureComponent {
       <Modal
         isOpen={isVisible}
         onClose={hideSignupLogin}
+        footer={this.renderFooter()}
       >
         <form action="javascript:void(0);" onSubmit={this.onSubmit}>
           <Input
@@ -90,8 +95,10 @@ export default class SignupLogin extends React.PureComponent {
           <Spacing top={2}>
             <Button
               type="submit"
+              size="lg"
               disabled={isLoading}
               loading={isLoading}
+              block
             >
               Sign up
             </Button>
