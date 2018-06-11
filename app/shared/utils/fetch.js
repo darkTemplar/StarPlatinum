@@ -42,14 +42,22 @@ function _fetch(url, method, options = {}) {
     credentials: 'include',
   })
     .then(
-      response => response.json(),
+      response => {
+        if (response.status >= 400 && response.status < 600) {
+          return response.json()
+            .then((res) => {
+              throw res;
+            });
+        }
+
+        return response.json();
+      },
       (error) => {
         throw error;
       },
     )
     .catch((ex) => {
-      // TODO need to log error
-      throw new Error(ex.message);
+      throw ex;
     });
 }
 

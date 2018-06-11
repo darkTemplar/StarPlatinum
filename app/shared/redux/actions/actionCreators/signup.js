@@ -54,7 +54,7 @@ export default function signup({
             dispatch(hideSignupLogin());
           },
           (ex) => {
-            dispatch(signupError(ex.message));
+            dispatch(signupError(ex.errors));
           },
         )
     );

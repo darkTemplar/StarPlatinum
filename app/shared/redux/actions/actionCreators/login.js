@@ -53,7 +53,7 @@ export default function login({
             dispatch(hideSignupLogin());
           },
           (ex) => {
-            dispatch(loginError(ex.message));
+            dispatch(loginError(ex.errors));
           },
         )
     );
