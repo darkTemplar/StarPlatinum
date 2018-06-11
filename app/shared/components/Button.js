@@ -70,7 +70,7 @@ export function UnstyledButton({
 UnstyledButton.propTypes = propTypes;
 UnstyledButton.defaultProps = defaultProps;
 
-export default withStyles(({ color, unit, font }) => ({
+export default withStyles(({ color, unit }) => ({
   button: {
     '-webkit-appearance': 'none',
 
@@ -120,6 +120,5 @@ export default withStyles(({ color, unit, font }) => ({
 
   lg: {
     height: 50,
-    fontSize: font.large,
   },
 }), { pureComponent: true })(UnstyledButton);

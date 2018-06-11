@@ -1,10 +1,13 @@
+import {
+  forbidExtraProps,
+  mutuallyExclusiveTrueProps
+} from 'airbnb-prop-types';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { mutuallyExclusiveTrueProps } from 'airbnb-prop-types';
 
 import { css, withStyles, withStylesPropTypes } from '../hocs/withStyles';
 
-const propTypes = {
+const propTypes = forbidExtraProps({
   children: PropTypes.node.isRequired,
   size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
   bold: PropTypes.bool,
@@ -13,7 +16,7 @@ const propTypes = {
   inverse: mutuallyExclusiveTrueProps('primary', 'inverse', 'muted'),
   primary: mutuallyExclusiveTrueProps('primary', 'inverse', 'muted'),
   ...withStylesPropTypes,
-};
+});
 
 const defaultProps = {
   size: 'md',

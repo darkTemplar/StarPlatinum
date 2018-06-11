@@ -2,29 +2,27 @@ import { forbidExtraProps } from 'airbnb-prop-types';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { MODES } from './constants';
 import Button from '../Button';
 import Input from '../Input';
 import Modal from '../Modal';
+import SignupLoginFooterContainer from './SignupLoginFooterContainer';
 import Spacing from '../Spacing';
+import Text from '../Text';
 import UserShape from '../../shapes/UserShape';
 
-export const MODES = {
-  SIGNUP: 'signup',
-  LOGIN: 'login',
-};
-
 const propTypes = forbidExtraProps({
-  mode: PropTypes.oneOf(Object.values(MODES)),
+  mode: PropTypes.oneOf(Object.values(MODES)).isRequired,
   currentUser: UserShape,
   hideSignupLogin: PropTypes.func.isRequired,
   error: PropTypes.string,
   isVisible: PropTypes.bool,
   isLoading: PropTypes.bool,
   signup: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
 });
 
 const defaultProps = {
-  mode: MODES.SIGNUP,
   error: '',
   currentUser: null,
   isVisible: false,
@@ -50,7 +48,13 @@ export default class SignupLogin extends React.PureComponent {
   }
 
   onSubmit() {
-    this.props.signup(this.state);
+    const { mode, signup, login } = this.props;
+
+    if (mode === MODES.SIGNUP) {
+      signup(this.state);
+    } else {
+      login(this.state);
+    }
   }
 
   onChangeEmail(value) {
@@ -61,22 +65,20 @@ export default class SignupLogin extends React.PureComponent {
     this.setState({ password: value });
   }
 
-  renderFooter() {
-    return 'foobar';
-  }
-
   render() {
-    const { currentUser, isVisible, hideSignupLogin, isLoading } = this.props;
+    const { mode, currentUser, isVisible, hideSignupLogin, isLoading } = this.props;
 
     if (currentUser) {
       return null;
     }
 
+    const ctaLabel = mode === MODES.SIGNUP ? 'Sign up' : 'Log in';
+
     return (
       <Modal
         isOpen={isVisible}
         onClose={hideSignupLogin}
-        footer={this.renderFooter()}
+        footer={<SignupLoginFooterContainer />}
       >
         <form action="javascript:void(0);" onSubmit={this.onSubmit}>
           <Input
@@ -100,7 +102,7 @@ export default class SignupLogin extends React.PureComponent {
               loading={isLoading}
               block
             >
-              Sign up
+              <Text inverse>{ctaLabel}</Text>
             </Button>
           </Spacing>
         </form>

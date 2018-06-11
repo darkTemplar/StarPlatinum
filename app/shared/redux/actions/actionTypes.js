@@ -2,6 +2,7 @@ export const TOGGLE_NAV_EXPAND = 'offerdate/shared/TOGGLE_NAV_EXPAND';
 
 export const BOOTSTRAP_CURRENT_USER = 'offerdate/shared/BOOTSTRAP_CURRENT_USER';
 
+export const SWITCH_SIGNUP_LOGIN = 'offerdate/shared/SWITCH_SIGNUP_LOGIN';
 export const SHOW_SIGNUP_LOGIN = 'offerdate/shared/SHOW_SIGNUP_LOGIN';
 export const HIDE_SIGNUP_LOGIN = 'offerdate/shared/HIDE_SIGNUP_LOGIN';
 

@@ -1,5 +1,6 @@
 import {
   BOOTSTRAP_CURRENT_USER,
+  SWITCH_SIGNUP_LOGIN,
   HIDE_SIGNUP_LOGIN,
   LOGIN_ERROR,
   LOGIN_REQUEST,
@@ -9,6 +10,7 @@ import {
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
 } from '../actions/actionTypes';
+import { MODES } from '../../components/SignupLogin/constants';
 
 function getInitialState() {
   return {
@@ -18,15 +20,22 @@ function getInitialState() {
     error: '',
     // modal visible
     isVisible: false,
+    mode: MODES.SIGNUP,
   };
 }
 
-export default function authReducer(state = getInitialState, action = {}) {
+export default function authReducer(state = getInitialState(), action = {}) {
   switch (action.type) {
     case BOOTSTRAP_CURRENT_USER: {
       return {
         ...state,
         currentUser: action.payload.user,
+      };
+    }
+    case SWITCH_SIGNUP_LOGIN: {
+      return {
+        ...state,
+        mode: state.mode === MODES.SIGNUP ? MODES.LOGIN : MODES.SIGNUP,
       };
     }
     case LOGIN_REQUEST:
