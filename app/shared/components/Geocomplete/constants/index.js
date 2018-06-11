@@ -1,1 +1,1 @@
-export const GEOCOMPLETE_ENDPOINT = 'places';
+export const GEOCOMPLETE_ENDPOINT = 'getAddressSuggestions';

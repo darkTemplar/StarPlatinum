@@ -9,14 +9,17 @@ function getPort() {
   return process.env.API_PORT;
 }
 
-function getUrl(url) {
+function getUrl(url, query = {}) {
   const parsedUrlObject = urlParser.parse(url, true);
 
   return urlParser.format({
     hostname: getHost(),
     port: getPort(),
     pathname: `/api/${parsedUrlObject.pathname}`,
-    query: parsedUrlObject.query,
+    query: {
+      ...parsedUrlObject.query,
+      ...query,
+    },
   });
 }
 
@@ -26,15 +29,16 @@ function getUrl(url) {
  * @param  {String} method HTTP method: 'POST', 'GET', 'PUT', 'DELETE'
  * @param  {Object} options
  * @param  {Object} options.body
+ * @param  {Object} options.query
  * @return {Promise}
  */
 function _fetch(url, method, options = {}) {
-  return fetch(getUrl(url), {
+  return fetch(getUrl(url, options.query), {
     method,
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(options.body || {}),
+    body: method === 'GET' ? undefined : JSON.stringify(options.body || {}),
     credentials: 'include',
   })
     .then(
@@ -49,7 +53,7 @@ function _fetch(url, method, options = {}) {
     });
 }
 
-export function post(url, options ={}) {
+export function post(url, options = {}) {
   return _fetch(url, 'POST', options);
 }
 

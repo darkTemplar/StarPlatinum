@@ -1,5 +1,6 @@
+import _get from 'lodash/get';
 import { GEOCOMPLETE_ENDPOINT } from '../../constants';
-import { post } from '../../../../utils/fetch';
+import { get } from '../../../../utils/fetch';
 import fetchSuggestionsError from './fetchSuggestionsError';
 import fetchSuggestionsRequest from './fetchSuggestionsRequest';
 import fetchSuggestionsSuccess from './fetchSuggestionsSuccess';
@@ -8,13 +9,13 @@ export default function fetchSuggestions(value) {
   return (dispatch) => {
     dispatch(fetchSuggestionsRequest());
 
-    post(GEOCOMPLETE_ENDPOINT, {
-      body: {
-        value,
+    return get(GEOCOMPLETE_ENDPOINT, {
+      query: {
+        query: value,
       },
     }).then(
       (response) => {
-        dispatch(fetchSuggestionsSuccess(response.suggestions));
+        dispatch(fetchSuggestionsSuccess(_get(response, 'suggestions.predictions', [])));
       },
       ex => dispatch(fetchSuggestionsError(ex.message)),
     ).catch(ex => dispatch(fetchSuggestionsError(ex.message)));
