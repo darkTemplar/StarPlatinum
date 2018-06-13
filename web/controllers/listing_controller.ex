@@ -3,6 +3,7 @@ defmodule Offerdate.ListingController do
   # plug(:authenticate_user when action in [:index, :show])
   alias Offerdate.Auth
   alias Offerdate.Listing
+  alias Offerdate.S3
 
   def show(conn, %{"id" => listing_id}) do
     listing = Repo.get(Listing, String.to_integer(listing_id))
@@ -31,6 +32,7 @@ defmodule Offerdate.ListingController do
       {:ok, %{listing: listing}} ->
         conn
         |> put_status(:created)
+        # here call an insert function to property images table (and use task.await from s3 image upload there)
         |> render("success.json", listing: listing)
       {:error, _operation, repo_changeset, _changes} ->
         conn

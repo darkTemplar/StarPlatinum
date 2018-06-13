@@ -3,6 +3,7 @@ defmodule Offerdate.Listing do
   alias __MODULE__
   alias Offerdate.Repo
   alias Offerdate.Property
+  alias Offerdate.PropertyImage
 
   @derive {Poison.Encoder, only: [:listing_price, :sale_price, :initial_expiry, :final_expiry, :beds, :baths, :area, :status]}
   schema "listings" do
@@ -33,9 +34,12 @@ defmodule Offerdate.Listing do
 
   
   def to_multi(params \\ %{}) do
+    # async task to upload image data to s3
+    property_image_params = Task.async(fn -> Offerdate.S3.upload_images(params["images"]) end)
     property_changeset = Property.changeset(%Property{}, params)
     multi = Ecto.Multi.new()
-    case Repo.get_by(Property, address_hash: get_field(property_changeset, :address_hash)) do
+    # check to see if property already exists or if we need to create a new entry
+    case Repo.get_by(Property, place_id: get_field(property_changeset, :place_id)) do
       nil -> 
         multi
         |> Ecto.Multi.insert(:property, property_changeset)
@@ -43,10 +47,16 @@ defmodule Offerdate.Listing do
           params = Map.put(params, "property_id", property.id)
           Repo.insert(Listing.changeset(%Listing{}, params))
         end)
+        |> Ecto.Multi.run(:property_image, fn multi ->
+          PropertyImage.insert_from_s3(Task.await(property_image_params), multi.listing.property_id)
+        end)
       property ->
         params = Map.put(params, "property_id", property.id)
         multi
-        |> Ecto.Multi.insert(:listing, Listing.changeset(%Listing{}, params)) 
+        |> Ecto.Multi.insert(:listing, Listing.changeset(%Listing{}, params))
+        |> Ecto.Multi.run(:property_image, fn multi -> 
+          PropertyImage.insert_from_s3(Task.await(property_image_params), multi.listing.property_id)
+        end) 
     end
   end
 
