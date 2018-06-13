@@ -22,7 +22,8 @@ config :logger, :console,
 
 config :ex_aws,  
   access_key_id: [System.get_env("AWS_ACCESS_KEY"), :instance_role],
-  secret_access_key: [System.get_env("AWS_SECRET_KEY"), :instance_role]
+  secret_access_key: [System.get_env("AWS_SECRET_KEY"), :instance_role],
+  region: "us-west-2"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -71,7 +71,7 @@ defmodule Offerdate.Mixfile do
       {:ex_aws, "~> 2.0.2"},
       {:ex_aws_s3, "~> 2.0.0"},
       {:hackney, "~> 1.8.6"},
-      { :uuid, "~> 1.1" }
+      {:uuid, "~> 1.1"}
     ]
   end
 
