@@ -13,7 +13,8 @@ const propTypes = {
   onSignup: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
   currentUser: UserShape,
-  showSignupLogin: PropTypes.func.isRequired,
+  showSignup: PropTypes.func.isRequired,
+  showLogin: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   ...withStylesPropTypes,
 };
@@ -25,7 +26,8 @@ const defaultProps = {
 export function UnstyledHeader({
   toggleNavExpand,
   currentUser,
-  showSignupLogin,
+  showSignup,
+  showLogin,
   logout,
   styles,
 }) {
@@ -44,10 +46,10 @@ export function UnstyledHeader({
       <div {...css(styles.pullRight)}>
         {!currentUser && (
           <div>
-            <Button onPress={showSignupLogin}>
+            <Button onPress={showLogin}>
               Log in
             </Button>
-            <Button onPress={showSignupLogin}>
+            <Button onPress={showSignup}>
               Signup
             </Button>
           </div>

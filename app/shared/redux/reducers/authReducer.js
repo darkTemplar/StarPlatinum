@@ -6,6 +6,8 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   SHOW_SIGNUP_LOGIN,
+  SHOW_SIGNUP,
+  SHOW_LOGIN,
   SIGNUP_ERROR,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
@@ -66,6 +68,20 @@ export default function authReducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         isVisible: true,
+      };
+    }
+    case SHOW_LOGIN: {
+      return {
+        ...state,
+        isVisible: true,
+        mode: MODES.LOGIN,
+      };
+    }
+    case SHOW_SIGNUP: {
+      return {
+        ...state,
+        isVisible: true,
+        mode: MODES.SIGNUP,
       };
     }
     case HIDE_SIGNUP_LOGIN: {

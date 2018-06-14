@@ -9,6 +9,7 @@ import Modal from '../Modal';
 import SignupLoginFooterContainer from './SignupLoginFooterContainer';
 import Spacing from '../Spacing';
 import Text from '../Text';
+import Title from '../Title';
 import UserShape from '../../shapes/UserShape';
 
 const propTypes = forbidExtraProps({
@@ -80,6 +81,9 @@ export default class SignupLogin extends React.PureComponent {
         onClose={hideSignupLogin}
         footer={<SignupLoginFooterContainer />}
       >
+        <Spacing bottom={2}>
+          <Title level={2} center>{ctaLabel}</Title>
+        </Spacing>
         <form action="javascript:void(0);" onSubmit={this.onSubmit}>
           <Input
             type="email"

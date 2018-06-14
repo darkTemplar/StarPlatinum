@@ -7,11 +7,13 @@ const propTypes = {
   level: PropTypes.oneOf([1, 2, 3]).isRequired,
   children: PropTypes.node.isRequired,
   jumbo: PropTypes.bool,
+  center: PropTypes.bool,
   ...withStylePropTypes,
 };
 
 const defaultProps = {
   jumbo: false,
+  center: false,
 };
 
 const levelToComponentMap = {
@@ -25,6 +27,7 @@ export function UnstyledTitle({
   children,
   styles,
   jumbo,
+  center,
 }) {
   const Component = jumbo ? 'h1' : levelToComponentMap[level];
 
@@ -32,6 +35,7 @@ export function UnstyledTitle({
     <Component
       {...css(
         styles.default,
+        center && styles.center,
         level === 1 && styles.level1,
         level === 2 && styles.level2,
         level === 3 && styles.level3,
@@ -50,6 +54,10 @@ export default withStyles(({ font, fontFamily }) => ({
   default: {
     margin: 0,
     fontFamily: fontFamily.bold,
+  },
+
+  center: {
+    textAlign: 'center',
   },
 
   jumbo: {
