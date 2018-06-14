@@ -32,7 +32,7 @@ export function UnstyledTitle({
     <Component
       {...css(
         styles.default,
-        level === 1 && styles.level1  ,
+        level === 1 && styles.level1,
         level === 2 && styles.level2,
         level === 3 && styles.level3,
         jumbo && styles.jumbo,

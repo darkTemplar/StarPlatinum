@@ -41,16 +41,23 @@ export function UnstyledHeader({
           <Text size="xl" inverse>OfferDate</Text>
         </div>
       </Link>
-      {!currentUser && (
-        <Button onPress={showSignupLogin}>
-          Signup
-        </Button>
-      )}
-      {currentUser && (
-        <Button onPress={logout}>
-          Logout
-        </Button>
-      )}
+      <div {...css(styles.pullRight)}>
+        {!currentUser && (
+          <div>
+            <Button onPress={showSignupLogin}>
+              Log in
+            </Button>
+            <Button onPress={showSignupLogin}>
+              Signup
+            </Button>
+          </div>
+        )}
+        {currentUser && (
+          <Button onPress={logout}>
+            Logout
+          </Button>
+        )}
+      </div>
     </nav>
   );
 }
@@ -62,6 +69,10 @@ export default withStyles(({ color, unit, responsive }) => ({
   header: {
     width: '100%',
     background: color.greys.white,
+  },
+
+  pullRight: {
+    float: 'right',
   },
 
   mobileControl: {
