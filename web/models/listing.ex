@@ -3,7 +3,7 @@ defmodule Offerdate.Listing do
   alias __MODULE__
   alias Offerdate.Repo
   alias Offerdate.Property
-  alias Offerdate.PropertyImage
+  alias Offerdate.ListingDocument
 
   @derive {Poison.Encoder, only: [:listing_price, :sale_price, :initial_expiry, :final_expiry, :beds, :baths, :area, :status]}
   schema "listings" do
@@ -34,9 +34,11 @@ defmodule Offerdate.Listing do
 
   
   def to_multi(params \\ %{}) do
-    # async task to upload image data to s3
-    property_image_params = Task.async(fn -> Offerdate.S3.upload_images(params["images"]) end)
+    # async task to upload docs like images and disclosures to s3
+    listing_doc_params = Task.async(fn -> Offerdate.S3.upload_files(params["files"]) end)
     property_changeset = Property.changeset(%Property{}, params)
+    IO.inspect "listing params"
+    IO.inspect params
     multi = Ecto.Multi.new()
     # check to see if property already exists or if we need to create a new entry
     case Repo.get_by(Property, place_id: get_field(property_changeset, :place_id)) do
@@ -47,16 +49,16 @@ defmodule Offerdate.Listing do
           params = Map.put(params, "property_id", property.id)
           Repo.insert(Listing.changeset(%Listing{}, params))
         end)
-        |> Ecto.Multi.run(:property_image, fn multi ->
-          PropertyImage.insert_from_s3(Task.await(property_image_params), multi.listing.property_id)
+        |> Ecto.Multi.run(:listing_document, fn multi ->
+          ListingDocument.insert_from_s3(Task.await(listing_doc_params), multi.listing.id)
         end)
       property ->
         params = Map.put(params, "property_id", property.id)
         multi
         |> Ecto.Multi.insert(:listing, Listing.changeset(%Listing{}, params))
-        |> Ecto.Multi.run(:property_image, fn multi -> 
-          PropertyImage.insert_from_s3(Task.await(property_image_params), multi.listing.property_id)
-        end) 
+        |> Ecto.Multi.run(:listing_document, fn multi -> 
+          ListingDocument.insert_from_s3(Task.await(listing_doc_params), multi.listing.id)
+        end)
     end
   end
 
