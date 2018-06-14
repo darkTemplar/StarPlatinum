@@ -7,12 +7,13 @@ defmodule Offerdate.ListingDocument do
     belongs_to(:listing, Offerdate.Listing)
     field(:type, :integer)
     field(:url, :string)
-    field(:metadata, :map)
+    field(:etag, :string)
+    field(:size, :float)
 
     timestamps()
   end
 
-  @allowed_fields ~w(listing_id type url metadata)
+  @allowed_fields ~w(listing_id type url etag size)
 
   def changeset(%ListingDocument{} = model, params \\ :invalid) do
     model
