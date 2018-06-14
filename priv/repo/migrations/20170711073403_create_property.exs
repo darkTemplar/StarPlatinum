@@ -16,16 +16,5 @@ defmodule Offerdate.Repo.Migrations.CreateProperty do
     end
 
     create(unique_index(:properties, [:place_id]))
-
-    create table(:property_images) do
-      add(:url, :string, null: false)
-      add(:property_id, references(:properties, on_delete: :nothing))
-      add(:etag, :string)
-      add(:size, :float)
-
-      timestamps()
-    end
-
-    create(unique_index(:property_images, [:property_id]))
   end
 end
