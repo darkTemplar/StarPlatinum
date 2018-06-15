@@ -7,7 +7,7 @@ defmodule Offerdate.ListingController do
 
   def show(conn, %{"id" => listing_id}) do
     listing = Repo.get(Listing, String.to_integer(listing_id))
-    render(conn, "show.json", user: listing)
+    render(conn, "show.json", listing: listing)
   end
 
   def new(conn, _params) do
