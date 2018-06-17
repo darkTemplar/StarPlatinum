@@ -22,4 +22,14 @@ defmodule Offerdate.ListingView do
     }
   end
 
+  def render("new.json", %{agent_preferences: agent_preferences}) do
+    %{
+      status: :ok,
+      agent_preferences: agent_preferences,
+      message: """
+        New listing initial params.
+      """
+    }
+  end
+
 end

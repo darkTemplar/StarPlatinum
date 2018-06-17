@@ -5,6 +5,15 @@ defmodule Offerdate.Listing do
   alias Offerdate.Property
   alias Offerdate.ListingDocument
 
+  @price 1
+  @escrow_period 2
+  @escrow_title_fee 3
+  @contingencies 4
+  @financing 5
+  @property_condition 6
+  @offer_expiration 7
+  @disclosures 8
+
   @derive {Poison.Encoder, only: [:listing_price, :sale_price, :initial_expiry, :final_expiry, :beds, :baths, :area, :status]}
   schema "listings" do
     field(:listing_price, :float)
@@ -37,8 +46,6 @@ defmodule Offerdate.Listing do
     # async task to upload docs like images and disclosures to s3
     listing_doc_params = Task.async(fn -> Offerdate.S3.upload_files(params["files"]) end)
     property_changeset = Property.changeset(%Property{}, params)
-    IO.inspect "listing params"
-    IO.inspect params
     multi = Ecto.Multi.new()
     # check to see if property already exists or if we need to create a new entry
     case Repo.get_by(Property, place_id: get_field(property_changeset, :place_id)) do
@@ -62,10 +69,21 @@ defmodule Offerdate.Listing do
     end
   end
 
-
   def create_listing(attrs \\ %{}) do
     %Listing{}
     |> changeset(attrs)
     |> Repo.insert()
+  end
+
+  def get_preferences() do
+    %{
+      :price => ["Price", @price],
+      :escrow_period => ["Escrow Period", @escrow_period],
+      :escrow_title_fee => ["Escrow and Title Fee", @escrow_title_fee],
+      :contingencies => ["Contingencies", @contingencies],
+      :financing => ["Financing", @financing],
+      :offer_expiration => ["Offer Expiration Duration", @offer_expiration],
+      :disclosures => ["Disclosures", @disclosures],
+    }
   end
 end

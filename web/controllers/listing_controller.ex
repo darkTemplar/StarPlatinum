@@ -11,8 +11,7 @@ defmodule Offerdate.ListingController do
   end
 
   def new(conn, _params) do
-    changeset = Listing.changeset(%Listing{})
-    render(conn, "new.json", changeset: changeset)
+    render(conn, "new.json", agent_preferences: Listing.get_preferences())
   end
 
   @apidoc """
