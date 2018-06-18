@@ -78,7 +78,7 @@ export default function PreferencesSection({
         />
       </div>
     </div>
-  ); 
+  );
 }
 
 PreferencesSection.propTypes = propTypes;

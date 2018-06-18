@@ -1,21 +1,20 @@
-import { forbidExtraProps } from 'airbnb-prop-types';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import { withRedux, withReduxPropTypes } from '../hocs/withRedux';
 import LayoutContainer from '../layout/LayoutContainer';
 
-const propTypes = forbidExtraProps({
+const propTypes = {
   children: PropTypes.node.isRequired,
   reducers: PropTypes.object,
   ...withReduxPropTypes,
-});
+};
 
 const defaultProps = {
   reducers: {},
 };
 
-export class PurePageContent extends React.PureComponent {
+export class PageContentWithReduxAndAuth extends React.PureComponent {
   constructor(props) {
     super(props);
     this.props.store.injectAll(this.props.reducers);
@@ -32,7 +31,7 @@ export class PurePageContent extends React.PureComponent {
   }
 }
 
-PurePageContent.propTypes = propTypes;
-PurePageContent.defaultProps = defaultProps;
+PageContentWithReduxAndAuth.propTypes = propTypes;
+PageContentWithReduxAndAuth.defaultProps = defaultProps;
 
-export default withRedux(PurePageContent);
+export default withRedux(PageContentWithReduxAndAuth);
