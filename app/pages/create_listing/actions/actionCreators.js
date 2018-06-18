@@ -3,6 +3,7 @@ import {
   CREATE_LISTING_REQUEST,
   CREATE_LISTING_SUCCESS,
   CREATE_LISTING_ERROR,
+  BOOTSTRAP_CREATE_LISTING,
 } from './actionTypes';
 import { post } from '../../../shared/utils/fetch';
 
@@ -38,5 +39,14 @@ export function createListing(listing) {
         console.log(response);
       })
       .catch(ex => dispatch(createListingError(ex.message)));
+  };
+}
+
+export function bootstrapData(bootstrapData = {}) {
+  return {
+    type: BOOTSTRAP_CREATE_LISTING,
+    payload: {
+      bootstrapData,
+    },
   };
 }

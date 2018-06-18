@@ -1,20 +1,45 @@
+import { forbidExtraProps } from 'airbnb-prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
+import _omit from 'lodash/omit';
 
 import { CREATE_LISTING_PREF_API_ENDPOINT } from './constants/api';
+import { bootstrapData } from './actions/actionCreators';
 import { get } from '../../shared/utils/fetch';
+import BootstrapDataShape from './shapes/BootstrapDataShape';
 import CreateListingPageContentContainer from './containers/CreateListingPageContentContainer';
+import createListingBootstrapReducer from './reducers/createListingBootstrapReducer';
 import geocompleteReducer from '../../shared/components/Geocomplete/reducers/geocompleteReducer';
 import withPage from '../../shared/page/withPage';
 
+const propTypes = forbidExtraProps({
+  bootstrapData: BootstrapDataShape.isRequired,
+});
+
+function filterResponse(response) {
+  return {
+    bootstrapData: _omit(response, ['status', 'message']),
+  };
+}
+
+const contextTypes = {
+  store: PropTypes.object.isRequired,
+};
+
 export class CreateListing extends React.PureComponent {
+  constructor(props, context) {
+    super(props, context);
+    this.context.store.dispatch(bootstrapData(this.props.bootstrapData));
+  }
+
   static getInitialProps({ req }) {
     if (req) {
       return req.api.get(CREATE_LISTING_PREF_API_ENDPOINT)
-        .then(response => response.agent_preferences);
+        .then(filterResponse);
     }
 
     return get(CREATE_LISTING_PREF_API_ENDPOINT)
-      .then(response => response.agent_preferences);
+      .then(filterResponse);
   }
 
   render() {
@@ -24,4 +49,10 @@ export class CreateListing extends React.PureComponent {
   }
 }
 
-export default withPage(CreateListing, { geocomplete: geocompleteReducer });
+CreateListing.propTypes = propTypes;
+CreateListing.contextTypes = contextTypes;
+
+export default withPage(CreateListing, {
+  geocomplete: geocompleteReducer,
+  createListing: createListingBootstrapReducer,
+});

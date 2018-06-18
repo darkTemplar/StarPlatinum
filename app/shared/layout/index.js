@@ -39,7 +39,8 @@ const STATIC_SIGNED_IN_NAVBAR_ITEMS = [
     id: 'nav-listing-create',
     icon: ListPropertyIcon,
     label: 'List a Property',
-    url: '/listing/new',
+    url: '/create_listing',
+    as: '/listing/new',
   },
   {
     id: 'nav-my-listings',

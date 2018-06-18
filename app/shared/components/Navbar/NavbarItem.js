@@ -2,7 +2,7 @@ import React from 'react';
 
 import { css, withStyles, withStylesPropTypes } from '../../hocs/withStyles';
 import { withNavbarItemPropTypes } from './NavbarItemShape';
-import Link from '../Link';
+import RoutingLink from '../RoutingLink';
 import Spacing from '../Spacing';
 import Text from '../Text';
 import { core as coreColors } from '../../styles/color';
@@ -18,18 +18,19 @@ export function UnstyledNavbarItem({
   icon: IconComponent,
   label,
   url,
+  as,
   styles,
 }) {
   return (
     <div {...css(styles.navbarItem, active && styles.active)}>
-      <Link href={url} id={id}>
+      <RoutingLink href={url} id={id} as={as || undefined}>
         <Spacing bottom={2}>
           <IconComponent size={24} color={active ? coreColors.primary : undefined} />
         </Spacing>
         <Text size="lg">
           {label}
         </Text>
-      </Link>
+      </RoutingLink>
     </div>
   );
 }

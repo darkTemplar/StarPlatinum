@@ -8,6 +8,7 @@ export const withNavbarItemPropTypes = {
   icon: Types.func.isRequired,
   label: Types.string.isRequired,
   url: Types.string.isRequired,
+  as: Types.string,
 };
 
 export default Shape(withNavbarItemPropTypes);
