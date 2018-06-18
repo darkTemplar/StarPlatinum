@@ -30,6 +30,8 @@ app.prepare()
         app.render(req, res, '/home', query);
       } else if (pathname === '/listing/new') {
         app.render(req, res, '/create_listing', query);
+      } else if (pathname.startsWith('/listing/')) {
+        app.render(req, res, '/view_listing', query);
       } else {
         handle(req, res, parsedUrl);
       }

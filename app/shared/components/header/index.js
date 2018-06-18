@@ -10,8 +10,6 @@ import UserShape from '../../shapes/UserShape';
 
 const propTypes = {
   toggleNavExpand: PropTypes.func.isRequired,
-  onSignup: PropTypes.func.isRequired,
-  onLogin: PropTypes.func.isRequired,
   currentUser: UserShape,
   showSignup: PropTypes.func.isRequired,
   showLogin: PropTypes.func.isRequired,

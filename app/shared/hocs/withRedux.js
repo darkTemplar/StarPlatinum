@@ -47,11 +47,13 @@ export function withRedux(WrappedComponent) {
     }
 
     render() {
+      const { user, ...rest } = this.props;
+
       return (
         <Provider store={this.store}>
           <WrappedComponent
             store={this.store}
-            {...this.props}
+            {...rest}
           />
         </Provider>
       );

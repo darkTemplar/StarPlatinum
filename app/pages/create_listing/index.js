@@ -1,15 +1,11 @@
 import React from 'react';
 
-import CreateListingApp from './app';
+import CreateListingPageContentContainer from './containers/CreateListingPageContentContainer';
+import geocompleteReducer from '../../shared/components/Geocomplete/reducers/geocompleteReducer';
+import withPage from '../../shared/page/withPage';
 
-export default class CreateListing extends React.PureComponent {
-  static getInitialProps() {
-    return CreateListingApp.getInitialProps.apply(CreateListingApp, Array.prototype.slice.call(arguments));
-  }
-
-  render() {
-    return (
-      <CreateListingApp {...this.props} />
-    );
-  }
+export function CreateListing() {
+  return <CreateListingPageContentContainer />;
 }
+
+export default withPage(CreateListing, { geocomplete: geocompleteReducer });
