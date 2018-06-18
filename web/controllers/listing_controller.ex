@@ -6,8 +6,8 @@ defmodule Offerdate.ListingController do
   alias Offerdate.S3
 
   def show(conn, %{"id" => listing_id}) do
-    listing = Repo.get(Listing, String.to_integer(listing_id))
-    render(conn, "show.json", listing: listing)
+    listing = Repo.get(Listing, String.to_integer(listing_id)) |> Repo.preload([:property, :user])
+    render(conn, "show.json", listing: listing, user: listing.user, property: listing.property)
   end
 
   def new(conn, _params) do
@@ -29,10 +29,12 @@ defmodule Offerdate.ListingController do
       
     case Repo.transaction(multi) do
       {:ok, %{listing: listing}} ->
+        # load created listing along with associations
+        created_listing = Repo.get_by(Listing, id: listing.id) |> Repo.preload([:property, :user])
         conn
         |> put_status(:created)
         # here call an insert function to property images table (and use task.await from s3 image upload there)
-        |> render("success.json", listing: listing)
+        |> render("success.json", listing: created_listing, user: created_listing.user, property: created_listing.property)
       {:error, _operation, repo_changeset, _changes} ->
         conn
         |> put_status(:unprocessable_entity)
