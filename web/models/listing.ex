@@ -76,14 +76,14 @@ defmodule Offerdate.Listing do
   end
 
   def get_preferences() do
-    %{
-      :price => ["Price", @price],
-      :escrow_period => ["Escrow Period", @escrow_period],
-      :escrow_title_fee => ["Escrow and Title Fee", @escrow_title_fee],
-      :contingencies => ["Contingencies", @contingencies],
-      :financing => ["Financing", @financing],
-      :offer_expiration => ["Offer Expiration Duration", @offer_expiration],
-      :disclosures => ["Disclosures", @disclosures],
-    }
+    [
+      ["Price", @price],
+      ["Escrow Period", @escrow_period],
+      ["Escrow and Title Fee", @escrow_title_fee],
+      ["Contingencies", @contingencies],
+      ["Financing", @financing],
+      ["Offer Expiration Duration", @offer_expiration],
+      ["Disclosures", @disclosures],
+    ]
   end
 end
