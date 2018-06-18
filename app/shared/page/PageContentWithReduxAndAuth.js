@@ -22,11 +22,11 @@ export class PurePageContent extends React.PureComponent {
   }
 
   render() {
-    const { children, store } = this.props;
+    const { children } = this.props;
 
     return (
       <LayoutContainer>
-        {React.cloneElement(children, { store })}
+        {children}
       </LayoutContainer>
     );
   }

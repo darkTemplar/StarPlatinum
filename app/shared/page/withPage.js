@@ -1,5 +1,5 @@
 import React from 'react';
-import hoistNonReactStatics from 'hoist-non-react-statics';
+import _omit from 'lodash/omit';
 
 import PageContentWithReduxAndAuth from './PageContentWithReduxAndAuth';
 
@@ -17,13 +17,14 @@ export default function withPage(WrappedComponent, reducers) {
 
     render() {
       const {
+        // don't pass url down
         url,
         ...rest
       } = this.props;
 
       return (
         <PageContentWithReduxAndAuth reducers={reducers} {...rest}>
-          <WrappedComponent {...rest} />
+          <WrappedComponent {..._omit(rest, ['user'])} />
         </PageContentWithReduxAndAuth>
       );
     }
