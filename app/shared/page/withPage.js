@@ -29,7 +29,9 @@ export default function withPage(WrappedComponent, reducers) {
     }
   }
 
-  hoistNonReactStatics(WithPage, WrappedComponent);
+  WithPage.displayName = `withPage(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
+
+  // no hoisting here to avoid overriding getInitialProps
 
   return WithPage;
 }

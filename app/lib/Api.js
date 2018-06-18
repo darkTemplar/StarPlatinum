@@ -26,6 +26,7 @@ export default class Api {
     this.host = getHost();
     this.port = getPort();
     this.protocol = _get(options, 'protocol', DEFAULT_HTTP_PROTOCOL);
+    this.cookie = options.cookie || {};
     this.defaultHeaders = {
       'Content-Type': 'application/json',
     };
@@ -37,6 +38,14 @@ export default class Api {
 
   post(url, options = {}) {
     return this._fetch(url, 'POST', options);
+  }
+
+  put(url, options = {}) {
+    return this._fetch(url, 'PUT', options);
+  }
+
+  del(url, options = {}) {
+    return this._fetch(url, 'DELETE', options);
   }
 
   _getUrl(url) {
@@ -52,13 +61,30 @@ export default class Api {
   }
 
   _fetch(url, method, options = {}) {
+    const includeCookie = _get(options, 'includeCookie', true);
+
     return fetch(this._getUrl(url), {
       method,
       headers: {
         ...this.defaultHeaders,
         ...(options.headers || {}),
+        ...(includeCookie ? { cookie: this.cookie } : {}),
       },
       ..._omit(options, 'headers'),
-    });
+    }).then(
+      response => {
+        if (response.status >= 400 && response.status < 600) {
+          return response.json()
+            .then((res) => {
+              throw res;
+            });
+        }
+
+        return response.json();
+      },
+      (error) => {
+        throw error;
+      },
+    );
   }
 }

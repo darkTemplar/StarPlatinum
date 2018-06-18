@@ -26,6 +26,7 @@ export function withRedux(WrappedComponent) {
   class WithRedux extends React.PureComponent {
     // THIS MUST BE MANUALLY CALLED BY PAGE USING THIS
     static getInitialProps({ req }) {
+      debugger
       if (req) {
         // server logic
         return {
