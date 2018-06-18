@@ -14,6 +14,7 @@ import Spacing from '../Spacing';
 import noop from '../../utils/noop';
 
 const propTypes = forbidExtraProps({
+  isOpen: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.func.isRequired,
   footer: PropTypes.node,
@@ -24,6 +25,7 @@ const propTypes = forbidExtraProps({
 
 const defaultProps = {
   footer: null,
+  isOpen: false,
   closeOnEscape: true,
   closeOnOutsideClick: true,
 };
