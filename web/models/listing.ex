@@ -14,7 +14,7 @@ defmodule Offerdate.Listing do
   @offer_expiration 7
   @disclosures 8
 
-  @derive {Poison.Encoder, only: [:listing_price, :sale_price, :initial_expiry, :final_expiry, :beds, :baths, :area, :status]}
+  @derive {Poison.Encoder, only: [:id, :listing_price, :sale_price, :initial_expiry, :final_expiry, :beds, :baths, :area, :status]}
   schema "listings" do
     field(:listing_price, :float)
     field(:sale_price, :float)
