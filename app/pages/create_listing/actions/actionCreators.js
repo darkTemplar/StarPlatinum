@@ -33,7 +33,9 @@ export function createListing(listing) {
     dispatch(createListingRequest);
 
     post(CREATE_LISTING_API_ENDPOINT, {
-      body: listing,
+      body: {
+        listing,
+      },
     })
       .then((response) => {
         console.log(response);
@@ -42,11 +44,11 @@ export function createListing(listing) {
   };
 }
 
-export function bootstrapData(bootstrapData = {}) {
+export function bootstrapData(data = {}) {
   return {
     type: BOOTSTRAP_CREATE_LISTING,
     payload: {
-      bootstrapData,
+      bootstrapData: data,
     },
   };
 }

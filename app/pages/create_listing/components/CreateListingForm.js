@@ -16,7 +16,7 @@ const propTypes = {
   // redux form provided onSubmit handler
   handleSubmit: PropTypes.func.isRequired,
 
-  // required onSubmit function
+  // required onSubmit function from redux form
   onSubmit: PropTypes.func.isRequired,
 };
 

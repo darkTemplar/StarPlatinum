@@ -61,6 +61,7 @@ function BasicListingDetailsSection({
               id="create-listing-sqft"
               type="text"
               label="SQFT"
+              parse={number}
               name={FORM_FIELD_SQFT}
             />
           </div>
@@ -69,6 +70,7 @@ function BasicListingDetailsSection({
               id="create-listing-lot"
               type="text"
               label="LOT SIZE"
+              parse={number}
               name={FORM_FIELD_LOT_SIZE}
             />
           </div>
