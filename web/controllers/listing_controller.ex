@@ -4,6 +4,7 @@ defmodule Offerdate.ListingController do
   alias Offerdate.Auth
   alias Offerdate.Listing
   alias Offerdate.S3
+  alias Offerdate.TimeUtils
 
   def show(conn, %{"id" => listing_id}) do
     listing = Repo.get(Listing, String.to_integer(listing_id)) |> Repo.preload([:property, :user])
@@ -25,6 +26,12 @@ defmodule Offerdate.ListingController do
     # add current session user_id to params
     user_id = get_session(conn, :user_id)
     listing_params = Map.put(listing_params, "user_id", user_id)
+    # convert supplied unix time stamps to naive datetime structs
+    time_params = %{
+      "initial_expiry" => TimeUtils.unix_to_naive_datetime(listing_params["initial_expiry"]),
+      "final_expiry" => TimeUtils.unix_to_naive_datetime(listing_params["final_expiry"]),
+    }
+    listing_params = Map.merge(listing_params, time_params)
     multi = Listing.to_multi(listing_params)
       
     case Repo.transaction(multi) do
