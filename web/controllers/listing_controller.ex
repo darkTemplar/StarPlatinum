@@ -3,6 +3,7 @@ defmodule Offerdate.ListingController do
   # plug(:authenticate_user when action in [:index, :show])
   alias Offerdate.Auth
   alias Offerdate.Listing
+  alias Offerdate.GoogleController
   alias Offerdate.S3
   alias Offerdate.TimeUtils
 
@@ -26,12 +27,18 @@ defmodule Offerdate.ListingController do
     # add current session user_id to params
     user_id = get_session(conn, :user_id)
     listing_params = Map.put(listing_params, "user_id", user_id)
+    # add in structured address params from google place details api
+    address_params = GoogleController.get_place_details(listing_params["place_id"])
     # convert supplied unix time stamps to naive datetime structs
     time_params = %{
       "initial_expiry" => TimeUtils.unix_to_naive_datetime(listing_params["initial_expiry"]),
       "final_expiry" => TimeUtils.unix_to_naive_datetime(listing_params["final_expiry"]),
     }
-    listing_params = Map.merge(listing_params, time_params)
+
+    listing_params = listing_params 
+      |> Map.merge(time_params)
+      |> Map.merge(address_params)
+
     multi = Listing.to_multi(listing_params)
       
     case Repo.transaction(multi) do
