@@ -26,12 +26,13 @@ user =
 
 property =
   Property.create_property(%{
-    street_address: "725 Roble Avenue,",
+    street_number: "725",
+    route: "Roble Avenue"
     unit_number: "Apt 9",
     city: "Menlo Park",
     state: "CA",
     country: "USA",
-    zip: "94025"
+    postal_code: "94025"
   })
 
 IO.inspect("#{user.id}")
