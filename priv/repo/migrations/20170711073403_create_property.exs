@@ -3,7 +3,7 @@ defmodule Offerdate.Repo.Migrations.CreateProperty do
 
   def change do
     create table(:properties) do
-      add(:street_number, :string, null: false)
+      add(:street_number, :string)
       add(:route, :string, null: false)
       add(:unit_number, :string)
       add(:city, :string)

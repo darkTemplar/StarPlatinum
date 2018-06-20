@@ -24,7 +24,7 @@ defmodule Offerdate.Property do
   def changeset(%Property{} = model, params \\ :invalid) do
     model
     |> cast(params, @allowed_fields)
-    |> validate_required([:street_number, :route, :country])
+    |> validate_required([:route, :city, :country])
     |> put_address_hash()
     |> unique_constraint(:place_id)
   end
