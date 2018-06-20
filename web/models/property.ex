@@ -3,14 +3,15 @@ defmodule Offerdate.Property do
   alias __MODULE__
   alias Offerdate.Repo
 
-  @derive {Poison.Encoder, only: [:id, :street_address, :unit_number, :city, :state, :country, :zip, :place_id]}
+  @derive {Poison.Encoder, only: [:id, :street_number, :route, :unit_number, :city, :state, :country, :postal_code, :place_id]}
   schema "properties" do
-    field(:street_address, :string)
+    field(:street_number, :string)
+    field(:route, :string)
     field(:unit_number, :string)
     field(:city, :string)
     field(:state, :string)
     field(:country, :string)
-    field(:zip, :string)
+    field(:postal_code, :string)
     field(:place_id, :string)
     field(:address_hash, :string)
     has_many(:listings, Offerdate.Listing, on_delete: :delete_all)
@@ -18,12 +19,12 @@ defmodule Offerdate.Property do
     timestamps
   end
 
-  @allowed_fields ~w(street_address unit_number city state country zip place_id)
+  @allowed_fields ~w(street_number route unit_number city state country postal_code place_id)
 
   def changeset(%Property{} = model, params \\ :invalid) do
     model
     |> cast(params, @allowed_fields)
-    |> validate_required([:street_address, :country, :zip])
+    |> validate_required([:street_number, :route, :country])
     |> put_address_hash()
     |> unique_constraint(:place_id)
   end
