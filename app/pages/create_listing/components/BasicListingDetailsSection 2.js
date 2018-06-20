@@ -23,18 +23,6 @@ const propTypes = {
   ...withStylesPropTypes,
 };
 
-const MAX_BEDS = 15;
-const MAX_BATHS = 15;
-
-const bedsOptions = Array.apply(null, new Array(MAX_BEDS)).map((_, i) => ({
-  label: `${i + 1}`,
-  value: i + 1,
-}));
-const bathsOptions = Array.apply(null, new Array(MAX_BATHS)).map((_, i) => ({
-  label: `${i + 1}`,
-  value: i + 1,
-}));
-
 function BasicListingDetailsSection({
   styles,
 }) {
@@ -54,7 +42,7 @@ function BasicListingDetailsSection({
               label="BATHROOMS"
               name={FORM_FIELD_BEDROOMS}
               parse={number}
-              options={bedsOptions}
+              options={[]}
               borderlessRight
             />
           </div>
@@ -64,27 +52,25 @@ function BasicListingDetailsSection({
               label="BATHROOMS"
               name={FORM_FIELD_BATHROOMS}
               parse={number}
-              options={bathsOptions}
+              options={[]}
               borderlessRight
             />
           </div>
           <div {...css(styles.item)}>
             <InputField
               id="create-listing-sqft"
-              type="number"
+              type="text"
               label="SQFT"
               parse={number}
-              format={number}
               name={FORM_FIELD_SQFT}
             />
           </div>
           <div {...css(styles.item)}>
             <InputField
               id="create-listing-lot"
-              type="number"
+              type="text"
               label="LOT SIZE"
               parse={number}
-              format={number}
               name={FORM_FIELD_LOT_SIZE}
             />
           </div>

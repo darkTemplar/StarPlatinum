@@ -1,3 +1,5 @@
+import _get from 'lodash/get';
+
 import { CREATE_LISTING_API_ENDPOINT } from '../constants/api';
 import {
   CREATE_LISTING_REQUEST,
@@ -13,9 +15,12 @@ export function createListingRequest() {
   };
 }
 
-export function createListingSuccess() {
+export function createListingSuccess(createdListingId) {
   return {
     type: CREATE_LISTING_SUCCESS,
+    payload: {
+      createdListingId,
+    },
   };
 }
 
@@ -30,7 +35,7 @@ export function createListingError(errorMessage) {
 
 export function createListing(listing) {
   return (dispatch) => {
-    dispatch(createListingRequest);
+    dispatch(createListingRequest());
 
     post(CREATE_LISTING_API_ENDPOINT, {
       body: {
@@ -38,7 +43,11 @@ export function createListing(listing) {
       },
     })
       .then((response) => {
-        console.log(response);
+        const createdListingId = _get(response, ['listing', 'id'], null);
+
+        if (createdListingId) {
+          dispatch(createListingSuccess(createdListingId));
+        }
       })
       .catch(ex => dispatch(createListingError(ex.message)));
   };

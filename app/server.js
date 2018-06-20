@@ -22,6 +22,10 @@ app.prepare()
     server.use('/', bodyParser.json());
 
     // page routes
+    server.get('/listing/:listingId', (req, res) => {
+      app.render(req, res, '/view_listing');
+    });
+
     server.get('*', (req, res) => {
       const parsedUrl = parse(req.url, true);
       const { pathname, query } = parsedUrl;
@@ -30,10 +34,8 @@ app.prepare()
         app.render(req, res, '/home', query);
       } else if (pathname === '/listing/new') {
         app.render(req, res, '/create_listing', query);
-      } else if (pathname.startsWith('/listing/')) {
-        app.render(req, res, '/view_listing', query);
       } else {
-        handle(req, res, parsedUrl);
+        handle(req, res, parse(req.url, true));
       }
     });
 

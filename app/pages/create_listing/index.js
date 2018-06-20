@@ -9,6 +9,7 @@ import { get } from '../../shared/utils/fetch';
 import BootstrapDataShape from './shapes/BootstrapDataShape';
 import CreateListingPageContentContainer from './containers/CreateListingPageContentContainer';
 import createListingBootstrapReducer from './reducers/createListingBootstrapReducer';
+import createListingReducer from './reducers/createListingReducer';
 import geocompleteReducer from '../../shared/components/Geocomplete/reducers/geocompleteReducer';
 import withPage from '../../shared/page/withPage';
 
@@ -54,5 +55,6 @@ CreateListing.contextTypes = contextTypes;
 
 export default withPage(CreateListing, {
   geocomplete: geocompleteReducer,
-  createListing: createListingBootstrapReducer,
+  createListingBootstrap: createListingBootstrapReducer,
+  createListing: createListingReducer,
 });

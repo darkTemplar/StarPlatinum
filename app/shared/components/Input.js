@@ -20,6 +20,7 @@ const propTypes = {
   borderlessBottom: PropTypes.bool,
   borderlessLeft: PropTypes.bool,
   nativeOnChange: PropTypes.bool,
+  autocomplete: PropTypes.bool,
   ...withStylePropTypes,
 };
 
@@ -33,6 +34,7 @@ const defaultProps = {
   value: undefined,
   name: '',
   nativeOnChange: false,
+  autocomplete: false,
   inputRef() {},
 };
 
@@ -51,6 +53,7 @@ export function UnstyledInput({
   styles,
   name,
   inputRef,
+  autocomplete,
   nativeOnChange,
   ...rest
 }) {
@@ -72,6 +75,7 @@ export function UnstyledInput({
         <Text small muted inline>{label}</Text>
       </label>
       <input
+        autocomplete={autocomplete ? undefined : "off"}
         ref={inputRef}
         id={id}
         name={name || id}
