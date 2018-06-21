@@ -11,12 +11,12 @@ do
 done
 
 # Create, migrate, and seed database if it doesn't exist.
-if [[ -z `psql -Atqc "\\list $DB_NAME"` ]]; then
+if [[ -z `psql -Atqc "\\list $POSTGRES_DATABASE"` ]]; then
   echo "Database $DB_NAME does not exist. Creating..."
   createdb -E UTF8 $POSTGRES_DATABASE -l en_US.UTF-8 -T template0
   mix ecto.migrate
   #mix run priv/repo/seeds.exs
-  echo "Database $DB_NAME created."
+  echo "Database $POSTGRES_DATABASE created."
 fi
 
 exec mix phoenix.server
