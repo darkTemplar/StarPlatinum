@@ -159,6 +159,7 @@ export default withStyles(({
   contentContainer: {
     padding: `0 ${2 * unit}px`,
     display: 'table-cell',
+    width: '100%',
   },
 
   webContentTable: {
@@ -193,6 +194,7 @@ export default withStyles(({
 
     [responsive.mediumAndAbove]: {
       display: 'table-cell',
+      minWidth: NAVBAR_WIDTH,
     },
   },
 }), { pureComponent: true })(UnstyledLayout);

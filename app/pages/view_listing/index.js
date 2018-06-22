@@ -4,10 +4,15 @@ import _omit from 'lodash/omit';
 
 import { LISTING_API } from './constants/api';
 import { get } from '../../shared/utils/fetch';
+import Card from '../../shared/components/Card';
+import ListingShape from './shapes/ListingShape';
+import PropertyShape from './shapes/PropertyShape';
+import Title from '../../shared/components/Title';
 import withPage from '../../shared/page/withPage';
 
 const propTypes = forbidExtraProps({
-
+  listing: ListingShape.isRequired,
+  property: PropertyShape.isRequired,
 });
 
 function filterResponse(response) {
@@ -28,11 +33,15 @@ export class ViewListing extends React.PureComponent {
   }
 
   render() {
-    console.log(this.props);
+    const { property: { route } } = this.props;
 
     return (
       <div>
-        Hello World
+        <Card>
+          <Title level={1}>
+            {route}
+          </Title>
+        </Card>
       </div>
     );
   }
