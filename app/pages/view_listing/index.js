@@ -28,6 +28,8 @@ export class ViewListing extends React.PureComponent {
   }
 
   render() {
+    console.log(this.props);
+
     return (
       <div>
         Hello World

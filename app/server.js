@@ -22,6 +22,9 @@ app.prepare()
     server.use('/', bodyParser.json());
 
     // page routes
+    server.get('/listing/new', (req, res) => {
+      app.render(req, res, '/create_listing');
+    });
     server.get('/listing/:listingId', (req, res) => {
       app.render(req, res, '/view_listing');
     });
@@ -32,8 +35,6 @@ app.prepare()
 
       if (pathname === '/') {
         app.render(req, res, '/home', query);
-      } else if (pathname === '/listing/new') {
-        app.render(req, res, '/create_listing', query);
       } else {
         handle(req, res, parse(req.url, true));
       }
