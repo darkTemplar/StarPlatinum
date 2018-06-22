@@ -7,7 +7,7 @@
     "build": "rimraf node_modules/.cache/babel-loader && next build",
     "dev": "NODE_ENV=development node index.js",
     "prod": "NODE_ENV=production node index.js",
-    "dev-debug": "node --inspect index.js"
+    "dev-debug": "NODE_ENV=development node --inspect index.js"
   },
   "keywords": [],
   "author": "",

@@ -20,7 +20,7 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <link rel="stylesheet" href="/_next/static/style.css" />
+          <link rel="stylesheet" href={process.env.NODE_ENV === 'development' ? '/_next/static/style.css' : '/static/style.css'} />
           <style dangerouslySetInnerHTML={{ __html: `
             * {
               box-sizing: border-box;

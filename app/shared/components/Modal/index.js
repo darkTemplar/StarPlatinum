@@ -54,32 +54,34 @@ export class UnstyledModal extends React.PureComponent {
         overlayClassName={css(styles.overlay).className}
         {...otherProps}
       >
-        <OutsideClickHandler onOutsideClick={closeOnEscape ? onClose : noop}>
-          <div {...css(styles.modal)}>
-            <div {...css(styles.modalBody)}>
-              <div {...css(styles.closeButtonContainer)}>
-                <div {...css(styles.closeButton)}>
-                  <Spacing bottom={1}>
-                    <IconButton onPress={onClose} icon={<CloseIcon size={16} />} />
-                  </Spacing>
+        <div>
+          <OutsideClickHandler onOutsideClick={closeOnEscape ? onClose : noop}>
+            <div {...css(styles.modal)}>
+              <div {...css(styles.modalBody)}>
+                <div {...css(styles.closeButtonContainer)}>
+                  <div {...css(styles.closeButton)}>
+                    <Spacing bottom={1}>
+                      <IconButton onPress={onClose} icon={<CloseIcon size={16} />} />
+                    </Spacing>
+                  </div>
                 </div>
+                {children}
               </div>
-              {children}
+              {footer && (
+                <div {...css(styles.modalFooter)}>
+                  {footer}
+                </div>
+              )}
             </div>
-            {footer && (
-              <div {...css(styles.modalFooter)}>
-                {footer}
-              </div>
-            )}
-          </div>
-        </OutsideClickHandler>
-        {closeOnEscape && (
-          <EventListener
-            target="document"
-            eventName="keyup"
-            callback={this.onKeyUp}
-          />
-        )}
+          </OutsideClickHandler>
+          {closeOnEscape && (
+            <EventListener
+              target="document"
+              eventName="keyup"
+              callback={this.onKeyUp}
+            />
+          )}
+        </div>
       </ReactModal>
     );
   }
