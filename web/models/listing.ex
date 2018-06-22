@@ -26,6 +26,7 @@ defmodule Offerdate.Listing do
     field(:baths, :integer)
     field(:area, :float)
     field(:status, :integer, default: 1)
+    has_many(:listing_documents, ListingDocument)
     has_many(:participants, Offerdate.Participant)
 
     timestamps()

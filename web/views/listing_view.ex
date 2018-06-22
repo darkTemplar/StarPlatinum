@@ -2,12 +2,13 @@ defmodule Offerdate.ListingView do
   use Offerdate.Web, :view
   alias Offerdate.Listing
 
-  def render("success.json", %{listing: listing, user: user, property: property}) do
+  def render("success.json", %{listing: listing, user: user, property: property, listing_documents: listing_documents}) do
     %{
       status: :ok,
       listing: listing,
       user: user,
       property: property,
+      listing_documents: listing_documents,
       message: """
         Listing has been created.
       """

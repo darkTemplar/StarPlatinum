@@ -8,8 +8,12 @@ defmodule Offerdate.ListingController do
   alias Offerdate.TimeUtils
 
   def show(conn, %{"id" => listing_id}) do
-    listing = Repo.get(Listing, String.to_integer(listing_id)) |> Repo.preload([:property, :user])
-    render(conn, "show.json", listing: listing, user: listing.user, property: listing.property)
+    listing = Repo.get(Listing, String.to_integer(listing_id)) |> Repo.preload([:property, :user, :listing_documents])
+    # return list of tuples of listing doc urls and type
+    listing_documents = listing.listing_documents
+      |> Enum.map(fn x -> [x.url, x.type] end)
+    render(conn, "show.json", listing: listing, user: listing.user, 
+      property: listing.property, listing_documents: listing_documents)
   end
 
   def new(conn, _params) do
@@ -44,11 +48,15 @@ defmodule Offerdate.ListingController do
     case Repo.transaction(multi) do
       {:ok, %{listing: listing}} ->
         # load created listing along with associations
-        created_listing = Repo.get_by(Listing, id: listing.id) |> Repo.preload([:property, :user])
+        created_listing = Repo.get_by(Listing, id: listing.id) |> Repo.preload([:property, :user, :listing_documents])
+        # return list of tuples of listing doc urls and type
+        listing_documents = created_listing.listing_documents
+          |> Enum.map(fn x -> [x.url, x.type] end)
         conn
         |> put_status(:created)
         # here call an insert function to property images table (and use task.await from s3 image upload there)
-        |> render("success.json", listing: created_listing, user: created_listing.user, property: created_listing.property)
+        |> render("success.json", listing: created_listing, user: created_listing.user,
+         property: created_listing.property, listing_documents: listing_documents)
       {:error, _operation, repo_changeset, _changes} ->
         conn
         |> put_status(:unprocessable_entity)
