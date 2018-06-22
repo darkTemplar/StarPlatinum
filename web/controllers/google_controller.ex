@@ -21,6 +21,22 @@ defmodule Offerdate.GoogleController do
 		end
 	end
 
+  def get_geometry(place_id) do
+    input_params = %{:place_id => place_id, :key => System.get_env("GOOGLE_MAPS_API_KEY")}
+    url = System.get_env("GOOGLE_PLACES_DETAILS_URL") <> "?" <> URI.encode_query(input_params)
+    case HTTPoison.get(url) do
+        {:ok, %{status_code: 200, body: body}} ->
+          Poison.decode!(body)
+          |> get_in(["result", "geometry"])
+
+        {:ok, %{status_code: 404}} ->
+          %{}
+
+        {:error, %{reason: reason}} ->
+          %{}
+    end
+  end
+
   def get_place_details(place_id) do
     input_params = %{:place_id => place_id, :key => System.get_env("GOOGLE_MAPS_API_KEY"), :types => "address"}
     url = System.get_env("GOOGLE_PLACES_DETAILS_URL") <> "?" <> URI.encode_query(input_params)

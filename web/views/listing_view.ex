@@ -15,14 +15,17 @@ defmodule Offerdate.ListingView do
     }
   end
 
-  def render("show.json", %{listing: listing, user: user, property: property}) do
+  def render("show.json", %{listing: listing, user: user, 
+    property: property, listing_documents: listing_documents, geometry: geometry}) do
     %{
       status: :ok,
       listing: listing,
       user: user,
       property: property,
+      listing_documents: listing_documents,
+      geometry: geometry,
       message: """
-        Listing has been updated.
+        Showing listing details.
       """
     }
   end

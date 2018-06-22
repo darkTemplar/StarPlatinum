@@ -9,11 +9,12 @@ defmodule Offerdate.ListingController do
 
   def show(conn, %{"id" => listing_id}) do
     listing = Repo.get(Listing, String.to_integer(listing_id)) |> Repo.preload([:property, :user, :listing_documents])
+    geometry = GoogleController.get_geometry(listing.property.place_id)
     # return list of tuples of listing doc urls and type
     listing_documents = listing.listing_documents
       |> Enum.map(fn x -> [x.url, x.type] end)
     render(conn, "show.json", listing: listing, user: listing.user, 
-      property: listing.property, listing_documents: listing_documents)
+      property: listing.property, listing_documents: listing_documents, geometry: geometry)
   end
 
   def new(conn, _params) do
@@ -48,7 +49,8 @@ defmodule Offerdate.ListingController do
     case Repo.transaction(multi) do
       {:ok, %{listing: listing}} ->
         # load created listing along with associations
-        created_listing = Repo.get_by(Listing, id: listing.id) |> Repo.preload([:property, :user, :listing_documents])
+        created_listing = Repo.get_by(Listing, id: listing.id) 
+          |> Repo.preload([:property, :user, :listing_documents])
         # return list of tuples of listing doc urls and type
         listing_documents = created_listing.listing_documents
           |> Enum.map(fn x -> [x.url, x.type] end)
@@ -75,11 +77,16 @@ defmodule Offerdate.ListingController do
   """
   def update(conn, %{"id" => listing_id, "listing" => listing_params}) do
     listing = Repo.get(Listing, String.to_integer(listing_id))
+      |> Repo.preload([:property, :user, :listing_documents], [force: true])
     changeset = Listing.changeset(listing, listing_params)
 
     case Repo.update(changeset) do
       {:ok, listing} ->
-        render(conn, "show.json", listing: listing)
+        geometry = GoogleController.get_geometry(listing.property.place_id)
+        listing_documents = listing.listing_documents
+          |> Enum.map(fn x -> [x.url, x.type] end)
+        render(conn, "show.json", listing: listing, user: listing.user, 
+      property: listing.property, listing_documents: listing_documents, geometry: geometry)
 
       {:error, changeset} ->
         conn
