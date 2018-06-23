@@ -20,3 +20,13 @@ docker push 103126352378.dkr.ecr.us-west-1.amazonaws.com/offerdate:loadbalancer-
 echo "********************************************************"
 echo "Done"
 echo "********************************************************"
+echo "Build and Upload static assets to s3"
+echo "********************************************************"
+source .env
+cd app
+rm -rf node_modules
+npm install
+npm run build
+s3cmd --configure --access_key=$AWS_ACCESS_KEY --secret_key=$AWS_SECRET_KEY -s --no-encrypt --dump-config 2>&1 | tee .s3cfg
+s3cmd sync build/* s3://offerdate-web-bundle
+s3cmd sync static/* s3://offerdate-web-bundle
