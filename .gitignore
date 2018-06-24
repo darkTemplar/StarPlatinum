@@ -1,4 +1,5 @@
 # App artifacts
+.s3cfg
 k8s/offerdate-secret.yaml
 /_build
 *.env
