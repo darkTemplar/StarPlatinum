@@ -1,10 +1,13 @@
 import { forbidExtraProps } from 'airbnb-prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import _omit from 'lodash/omit';
 
 import { LISTING_API } from './constants/api';
 import { get } from '../../shared/utils/fetch';
 import Card from '../../shared/components/Card';
+import GeometryShape from './shapes/GeometryShape';
+import ListingDocumentShape from './shapes/ListingDocumentShape';
 import ListingShape from './shapes/ListingShape';
 import PropertyShape from './shapes/PropertyShape';
 import Title from '../../shared/components/Title';
@@ -13,6 +16,8 @@ import withPage from '../../shared/page/withPage';
 const propTypes = forbidExtraProps({
   listing: ListingShape.isRequired,
   property: PropertyShape.isRequired,
+  listing_documents: PropTypes.arrayOf(ListingDocumentShape).isRequired,
+  geometry: GeometryShape.isRequired,
 });
 
 function filterResponse(response) {
@@ -34,6 +39,7 @@ export class ViewListing extends React.PureComponent {
 
   render() {
     const { property: { route } } = this.props;
+    console.log(this.props);
 
     return (
       <div>
