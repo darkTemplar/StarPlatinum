@@ -28,5 +28,7 @@ rm -rf node_modules
 npm install
 npm run build
 s3cmd --configure --access_key=$AWS_ACCESS_KEY --secret_key=$AWS_SECRET_KEY -s --no-encrypt --dump-config 2>&1 | tee .s3cfg
+# temporary fix to copy over static folder under build to main static folder
+mv build/static/ static
 s3cmd sync build/* s3://offerdate-web-bundle
 s3cmd sync static/* s3://offerdate-web-bundle
