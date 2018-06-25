@@ -11,6 +11,7 @@ import Card from '../../../shared/components/Card';
 import CustomMap from '../../../shared/map';
 import GeometryShape from '../shapes/GeometryShape';
 import ListingShape from '../shapes/ListingShape';
+import PaddedCol from '../../../shared/components/PaddedCol';
 import PropertyShape from '../shapes/PropertyShape';
 import Title from '../../../shared/components/Title';
 
@@ -32,7 +33,7 @@ export function UnstyledInfoCard({
 }) {
   return (
     <Card>
-      <Row>
+      <Row nogutter>
         <Col md={12} lg={4}>
           <CustomMap
             center={location}
@@ -43,11 +44,11 @@ export function UnstyledInfoCard({
             mapElement={<div {...css(styles.map)} />}
           />
         </Col>
-        <Col>
+        <PaddedCol>
           <Title level={1}>
             {route}
           </Title>
-        </Col>
+        </PaddedCol>
       </Row>
     </Card>
   );

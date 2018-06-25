@@ -7,10 +7,12 @@ const propTypes = forbidExtraProps({
   children: PropTypes.node.isRequired,
   href: PropTypes.string.isRequired,
   as: PropTypes.string,
+  id: PropTypes.string,
 });
 
 const defaultProps = {
   as: undefined,
+  id: undefined,
 };
 
 export default function RoutingLink({

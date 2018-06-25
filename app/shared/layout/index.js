@@ -94,7 +94,8 @@ function getNavbarItems(currentUser = null) {
   }));
 }
 
-setConfiguration({ defaultScreenClass: 'sm', breakpoints: [SMALL, MEDIUM, LARGE, XLARGE] });
+// set configuration needs to read some type of cookie
+setConfiguration({ defaultScreenClass: 'sm', gutterWidth: 0, breakpoints: [SMALL, MEDIUM, LARGE, XLARGE] });
 
 export function UnstyledLayout({
   isNavExpanded,
