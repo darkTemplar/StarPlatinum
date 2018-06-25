@@ -5,12 +5,11 @@ import _omit from 'lodash/omit';
 
 import { LISTING_API } from './constants/api';
 import { get } from '../../shared/utils/fetch';
-import Card from '../../shared/components/Card';
 import GeometryShape from './shapes/GeometryShape';
+import InfoCard from './components/InfoCard';
 import ListingDocumentShape from './shapes/ListingDocumentShape';
 import ListingShape from './shapes/ListingShape';
 import PropertyShape from './shapes/PropertyShape';
-import Title from '../../shared/components/Title';
 import withPage from '../../shared/page/withPage';
 
 const propTypes = forbidExtraProps({
@@ -38,16 +37,15 @@ export class ViewListing extends React.PureComponent {
   }
 
   render() {
-    const { property: { route } } = this.props;
-    console.log(this.props);
+    const { property, geometry, listing } = this.props;
 
     return (
       <div>
-        <Card>
-          <Title level={1}>
-            {route}
-          </Title>
-        </Card>
+        <InfoCard
+          geometry={geometry}
+          listing={listing}
+          property={property}
+        />
       </div>
     );
   }

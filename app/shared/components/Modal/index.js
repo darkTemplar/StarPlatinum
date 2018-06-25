@@ -16,7 +16,7 @@ import noop from '../../utils/noop';
 const propTypes = forbidExtraProps({
   isOpen: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
-  children: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
   footer: PropTypes.node,
   closeOnEscape: PropTypes.bool,
   closeOnOutsideClick: PropTypes.bool,

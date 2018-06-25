@@ -1,11 +1,12 @@
 // polyfill for promises
 import 'es6-promise/auto';
 
-import { Container, Row } from 'react-grid-system';
+import { Container, Row, setConfiguration } from 'react-grid-system';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import { NAVBAR_WIDTH } from '../constants/ui';
+import { SMALL, MEDIUM, LARGE, XLARGE } from '../styles/responsive';
 import { css, withStyles, withStylesPropTypes } from '../hocs/withStyles';
 import BrowsePropertiesIcon from '../components/icons/BrowsePropertiesIcon';
 import CreateOfferIcon from '../components/icons/CreateOfferIcon';
@@ -93,6 +94,8 @@ function getNavbarItems(currentUser = null) {
   }));
 }
 
+setConfiguration({ defaultScreenClass: 'sm', breakpoints: [SMALL, MEDIUM, LARGE, XLARGE] });
+
 export function UnstyledLayout({
   isNavExpanded,
   currentUser,
@@ -108,7 +111,7 @@ export function UnstyledLayout({
             <HeaderContainer />
           </Row>
           <Row>
-            <div>
+            <div {...css(styles.fullWidth)}>
               {isNavExpanded && (
                 <div {...css(styles.navbarContainerMobile)}>
                   <Navbar navbarItems={getNavbarItems(currentUser)} />
@@ -156,14 +159,20 @@ export default withStyles(({
     ],
   },
 
+  fullWidth: {
+    width: '100%',
+  },
+
   contentContainer: {
     padding: `0 ${2 * unit}px`,
     display: 'table-cell',
     width: '100%',
+    verticalAlign: 'top',
   },
 
   webContentTable: {
     display: 'table',
+    width: '100%',
   },
 
   webContentTableRow: {
@@ -195,6 +204,7 @@ export default withStyles(({
     [responsive.mediumAndAbove]: {
       display: 'table-cell',
       minWidth: NAVBAR_WIDTH,
+      verticalAlign: 'top',
     },
   },
 }), { pureComponent: true })(UnstyledLayout);
