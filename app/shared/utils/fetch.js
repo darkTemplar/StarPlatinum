@@ -13,8 +13,8 @@ function getUrl(url, query = {}) {
   const parsedUrlObject = urlParser.parse(url, true);
 
   return urlParser.format({
-    hostname: getHost(),
-    port: getPort(),
+    //hostname: getHost(),
+    //port: getPort(),
     pathname: `/api/${parsedUrlObject.pathname}`,
     query: {
       ...parsedUrlObject.query,
