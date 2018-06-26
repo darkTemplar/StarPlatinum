@@ -7,7 +7,7 @@ services:
     env_file: .env
     build:
       context: ./app
-      dockerfile: Dockerfile.web
+      dockerfile: Dockerfile.web.prod
     links:
           - phoenix
     environment:
