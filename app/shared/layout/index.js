@@ -106,9 +106,11 @@ const contextTypes = {
 export class UnstyledLayout extends React.PureComponent {
   constructor(props, context) {
     super(props, context);
-    this.context.store.injectAll({
-      loadingBar: loadingBarReducer,
-    });
+    if (!this.context.store.getState().loadingBar) {
+      this.context.store.injectAll({
+        loadingBar: loadingBarReducer,
+      });
+    }
     this.onRouteChangeStart = this.onRouteChangeStart.bind(this);
     this.onRouteChangeComplete = this.onRouteChangeComplete.bind(this);
   }
