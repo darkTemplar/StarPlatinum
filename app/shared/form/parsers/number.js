@@ -1,3 +1,9 @@
 export default function number(val) {
-  return parseInt(val, 10);
+  const parsedValue = parseInt(val, 10);
+
+  if (isNaN(parsedValue)) {
+    return null;
+  }
+
+  return parsedValue;
 }

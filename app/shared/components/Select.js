@@ -59,7 +59,7 @@ export function UnstyledSelect({
         htmlFor={id}
         {...css(styles.label)}
       >
-        <Text small inline muted>{label}</Text>
+        <Text size="sm" inline muted>{label}</Text>
       </label>
       <div {...css(styles.actualSelectWrapper)}>
         <select

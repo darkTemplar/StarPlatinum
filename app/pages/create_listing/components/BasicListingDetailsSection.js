@@ -51,7 +51,7 @@ function BasicListingDetailsSection({
           <div {...css(styles.item)}>
             <SelectField
               id="create-listing-bathrooms"
-              label="BATHROOMS"
+              label="BEDROOMS"
               name={FORM_FIELD_BEDROOMS}
               parse={number}
               options={bedsOptions}
@@ -74,7 +74,6 @@ function BasicListingDetailsSection({
               type="number"
               label="SQFT"
               parse={number}
-              format={number}
               name={FORM_FIELD_SQFT}
             />
           </div>
@@ -84,7 +83,6 @@ function BasicListingDetailsSection({
               type="number"
               label="LOT SIZE"
               parse={number}
-              format={number}
               name={FORM_FIELD_LOT_SIZE}
             />
           </div>

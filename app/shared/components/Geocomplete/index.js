@@ -1,10 +1,12 @@
-import _get from 'lodash/get';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import _get from 'lodash/get';
+
 import Autocomplete from '../Autocomplete';
 import GeoAutocompleteItemShape from './GeoAutocompleteItemShape';
 
 const propTypes = {
+  isFetchingSuggestions: PropTypes.bool,
   suggestions: PropTypes.arrayOf(GeoAutocompleteItemShape),
   fetchSuggestions: PropTypes.func.isRequired,
   onChange: PropTypes.func,
@@ -12,6 +14,7 @@ const propTypes = {
 
 const defaultProps = {
   suggestions: [],
+  isFetchingSuggestions: false,
   onChange: () => null,
 };
 
@@ -27,7 +30,7 @@ export default class Geocomplete extends React.PureComponent {
   }
 
   render() {
-    const { suggestions, fetchSuggestions, ...rest } = this.props;
+    const { suggestions, fetchSuggestions, isFetchingSuggestions, ...rest } = this.props;
 
     return (
       <Autocomplete

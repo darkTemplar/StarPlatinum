@@ -6,13 +6,13 @@ import { css, withStyles, withStylePropTypes } from '../hocs/withStyles';
 import Text from './Text';
 
 const propTypes = {
-  type: PropTypes.oneOf(['text', 'email', 'search', 'tel', 'date', 'password']).isRequired,
+  type: PropTypes.oneOf(['text', 'email', 'number', 'search', 'tel', 'date', 'password']).isRequired,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   inputRef: PropTypes.func,
   name: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   lg: PropTypes.bool,
   inline: PropTypes.bool,
   borderlessTop: PropTypes.bool,
@@ -72,10 +72,10 @@ export function UnstyledInput({
         htmlFor={id}
         {...css(styles.label, lg && styles.labelLarge)}
       >
-        <Text small muted inline>{label}</Text>
+        <Text size="sm" muted inline>{label}</Text>
       </label>
       <input
-        autocomplete={autocomplete ? undefined : "off"}
+        autoComplete={autocomplete ? undefined : 'off'}
         ref={inputRef}
         id={id}
         name={name || id}

@@ -4,6 +4,7 @@ import 'es6-promise/auto';
 import { Container, Row, setConfiguration } from 'react-grid-system';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Router from 'next/router';
 
 import { NAVBAR_WIDTH } from '../constants/ui';
 import { SMALL, MEDIUM, LARGE, XLARGE } from '../styles/responsive';
@@ -97,45 +98,68 @@ function getNavbarItems(currentUser = null) {
 // set configuration needs to read some type of cookie
 setConfiguration({ defaultScreenClass: 'sm', gutterWidth: 0, breakpoints: [SMALL, MEDIUM, LARGE, XLARGE] });
 
-export function UnstyledLayout({
-  isNavExpanded,
-  currentUser,
-  children,
-  styles,
-}) {
-  // todo, move font styles onto body
-  return (
-    <div {...css(styles.base)}>
-      <PageContainer>
-        <Container fluid>
-          <Row>
-            <HeaderContainer />
-          </Row>
-          <Row>
-            <div {...css(styles.fullWidth)}>
-              {isNavExpanded && (
-                <div {...css(styles.navbarContainerMobile)}>
-                  <Navbar navbarItems={getNavbarItems(currentUser)} />
-                </div>
-              )}
-              <div {...css(styles.webContentTable)}>
-                <div {...css(styles.webContentTableRow)}>
-                  <div {...css(styles.navbarContainer)}>
+export class UnstyledLayout extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.onRouteChangeStart = this.onRouteChangeStart.bind(this);
+    this.onRouteChangeComplete = this.onRouteChangeComplete.bind(this);
+  }
+
+  componentDidMount() {
+    Router.onRouteChangeStart = this.onRouteChangeStart;
+    Router.onRouteChangeComplete = this.onRouteChangeComplete;
+  }
+
+  onRouteChangeStart() {
+    console.log('start');
+  }
+
+  onRouteChangeComplete() {
+    console.log('end');
+  }
+
+  render() {
+    const {
+      isNavExpanded,
+      currentUser,
+      children,
+      styles,
+    } = this.props;
+
+    // todo, move font styles onto body
+    return (
+      <div {...css(styles.base)}>
+        <PageContainer>
+          <Container fluid>
+            <Row>
+              <HeaderContainer />
+            </Row>
+            <Row>
+              <div {...css(styles.fullWidth)}>
+                {isNavExpanded && (
+                  <div {...css(styles.navbarContainerMobile)}>
                     <Navbar navbarItems={getNavbarItems(currentUser)} />
                   </div>
-                  <div {...css(styles.contentContainer)}>
-                    {children}
+                )}
+                <div {...css(styles.webContentTable)}>
+                  <div {...css(styles.webContentTableRow)}>
+                    <div {...css(styles.navbarContainer)}>
+                      <Navbar navbarItems={getNavbarItems(currentUser)} />
+                    </div>
+                    <div {...css(styles.contentContainer)}>
+                      {children}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </Row>
-        </Container>
-      </PageContainer>
-      <div id={MODAL_SLOT_DOCUMENT_ID} />
-      <SignupLoginContainer />
-    </div>
-  );
+            </Row>
+          </Container>
+        </PageContainer>
+        <div id={MODAL_SLOT_DOCUMENT_ID} />
+        <SignupLoginContainer />
+      </div>
+    );
+  }
 }
 
 UnstyledLayout.propTypes = propTypes;

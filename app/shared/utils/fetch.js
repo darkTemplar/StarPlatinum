@@ -2,19 +2,27 @@ import 'whatwg-fetch';
 import urlParser from 'url';
 
 function getHost() {
-  return process.env.API_HOST;
+  if (process.env.NODE_ENV === 'development') {
+    return process.env.API_HOST;
+  }
+
+  return undefined;
 }
 
 function getPort() {
-  return process.env.API_PORT;
+  if (process.env.NODE_ENV === 'development') {
+    return process.env.API_PORT;
+  }
+
+  return undefined;
 }
 
 function getUrl(url, query = {}) {
   const parsedUrlObject = urlParser.parse(url, true);
 
   return urlParser.format({
-    //hostname: getHost(),
-    //port: getPort(),
+    hostname: getHost(),
+    port: getPort(),
     pathname: `/api/${parsedUrlObject.pathname}`,
     query: {
       ...parsedUrlObject.query,
@@ -76,4 +84,3 @@ export function get(url, options = {}) {
 export function put(url, options) {
   return _fetch(url, 'PUT', options);
 }
-
