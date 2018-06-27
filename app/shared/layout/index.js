@@ -2,6 +2,7 @@
 import 'es6-promise/auto';
 
 import { Container, Row, setConfiguration } from 'react-grid-system';
+import LoadingBar, { loadingBarReducer, hideLoading, showLoading } from 'react-redux-loading-bar';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Router from 'next/router';
@@ -98,9 +99,16 @@ function getNavbarItems(currentUser = null) {
 // set configuration needs to read some type of cookie
 setConfiguration({ defaultScreenClass: 'sm', gutterWidth: 0, breakpoints: [SMALL, MEDIUM, LARGE, XLARGE] });
 
+const contextTypes = {
+  store: PropTypes.object.isRequired,
+};
+
 export class UnstyledLayout extends React.PureComponent {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
+    this.context.store.injectAll({
+      loadingBar: loadingBarReducer,
+    });
     this.onRouteChangeStart = this.onRouteChangeStart.bind(this);
     this.onRouteChangeComplete = this.onRouteChangeComplete.bind(this);
   }
@@ -111,11 +119,11 @@ export class UnstyledLayout extends React.PureComponent {
   }
 
   onRouteChangeStart() {
-    console.log('start');
+    this.context.store.dispatch(showLoading());
   }
 
   onRouteChangeComplete() {
-    console.log('end');
+    this.context.store.dispatch(hideLoading());
   }
 
   render() {
@@ -157,11 +165,15 @@ export class UnstyledLayout extends React.PureComponent {
         </PageContainer>
         <div id={MODAL_SLOT_DOCUMENT_ID} />
         <SignupLoginContainer />
+        <div {...css(styles.loaderContainer)}>
+          <LoadingBar {...css(styles.loader)} />
+        </div>
       </div>
     );
   }
 }
 
+UnstyledLayout.contextTypes = contextTypes;
 UnstyledLayout.propTypes = propTypes;
 UnstyledLayout.defaultProps = defaultProps;
 
@@ -231,5 +243,18 @@ export default withStyles(({
       minWidth: NAVBAR_WIDTH,
       verticalAlign: 'top',
     },
+  },
+
+  loaderContainer: {
+    position: 'fixed',
+    left: 0,
+    top: 0,
+    right: 0,
+  },
+
+  loader: {
+    height: unit / 2,
+    backgroundColor: color.core.primary,
+    position: 'absolute',
   },
 }), { pureComponent: true })(UnstyledLayout);

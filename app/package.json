@@ -38,6 +38,7 @@
     "react-grid-system": "^4.1.2",
     "react-modal": "^3.4.5",
     "react-redux": "^5.0.6",
+    "react-redux-loading-bar": "^4.0.5",
     "react-validators": "^0.1.7",
     "recompose": "^0.27.1",
     "redux": "^3.7.2",

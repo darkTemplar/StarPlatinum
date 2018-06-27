@@ -50,6 +50,7 @@ export function UnstyledButton({
       onClick={onPress}
       ref={buttonRef}
       type={type}
+      disabled={disabled}
       {...css(
         styles.button,
         primary && styles.primary,
