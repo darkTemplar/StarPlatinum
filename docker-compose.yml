@@ -18,6 +18,7 @@ services:
       API_PORT: ${API_PORT}
       NODE_ENV: ${NODE_ENV}
       DOCKER_ENABLED: ${DOCKER_ENABLED}
+      CLOUDFRONT_DOMAIN_NAME: ${CLOUDFRONT_DOMAIN_NAME}
     ports:
       - "3000:3000"
     image:
