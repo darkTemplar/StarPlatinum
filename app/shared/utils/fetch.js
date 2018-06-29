@@ -2,7 +2,7 @@ import 'whatwg-fetch';
 import urlParser from 'url';
 
 function getHost() {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.DOCKER_ENABLED !== 'true') {
     return process.env.API_HOST;
   }
 
@@ -10,7 +10,7 @@ function getHost() {
 }
 
 function getPort() {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.DOCKER_ENABLED !== 'true') {
     return process.env.API_PORT;
   }
 

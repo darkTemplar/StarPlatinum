@@ -17,6 +17,7 @@ services:
       API_HOST: ${API_HOST}
       API_PORT: ${API_PORT}
       NODE_ENV: ${NODE_ENV}
+      DOCKER_ENABLED: ${DOCKER_ENABLED}
     ports:
       - "3000:3000"
     image:
@@ -63,7 +64,7 @@ services:
       - ./config:/app/config
   db:
     # We use the predefined Postgres image
-    image: postgres:10.3
+    image: postgres:10.4
     environment:
       # Set user/password for Postgres
       POSTGRES_USER: ${DB_USERNAME}
