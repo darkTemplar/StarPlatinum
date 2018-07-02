@@ -45,6 +45,8 @@ services:
       S3_IMAGE_BUCKET_NAME: ${S3_IMAGE_BUCKET_NAME}
       GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY}
       GOOGLE_PLACES_BASE_URL: ${GOOGLE_PLACES_BASE_URL}
+      MAILGUN_DOMAIN: ${MAILGUN_DOMAIN}
+      MAILGUN_KEY: ${MAILGUN_KEY}
 
     ports:
       # Mapping the port to make the Phoenix app accessible outside of the container
