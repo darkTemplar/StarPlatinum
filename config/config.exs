@@ -25,11 +25,6 @@ config :ex_aws,
   secret_access_key: [System.get_env("AWS_SECRET_KEY"), :instance_role],
   region: "us-west-2"
 
-config :offerdate,
-    mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
-    mailgun_key: System.get_env("MAILGUN_API_KEY"),
-    from_email: "matt@offerdate.com"
-
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

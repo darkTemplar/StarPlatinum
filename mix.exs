@@ -5,7 +5,7 @@ defmodule Offerdate.Mixfile do
     [
       app: :offerdate,
       version: "0.0.1",
-      elixir: "~> 1.2",
+      elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       build_embedded: Mix.env() == :prod,
@@ -38,7 +38,8 @@ defmodule Offerdate.Mixfile do
         :ex_aws,
         :ex_aws_s3,
         :hackney,
-        :uuid
+        :uuid,
+        :bamboo
       ]
     ]
   end
@@ -61,7 +62,7 @@ defmodule Offerdate.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:comeonin, "~> 2.0"},
-      {:poison, " ~> 2.2"},
+      {:poison, " ~> 2.0"},
       {:httpoison, "~> 0.9"},
       {:cowboy, "~> 1.0"},
       {:distillery, "~> 1.0", override: true},
@@ -70,9 +71,9 @@ defmodule Offerdate.Mixfile do
       {:logger_file_backend, ">=0.0.4"},
       {:ex_aws, "~> 2.0.2"},
       {:ex_aws_s3, "~> 2.0.0"},
-      {:hackney, "~> 1.8.6"},
+      {:hackney, "~> 1.12.1"},
       {:uuid, "~> 1.1"},
-      {:mailgun, "~> 0.1.2"}
+      {:bamboo, "~> 1.0"}
     ]
   end
 

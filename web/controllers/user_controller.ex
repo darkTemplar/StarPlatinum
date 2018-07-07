@@ -1,6 +1,8 @@
 defmodule Offerdate.UserController do
   use Offerdate.Web, :controller
   alias Offerdate.User
+  alias Offerdate.Mailer
+  alias Offerdate.Email
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -28,6 +30,11 @@ defmodule Offerdate.UserController do
     changeset = User.changeset(%User{}, user_params)
     case Repo.insert(changeset) do
       {:ok, user} ->
+        # send welcome/confirmation email
+        user.email
+        |> Email.welcome_email
+        |> Mailer.deliver_later
+
         conn
         |> Offerdate.Auth.login(user)
         |> put_status(:created)

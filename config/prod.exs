@@ -36,6 +36,14 @@ config :s3,
   aws_secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
   image_bucket_name: System.get_env("S3_IMAGE_BUCKET_NAME")
 
+# email (mailgun) 
+config :offerdate, Offerdate.Mailer,
+  adapter: Bamboo.MailgunAdapter,
+  api_key: System.get_env("MAILGUN_KEY"),
+  domain: System.get_env("MAILGUN_SANDBOX_DOMAIN"),
+  from_email: "matt@offerdate.com",
+  support_email: "matt@offerdate.com"
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
