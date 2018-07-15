@@ -4,19 +4,25 @@ import fetch from 'node-fetch';
 import urlParser from 'url';
 
 function getHost() {
-  if (!process.env.API_HOST) {
+  if (process.env.DOCKER_ENABLED !== 'true') {
+    if (!process.env.API_HOST) {
     throw new Error('missing API HOST');
   }
 
   return process.env.API_HOST;
+  }
+  return undefined;
 }
 
 function getPort() {
-  if (!process.env.API_PORT) {
+  if (process.env.DOCKER_ENABLED !== 'true') {
+    if (!process.env.API_PORT) {
     throw new Error('missing API PORT');
   }
 
   return process.env.API_PORT;
+  }
+  return undefined;  
 }
 
 const DEFAULT_HTTP_PROTOCOL = 'http';
