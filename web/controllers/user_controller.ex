@@ -1,6 +1,7 @@
 defmodule Offerdate.UserController do
   use Offerdate.Web, :controller
   alias Offerdate.User
+  alias Offerdate.Role
   alias Offerdate.Mailer
   alias Offerdate.Email
 
@@ -28,6 +29,10 @@ defmodule Offerdate.UserController do
   """
   def signup(conn, %{"user" => user_params}) do
     changeset = User.changeset(%User{}, user_params)
+    # for now default all roles to buyer but as we expose more options in signup, this should come from user_params
+    role = Repo.get_by(Role, name: Role.buyer())
+    user_params = Map.put(user_params, "role_id", role.id)
+
     case Repo.insert(changeset) do
       {:ok, user} ->
         # send welcome/confirmation email

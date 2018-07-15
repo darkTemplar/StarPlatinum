@@ -4,7 +4,7 @@ defmodule Offerdate.User do
   alias __MODULE__
   alias Offerdate.Repo
 
-  @derive {Poison.Encoder, only: [:email, :first_name, :last_name, :license_number, :user_type]}
+  @derive {Poison.Encoder, only: [:email, :first_name, :last_name, :license_number, :status, :role_id]}
   schema "users" do
     field(:email, :string)
     field(:password, :string, virtual: true)
@@ -13,17 +13,19 @@ defmodule Offerdate.User do
     field(:last_name, :string)
     field(:license_number, :string)
     field(:phone, :string)
-    field(:user_type, :integer, default: 0)
+    field(:status, :integer, default: 0)
+    belongs_to(:role, Offerdate.Role)
     has_many(:listings, Offerdate.Listing)
 
     timestamps()
   end
 
-  @allowed_fields ~w(email password first_name last_name license_number phone user_type)
+  @allowed_fields ~w(email password first_name last_name license_number phone status role_id)
 
   def changeset(%User{} = model, params \\ :invalid) do
     model
     |> cast(params, @allowed_fields)
+    |> assoc_constraint(:role)
     |> validate_required([:email, :password, :first_name])
     |> validate_format(:email, ~r/@/)
     |> unique_constraint(:email)
