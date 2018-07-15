@@ -70,15 +70,20 @@ function BasicListingDetailsSection({
           </div>
           <div {...css(styles.item)}>
             <InputField
+              required
+              errorMessage="Required"
               id="create-listing-sqft"
               type="number"
               label="SQFT"
               parse={number}
               name={FORM_FIELD_SQFT}
+              borderlessRight
             />
           </div>
           <div {...css(styles.item)}>
             <InputField
+              required
+              errorMessage="Required"
               id="create-listing-lot"
               type="number"
               label="LOT SIZE"

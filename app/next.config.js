@@ -4,6 +4,8 @@ const withCSS = require('@zeit/next-css');
 
 require('dotenv').config();
 
+const isProd = process.env.NODE_ENV === 'production';
+
 module.exports = withCSS({
   distDir: 'build',
   webpack(config) {
@@ -11,4 +13,5 @@ module.exports = withCSS({
 
     return config;
   },
+  assetPrefix: isProd ? process.env.NODE_ENV.CLOUDFRONT_DOMAIN_NAME : '',
 });

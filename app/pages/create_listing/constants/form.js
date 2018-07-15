@@ -15,5 +15,11 @@ export const FORM_FIELD_PREFERENCES_1 = 'pref_1';
 export const FORM_FIELD_PREFERENCES_2 = 'pref_2';
 export const FORM_FIELD_PREFERENCES_3 = 'pref_3';
 
+// virtual fields
+export const FORM_FIELD_FILES = 'files';
+
 export const SHARE_DISCLOSURES_NO = 1;
 export const SHARE_DISCLOSURES_YES = 1;
+
+export const FILE_TYPE_IMAGE = 1;
+export const FILE_TYPE_OTHER = 2;

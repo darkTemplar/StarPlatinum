@@ -7,18 +7,18 @@ import GeocompleteContainer from
   '../../../../shared/components/Geocomplete/containers/GeocompleteContainer';
 
 function AddressInput(field) {
-  const { input, meta, change, ...rest } = field;
+  const { input, meta, ...rest } = field;
+  const { invalid, touched } = meta;
 
   return (
     <GeocompleteContainer
       {...input}
       {...rest}
-      onChange={value => change(FORM_NAME, input.name, value)}
+      invalid={touched && invalid}
+      onChange={input.onChange}
     />
   );
 }
-
-const ConnectedAddressInput = connect(undefined, { change })(AddressInput);
 
 export default function AddressField(props) {
   return (
@@ -26,7 +26,8 @@ export default function AddressField(props) {
       name={FORM_FIELD_GEO}
       id="create-listing-address"
       label="PROPERTY ADDRESS"
-      component={ConnectedAddressInput}
+      component={AddressInput}
+      validate={value => value ? undefined : 'Address Required'}
       {...props}
     />
   );

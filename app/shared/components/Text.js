@@ -12,9 +12,10 @@ const propTypes = forbidExtraProps({
   size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
   bold: PropTypes.bool,
   inline: PropTypes.bool,
-  muted: mutuallyExclusiveTrueProps('primary', 'inverse', 'muted'),
-  inverse: mutuallyExclusiveTrueProps('primary', 'inverse', 'muted'),
-  primary: mutuallyExclusiveTrueProps('primary', 'inverse', 'muted'),
+  error: mutuallyExclusiveTrueProps('primary', 'inverse', 'muted', 'error'),
+  muted: mutuallyExclusiveTrueProps('primary', 'inverse', 'muted', 'error'),
+  inverse: mutuallyExclusiveTrueProps('primary', 'inverse', 'muted', 'error'),
+  primary: mutuallyExclusiveTrueProps('primary', 'inverse', 'muted', 'error'),
   ...withStylesPropTypes,
 });
 
@@ -25,6 +26,7 @@ const defaultProps = {
   muted: false,
   primary: false,
   inverse: false,
+  error: false,
 };
 
 export function UnstyledText({
@@ -36,6 +38,7 @@ export function UnstyledText({
   styles,
   inverse,
   primary,
+  error,
 }) {
   const Component = inline ? 'span' : 'div';
 
@@ -53,6 +56,7 @@ export function UnstyledText({
         muted && styles.muted,
         inverse && styles.inverse,
         primary && styles.primary,
+        error && styles.error,
       )}
     >
       {children}
@@ -107,5 +111,9 @@ export default withStyles(({ font, color, fontFamily }) => ({
 
   inverse: {
     color: color.core.white,
+  },
+
+  error: {
+    color: color.core.flame,
   },
 }), { pureComponent: true })(UnstyledText);

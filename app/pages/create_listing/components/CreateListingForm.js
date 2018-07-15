@@ -15,9 +15,18 @@ import UploadPhotosSection from './UploadPhotosSection';
 const propTypes = {
   // redux form provided onSubmit handler
   handleSubmit: PropTypes.func.isRequired,
+  // redux form provided boolean indicating whether form is submitting
+  submitting: PropTypes.bool,
+  // redux form provided boolean indicating whether form has been touched
+  pristine: PropTypes.bool,
 
   // required onSubmit function from redux form
   onSubmit: PropTypes.func.isRequired,
+};
+
+const defaultProps = {
+  submitting: false,
+  pristine: true,
 };
 
 const contextTypes = {
@@ -31,8 +40,10 @@ export class UnstyledListingForm extends React.PureComponent {
   }
 
   render() {
+    const { handleSubmit, submitting, pristine } = this.props;
+
     return (
-      <form onSubmit={this.props.handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <Spacing bottom={4}>
           <BasicListingDetailsSection />
         </Spacing>
@@ -57,7 +68,7 @@ export class UnstyledListingForm extends React.PureComponent {
             ]}
           />
         </Spacing>
-        <Button type="submit">
+        <Button type="submit" disabled={submitting || pristine}>
           Create
         </Button>
       </form>
@@ -66,12 +77,15 @@ export class UnstyledListingForm extends React.PureComponent {
 }
 
 UnstyledListingForm.propTypes = propTypes;
+UnstyledListingForm.defaultProps = defaultProps;
 UnstyledListingForm.contextTypes = contextTypes;
 
-export default withStyles(() => ({
+const StyledListingForm = withStyles(() => ({
   item: {
   },
-}), { pureComponent: true })(reduxForm({
+}), { pureComponent: true })(UnstyledListingForm);
+
+export default reduxForm({
   form: FORM_NAME,
   reenableInitialize: true,
-})(UnstyledListingForm));
+})(StyledListingForm);

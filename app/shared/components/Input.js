@@ -21,6 +21,7 @@ const propTypes = {
   borderlessLeft: PropTypes.bool,
   nativeOnChange: PropTypes.bool,
   autocomplete: PropTypes.bool,
+  invalid: PropTypes.bool,
   ...withStylePropTypes,
 };
 
@@ -35,6 +36,8 @@ const defaultProps = {
   name: '',
   nativeOnChange: false,
   autocomplete: false,
+  invalid: false,
+  error: '',
   inputRef() {},
 };
 
@@ -55,6 +58,7 @@ export function UnstyledInput({
   inputRef,
   autocomplete,
   nativeOnChange,
+  invalid,
   ...rest
 }) {
   return (
@@ -70,9 +74,12 @@ export function UnstyledInput({
     >
       <label
         htmlFor={id}
-        {...css(styles.label, lg && styles.labelLarge)}
+        {...css(
+          styles.label,
+          lg && styles.labelLarge,
+        )}
       >
-        <Text size="sm" muted inline>{label}</Text>
+        <Text size="sm" muted={!invalid} error={invalid} inline>{label}</Text>
       </label>
       <input
         autoComplete={autocomplete ? undefined : 'off'}
@@ -84,7 +91,10 @@ export function UnstyledInput({
           onChange(e.target.value);
         }}
         value={value}
-        {...css(styles.input, lg && styles.inputLarge)}
+        {...css(
+          styles.input,
+          lg && styles.inputLarge,
+        )}
         {..._omit(rest, 'className')}
       />
     </div>

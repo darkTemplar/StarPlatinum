@@ -75,13 +75,10 @@ export class UnstyledAutocomplete extends React.PureComponent {
   }
 
   renderInputComponent(props) {
-    const { inputProps } = this.props;
-
     return (
       <Input
         type="search"
         nativeOnChange
-        {...inputProps}
         {..._omit(props, 'ref')}
         inputRef={props.ref || undefined}
       />
@@ -98,10 +95,12 @@ export class UnstyledAutocomplete extends React.PureComponent {
       getSuggestionValue,
       alwaysRenderSuggestions,
       styles,
+      inputProps: otherInputProps,
     } = this.props;
     const inputProps = {
       value,
       onChange: this.onChange,
+      ...otherInputProps,
     };
 
     return (

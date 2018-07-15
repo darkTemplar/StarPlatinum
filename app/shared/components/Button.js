@@ -104,7 +104,7 @@ export default withStyles(({ color, unit }) => ({
   },
 
   disabled: {
-
+    opacity: 0.4,
   },
 
   block: {
