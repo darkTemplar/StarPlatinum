@@ -11,8 +11,15 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Offerdate.User
+alias Offerdate.Role
 alias Offerdate.Property
 alias Offerdate.Listing
+
+role = Role.create_role(%{
+    name: "Buyer"
+  })
+
+IO.inspect "#{role.id}"
 
 user =
   User.create_user(%{
@@ -21,7 +28,8 @@ user =
     first_name: "Abhas",
     last_name: "Sinha",
     license_numer: "all123",
-    phone: "6073428695"
+    phone: "6073428695",
+    role_id: role.id
   })
 
 property =
