@@ -79,7 +79,7 @@ export function UnstyledInput({
           lg && styles.labelLarge,
         )}
       >
-        <Text size="sm" muted={!invalid} error={invalid} inline>{label}</Text>
+        <Text size="sm" muted={!invalid} error={invalid} bold={invalid} inline>{label}</Text>
       </label>
       <input
         autoComplete={autocomplete ? undefined : 'off'}

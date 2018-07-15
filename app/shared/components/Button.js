@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { css, withStyles, withStylesPropTypes } from '../hocs/withStyles';
+import Loader from './Loader';
 
 const propTypes = {
   primary: mutuallyExclusiveTrueProps('primary', 'secondary'),
@@ -30,6 +31,7 @@ const defaultProps = {
   buttonRef: () => null,
   children: null,
 };
+
 
 // TODO add mobile touch support
 export function UnstyledButton({
@@ -63,7 +65,8 @@ export function UnstyledButton({
         size === 'lg' && styles.lg,
       )}
     >
-      {children}
+      {loading && <Loader />}
+      {!loading && children}
     </button>
   );
 }

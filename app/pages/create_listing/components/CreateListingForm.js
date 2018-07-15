@@ -68,7 +68,7 @@ export class UnstyledListingForm extends React.PureComponent {
             ]}
           />
         </Spacing>
-        <Button type="submit" disabled={submitting || pristine}>
+        <Button type="submit" disabled={submitting || pristine} loading={submitting}>
           Create
         </Button>
       </form>
