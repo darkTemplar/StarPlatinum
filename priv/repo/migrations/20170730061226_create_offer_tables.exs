@@ -3,26 +3,24 @@ defmodule Offerdate.Repo.Migrations.CreateOfferTables do
 
   def change do
 
-  	create table(:participants) do
+  	create table(:bids) do
 		add :listing_id, references(:listings, on_delete: :nothing)
-		add :type, :integer		
-		add :bid, :map
-		timestamps()
-  	end
-  	create unique_index(:participants, [:listing_id, :type])
-
-
-	create table(:documents) do
 		add :user_id, references(:users, on_delete: :nothing)
-		add :listing_id, references(:listings, on_delete: :nothing)
-		add :type, :integer		
-		add :url, :string
-		add :description, :string
-		add :etag, :string
-		add :size, :float
+		add :offer, :map
+		add :history, :map
 		timestamps()
   	end
-  	create unique_index(:documents, [:user_id, :listing_id])
+  	create unique_index(:bids, [:listing_id])
+
+
+	create table(:participants) do
+		add :user_id, references(:users, on_delete: :nothing)
+		add :participant_id, references(:users, on_delete: :nothing)
+		add :listing_id, references(:listings, on_delete: :nothing)
+		timestamps()
+  	end
+  	create unique_index(:participants, [:user_id, :listing_id])
+  	create unique_index(:participants, [:user_id, :participant_id])
 
   end
 end
