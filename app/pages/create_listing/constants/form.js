@@ -1,5 +1,6 @@
 export const FORM_NAME = 'create-listings-form';
 
+export const FORM_FIELD_GEO_INPUT = 'place';
 export const FORM_FIELD_GEO = 'place_id';
 export const FORM_FIELD_SQFT = 'area';
 export const FORM_FIELD_BEDROOMS = 'beds';

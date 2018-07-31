@@ -41,6 +41,7 @@ export default class CreateListingPageContent extends React.PureComponent {
 
   onSubmit(values) {
     // TODO remove temp hacky logic
+    delete values.place;
     values.final_expiry = values.initial_expiry;
     values[FORM_FIELD_FILES] = [
       ...(values[FORM_FIELD_PHOTOS] || []).map(image => [image.data, FILE_TYPE_IMAGE]),

@@ -10,6 +10,7 @@ const propTypes = {
   suggestions: PropTypes.arrayOf(GeoAutocompleteItemShape),
   fetchSuggestions: PropTypes.func.isRequired,
   onChange: PropTypes.func,
+  onSelectSuggestion: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -24,9 +25,9 @@ export default class Geocomplete extends React.PureComponent {
     this.onSelect = this.onSelect.bind(this);
   }
 
-  onSelect(suggestion) {
-    const { onChange } = this.props;
-    onChange(_get(suggestion, 'suggestion.place_id', ''));
+  onSelect(event) {
+    this.props.onChange(_get(event, 'suggestion.description', ''));
+    this.props.onSelectSuggestion(_get(event, 'suggestion.place_id', null));
   }
 
   render() {
