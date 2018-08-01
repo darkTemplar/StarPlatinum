@@ -1,28 +1,10 @@
 import 'whatwg-fetch';
 import urlParser from 'url';
 
-function getHost() {
-  if (process.env.DOCKER_ENABLED !== 'true') {
-    return process.env.API_HOST;
-  }
-
-  return undefined;
-}
-
-function getPort() {
-  if (process.env.DOCKER_ENABLED !== 'true') {
-    return process.env.API_PORT;
-  }
-
-  return undefined;
-}
-
 function getUrl(url, query = {}) {
   const parsedUrlObject = urlParser.parse(url, true);
 
   return urlParser.format({
-    hostname: getHost(),
-    port: getPort(),
     pathname: `/api/${parsedUrlObject.pathname}`,
     query: {
       ...parsedUrlObject.query,
