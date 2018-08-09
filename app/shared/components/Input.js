@@ -22,6 +22,7 @@ const propTypes = {
   nativeOnChange: PropTypes.bool,
   autocomplete: PropTypes.bool,
   invalid: PropTypes.bool,
+  suffix: PropTypes.node,
   ...withStylePropTypes,
 };
 
@@ -38,6 +39,7 @@ const defaultProps = {
   autocomplete: false,
   invalid: false,
   error: '',
+  suffix: null,
   inputRef() {},
 };
 
@@ -59,6 +61,7 @@ export function UnstyledInput({
   autocomplete,
   nativeOnChange,
   invalid,
+  suffix,
   ...rest
 }) {
   return (
@@ -81,22 +84,27 @@ export function UnstyledInput({
       >
         <Text size="sm" muted={!invalid} error={invalid} bold={invalid} inline>{label}</Text>
       </label>
-      <input
-        autoComplete={autocomplete ? undefined : 'off'}
-        ref={inputRef}
-        id={id}
-        name={name || id}
-        type={type}
-        onChange={nativeOnChange ? onChange : (e) => {
-          onChange(e.target.value);
-        }}
-        value={value}
-        {...css(
-          styles.input,
-          lg && styles.inputLarge,
-        )}
-        {..._omit(rest, 'className')}
-      />
+      <div>
+        {suffix && <div {...css(styles.inputSuffix)}>{suffix}</div>}
+        <div {...css(styles.inputInnerWrapper)}>
+          <input
+            autoComplete={autocomplete ? undefined : 'off'}
+            ref={inputRef}
+            id={id}
+            name={name || id}
+            type={type}
+            onChange={nativeOnChange ? onChange : (e) => {
+              onChange(e.target.value);
+            }}
+            value={value}
+            {...css(
+              styles.input,
+              lg && styles.inputLarge,
+            )}
+            {..._omit(rest, 'className')}
+          />
+        </div>
+      </div>
     </div>
   );
 }
@@ -114,6 +122,14 @@ export default withStyles(({ color, unit, font }) => ({
   inputContainerLarge: {
     fontSize: font.large,
     paddingTop: unit,
+  },
+
+  inputInnerWrapper: {
+    overflow: 'hidden',
+  },
+
+  inputSuffix: {
+    float: 'right',
   },
 
   input: {

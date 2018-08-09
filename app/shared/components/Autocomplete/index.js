@@ -119,6 +119,7 @@ export class UnstyledAutocomplete extends React.PureComponent {
           suggestionsContainer: css(styles.suggestionsContainer).className,
           suggestionsList: css(styles.suggestionsList).className,
           suggestion: css(styles.suggestion).className,
+          suggestionHighlighted: css(styles.suggestionHighlighted).className,
         }}
       />
     );
@@ -153,5 +154,9 @@ export default withStyles(({ unit, color }) => ({
     ':last-child': {
       borderBottom: `1px solid ${color.border}`,
     },
+  },
+
+  suggestionHighlighted: {
+    background: color.greys.wind,
   },
 }))(UnstyledAutocomplete);

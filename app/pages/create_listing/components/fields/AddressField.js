@@ -5,6 +5,8 @@ import React from 'react';
 import { FORM_FIELD_GEO, FORM_FIELD_GEO_INPUT, FORM_NAME } from '../../constants/form';
 import GeocompleteContainer from
   '../../../../shared/components/Geocomplete/containers/GeocompleteContainer';
+import Spacing from '../../../../shared/components/Spacing';
+import googleImageSrc from '../../../../shared/images/google_search_image.png';
 
 function AddressInput(field) {
   const { input, meta, change, ...rest } = field;
@@ -19,6 +21,11 @@ function AddressInput(field) {
         change(FORM_NAME, FORM_FIELD_GEO, value);
       }}
       onChange={input.onChange}
+      suffix={(
+        <Spacing inline right={2}>
+          <img src={googleImageSrc} height={24} />
+        </Spacing>
+      )}
     />
   );
 }
