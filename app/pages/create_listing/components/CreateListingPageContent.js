@@ -3,15 +3,13 @@ import React from 'react';
 import Router from 'next/router';
 
 import {
-  FORM_FIELD_BATHROOMS,
-  FORM_FIELD_BEDROOMS,
-  FORM_FIELD_FILES,
-  FORM_FIELD_PHOTOS,
-  FORM_FIELD_DISCLOSURES,
+  FILE_TYPE_DISCLOSURES,
   FILE_TYPE_IMAGE,
-  FILE_TYPE_DISCLOSURES
+  FORM_FIELD_BATHROOMS,
+  FORM_FIELD_BEDROOMS
 } from '../constants/form';
 import CreateListingForm from './CreateListingForm';
+import SelectOptionShape from '../../../shared/shapes/SelectOptionShape';
 import Spacing from '../../../shared/components/Spacing';
 import Text from '../../../shared/components/Text';
 import Title from '../../../shared/components/Title';

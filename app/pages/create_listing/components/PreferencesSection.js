@@ -45,6 +45,11 @@ export default function PreferencesSection({
     ),
   );
 
+  const defaultOption = {
+    value: null,
+    label: 'Select preference',
+  };
+
   return (
     <div>
       <Spacing bottom={1}>
@@ -57,7 +62,7 @@ export default function PreferencesSection({
           id="preferences-1"
           label="FIRST PRIORITY"
           name={FORM_FIELD_PREFERENCES_1}
-          options={preferences1Options}
+          options={[defaultOption, ...preferences1Options]}
           parse={number}
           borderlessBottom
         />
@@ -65,7 +70,7 @@ export default function PreferencesSection({
           id="preferences-2"
           label="SECOND PRIORITY"
           name={FORM_FIELD_PREFERENCES_2}
-          options={preferences2Options}
+          options={[defaultOption, ...preferences2Options]}
           parse={number}
           borderlessBottom
         />
@@ -74,7 +79,7 @@ export default function PreferencesSection({
           label="THIRD PRIORITY"
           name={FORM_FIELD_PREFERENCES_3}
           parse={number}
-          options={preferences3Options}
+          options={[defaultOption, ...preferences3Options]}
         />
       </div>
     </div>

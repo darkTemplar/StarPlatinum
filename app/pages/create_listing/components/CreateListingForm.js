@@ -57,16 +57,7 @@ export class UnstyledListingForm extends React.PureComponent {
           <OtherInformationSection />
         </Spacing>
         <Spacing bottom={4}>
-          <PreferencesSectionContainer
-            preferencesOptions={[
-              { value: '', label: 'Select One' },
-              { value: 0, label: 'foo' },
-              { value: 1, label: 'foobar' },
-              { value: 2, label: 'foobat' },
-              { value: 3, label: 'barfoo' },
-              { value: 4, label: 'foofoo' },
-            ]}
-          />
+          <PreferencesSectionContainer />
         </Spacing>
         <Button type="submit" disabled={submitting || pristine} loading={submitting}>
           Create
