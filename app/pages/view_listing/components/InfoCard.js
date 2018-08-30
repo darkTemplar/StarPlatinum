@@ -16,6 +16,7 @@ import ListingShape from '../shapes/ListingShape';
 import PaddedCol from '../../../shared/components/PaddedCol';
 import PropertyShape from '../shapes/PropertyShape';
 import Spacing from '../../../shared/components/Spacing';
+import Text from '../../../shared/components/Text';
 import Title from '../../../shared/components/Title';
 
 const propTypes = forbidExtraProps({
@@ -29,13 +30,20 @@ const propTypes = forbidExtraProps({
 export function UnstyledInfoCard({
   property: {
     route,
+    city,
+    state,
+    postal_code: postalCode,
   },
   geometry: {
     location,
   },
   images,
   styles,
-  listing,
+  listing: {
+    baths,
+    beds,
+    area,
+  },
 }) {
   return (
     <Spacing top={2}>
@@ -58,11 +66,18 @@ export function UnstyledInfoCard({
                   mapElement={<div {...css(styles.map)} />}
                 />
               </Col>
-              <PaddedCol>
-                <Title level={1}>
-                  {route}
-                </Title>
-              </PaddedCol>
+              <div>
+                <PaddedCol>
+                  <Title level={1}>
+                    {route}
+                  </Title>
+                  <Text muted>
+                    {city}, {state} {postalCode} | {beds} bed, {baths} bath, {area} sqft
+                  </Text>
+                </PaddedCol>
+              </div>
+              <div {...css(styles.priceBox)}>
+              </div>
             </Row>
           </Card>
         </div>
@@ -93,5 +108,9 @@ export default withStyles(({ unit }) => ({
     padding: `0 ${2 * unit}px`,
     position: 'relative',
     zIndex: 1,
+  },
+
+  priceBox: {
+
   },
 }))(UnstyledInfoCard);

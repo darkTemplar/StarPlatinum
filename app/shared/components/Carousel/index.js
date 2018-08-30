@@ -99,8 +99,9 @@ export class UnstyledCarousel extends React.PureComponent {
       <div {...css(styles.carousel, { height })}>
         <div {...css(styles.carouselSlider, { transform: `translateX(${this.getTranslateX()}) translateZ(0)` })}>
           {images.map(image => (
-            <div {
-              ...css(
+            <div
+              key={image}
+              {...css(
                 styles.carouselItem,
                 {
                   width: `${widthPercent}%`,

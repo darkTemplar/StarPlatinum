@@ -34,11 +34,11 @@ export default withStyles(({ unit, responsive }) => ({
     margin: '0 auto',
 
     [responsive.mediumAndAbove]: {
-      maxWidth: 100 * unit,
+      maxWidth: 110 * unit,
     },
 
     [responsive.largeAndAbove]: {
-      maxWidth: 135 * unit,
+      maxWidth: 150 * unit,
     },
   },
 

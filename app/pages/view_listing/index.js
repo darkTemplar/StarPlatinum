@@ -5,7 +5,13 @@ import _omit from 'lodash/omit';
 
 import { FILE_TYPE_IMAGE } from '../create_listing/constants/form';
 import { LISTING_API } from './constants/api';
+import {
+  css,
+  withStyles,
+  withStylesPropTypes,
+} from '../../shared/hocs/withStyles';
 import { get } from '../../shared/utils/fetch';
+import CustomMap from '../../shared/map';
 import DescriptionCard from './components/DescriptionCard';
 import GeometryShape from './shapes/GeometryShape';
 import InfoCard from './components/InfoCard';
@@ -20,13 +26,14 @@ const propTypes = forbidExtraProps({
   property: PropertyShape.isRequired,
   listing_documents: PropTypes.arrayOf(PropTypes.array).isRequired,
   geometry: GeometryShape.isRequired,
+  ...withStylesPropTypes,
 });
 
 function filterResponse(response) {
   return _omit(response, ['status', 'message', 'user']);
 }
 
-export class ViewListing extends React.PureComponent {
+export class UnstyledViewListing extends React.PureComponent {
   static getInitialProps({ req, query }) {
     if (req) {
       const { params: { listingId } } = req;
@@ -40,7 +47,7 @@ export class ViewListing extends React.PureComponent {
   }
 
   render() {
-    const { property, geometry, listing, listing_documents: listingDocuments } = this.props;
+    const { property, geometry, listing, listing_documents: listingDocuments, styles } = this.props;
 
     return (
       <div>
@@ -56,11 +63,38 @@ export class ViewListing extends React.PureComponent {
         <Spacing top={2}>
           <PropertyDetailsCard />
         </Spacing>
+        <Spacing top={2}>
+          <CustomMap
+            center={geometry.location}
+            marker={geometry.location}
+            defaultZoom={13}
+            loadingElement={<div {...css(styles.mapContainer)} />}
+            containerElement={<div {...css(styles.mapContainer)} />}
+            mapElement={<div {...css(styles.map)} />}
+          />
+        </Spacing>
       </div>
     );
   }
 }
 
-ViewListing.propTypes = propTypes;
+UnstyledViewListing.propTypes = propTypes;
 
-export default withPage(ViewListing);
+const StyledViewListing = withStyles(() => ({
+  mapContainer: {
+    position: 'relative',
+    width: '100%',
+    height: 0,
+    paddingBottom: '75%',
+  },
+
+  map: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  }, 
+}))(UnstyledViewListing);
+
+export default withPage(StyledViewListing);
