@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import _omit from 'lodash/omit';
 
+import { FILE_TYPE_IMAGE } from '../create_listing/constants/form';
 import { LISTING_API } from './constants/api';
 import { get } from '../../shared/utils/fetch';
 import DescriptionCard from './components/DescriptionCard';
 import GeometryShape from './shapes/GeometryShape';
 import InfoCard from './components/InfoCard';
-import ListingDocumentShape from './shapes/ListingDocumentShape';
 import ListingShape from './shapes/ListingShape';
 import PropertyDetailsCard from './components/PropertyDetailsCard';
 import PropertyShape from './shapes/PropertyShape';
@@ -18,7 +18,7 @@ import withPage from '../../shared/page/withPage';
 const propTypes = forbidExtraProps({
   listing: ListingShape.isRequired,
   property: PropertyShape.isRequired,
-  listing_documents: PropTypes.arrayOf(ListingDocumentShape).isRequired,
+  listing_documents: PropTypes.arrayOf(PropTypes.array).isRequired,
   geometry: GeometryShape.isRequired,
 });
 
@@ -40,7 +40,7 @@ export class ViewListing extends React.PureComponent {
   }
 
   render() {
-    const { property, geometry, listing } = this.props;
+    const { property, geometry, listing, listing_documents: listingDocuments } = this.props;
 
     return (
       <div>
@@ -48,6 +48,7 @@ export class ViewListing extends React.PureComponent {
           geometry={geometry}
           listing={listing}
           property={property}
+          images={listingDocuments.filter(doc => doc[1] === FILE_TYPE_IMAGE).map(doc => doc[0])}
         />
         <Spacing top={2}>
           <DescriptionCard />

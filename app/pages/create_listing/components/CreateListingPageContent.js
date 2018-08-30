@@ -50,8 +50,6 @@ export default class CreateListingPageContent extends React.PureComponent {
       ...(values[FORM_FIELD_DISCLOSURES] || []).map(image => [image.data, FILE_TYPE_OTHER]),
     ];
 
-    debugger
-
     return this.props.createListing(duplicatedValues);
   }
 
