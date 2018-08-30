@@ -74,9 +74,12 @@ export function UnstyledButton({
 UnstyledButton.propTypes = propTypes;
 UnstyledButton.defaultProps = defaultProps;
 
-export default withStyles(({ color, unit }) => ({
+export default withStyles(({ color, unit, font }) => ({
   button: {
     '-webkit-appearance': 'none',
+    padding: `${1.5 * unit}px ${2.5 * unit}px`,
+    cursor: 'pointer',
+    borderRadius: 4,
 
     ':hover': {
 
@@ -93,13 +96,12 @@ export default withStyles(({ color, unit }) => ({
 
   primary: {
     backgroundColor: color.core.primary,
-    borderRadius: 3,
-    padding: 1.5 * unit,
     color: color.core.white,
   },
 
   secondary: {
-
+    backgroundColor: color.greys.haze,
+    color: color.core.black,
   },
 
   loading: {
@@ -119,10 +121,11 @@ export default withStyles(({ color, unit }) => ({
   },
 
   md: {
-
+    fontSize: font.medium,
   },
 
   lg: {
     height: 50,
+    fontSize: font.large,
   },
 }), { pureComponent: true })(UnstyledButton);

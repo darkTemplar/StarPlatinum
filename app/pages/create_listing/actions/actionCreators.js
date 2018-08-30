@@ -37,7 +37,7 @@ export function createListing(listing) {
   return (dispatch) => {
     dispatch(createListingRequest());
 
-    post(CREATE_LISTING_API_ENDPOINT, {
+    return post(CREATE_LISTING_API_ENDPOINT, {
       body: {
         listing,
       },

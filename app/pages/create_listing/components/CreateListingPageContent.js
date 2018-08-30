@@ -36,7 +36,7 @@ export default class CreateListingPageContent extends React.PureComponent {
   componentDidUpdate() {
     if (this.props.createdListingId) {
       // navigate to view listing page
-      Router.push(`/view_listing?listingId=${this.props.createdListingId}`, `/listing/${this.props.createdListingId}`);
+      Router.push(`/view_listing?listingId=${this.props.createdListingId}`, `/listings/${this.props.createdListingId}`);
     }
   }
 

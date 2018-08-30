@@ -5,6 +5,7 @@ import _omit from 'lodash/omit';
 
 import { FILE_TYPE_IMAGE } from '../create_listing/constants/form';
 import { LISTING_API } from './constants/api';
+import { LISTING_STATUS } from '../../shared/listing/status';
 import {
   css,
   withStyles,
@@ -15,10 +16,12 @@ import CustomMap from '../../shared/map';
 import DescriptionCard from './components/DescriptionCard';
 import GeometryShape from './shapes/GeometryShape';
 import InfoCard from './components/InfoCard';
+import ListingPreviewActionsContainer from './containers/ListingPreviewActionsContainer';
 import ListingShape from './shapes/ListingShape';
 import PropertyDetailsCard from './components/PropertyDetailsCard';
 import PropertyShape from './shapes/PropertyShape';
 import Spacing from '../../shared/components/Spacing';
+import previewListingReducer from './reducers/previewListingReducer';
 import withPage from '../../shared/page/withPage';
 
 const propTypes = forbidExtraProps({
@@ -48,9 +51,15 @@ export class UnstyledViewListing extends React.PureComponent {
 
   render() {
     const { property, geometry, listing, listing_documents: listingDocuments, styles } = this.props;
+    const { status } = listing;
 
     return (
       <div>
+        {status === LISTING_STATUS.REVIEW && (
+          <ListingPreviewActionsContainer
+            listing={listing}
+          />
+        )}
         <InfoCard
           geometry={geometry}
           listing={listing}
@@ -94,7 +103,9 @@ const StyledViewListing = withStyles(() => ({
     right: 0,
     bottom: 0,
     left: 0,
-  }, 
+  },
 }))(UnstyledViewListing);
 
-export default withPage(StyledViewListing);
+export default withPage(StyledViewListing, {
+  previewListing: previewListingReducer,
+});
