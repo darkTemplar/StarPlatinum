@@ -31,7 +31,7 @@ export default class Geocomplete extends React.PureComponent {
   }
 
   render() {
-    const { suggestions, fetchSuggestions, isFetchingSuggestions, ...rest } = this.props;
+    const { suggestions, fetchSuggestions, isFetchingSuggestions, onSelectSuggestion, ...rest } = this.props;
 
     return (
       <Autocomplete

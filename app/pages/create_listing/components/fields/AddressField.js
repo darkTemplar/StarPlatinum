@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 import { FORM_FIELD_GEO, FORM_FIELD_GEO_INPUT, FORM_NAME } from '../../constants/form';
+import { css, withStyles } from '../../../../shared/hocs/withStyles';
 import GeocompleteContainer from
   '../../../../shared/components/Geocomplete/containers/GeocompleteContainer';
 import Spacing from '../../../../shared/components/Spacing';
 import googleImageSrc from '../../../../shared/images/google_search_image.png';
 
-function AddressInput(field) {
-  const { input, meta, change, ...rest } = field;
+function AddressInput(props) {
+  const { input, meta, change, styles, ...rest } = props;
   const { invalid, touched } = meta;
 
   return (
@@ -23,14 +24,21 @@ function AddressInput(field) {
       onChange={input.onChange}
       suffix={(
         <Spacing inline right={2}>
-          <img src={googleImageSrc} height={24} />
+          <img src={googleImageSrc} height={24} {...css(styles.imageAdjust)} />
         </Spacing>
       )}
     />
   );
 }
 
-const ConnectedAddressInput = connect(undefined, { change })(AddressInput);
+const StyledAddressInput = withStyles(({ unit }) => ({
+  imageAdjust: {
+    position: 'relative',
+    top: unit,
+  },
+}))(AddressInput);
+
+const ConnectedAddressInput = connect(undefined, { change })(StyledAddressInput);
 
 export default function AddressField(props) {
   return (

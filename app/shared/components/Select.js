@@ -17,11 +17,13 @@ const propTypes = {
   borderlessBottom: PropTypes.bool,
   borderlessLeft: PropTypes.bool,
   lg: PropTypes.bool,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   ...withStylesPropTypes,
 };
 
 const defaultProps = {
   selectRef() {},
+  value: undefined,
   borderlessTop: false,
   borderlessRight: false,
   borderlessBottom: false,
@@ -42,6 +44,7 @@ export function UnstyledSelect({
   lg,
   styles,
   options,
+  value,
   ...otherProps
 }) {
   return (
@@ -67,6 +70,7 @@ export function UnstyledSelect({
           name={name}
           ref={selectRef}
           onChange={onChange}
+          value={value}
           {...css(styles.select, lg && styles.selectLarge)}
           {...otherProps}
         >

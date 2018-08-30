@@ -19,7 +19,7 @@ app.prepare()
     // auth middleware to get user
     server.use(currentUserMiddleware);
 
-    server.use('/', bodyParser.json());
+    server.use('/', bodyParser.json({ limit: '50mb' }));
 
     // page routes
     server.get('/listing/new', (req, res) => {

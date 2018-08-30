@@ -3,7 +3,10 @@ import React from 'react';
 import Router from 'next/router';
 
 import {
-  FILE_TYPE_DISCLOSURES,
+  FORM_FIELD_FILES,
+  FORM_FIELD_PHOTOS,
+  FORM_FIELD_DISCLOSURES,
+  FILE_TYPE_OTHER,
   FILE_TYPE_IMAGE,
   FORM_FIELD_BATHROOMS,
   FORM_FIELD_BEDROOMS
@@ -38,14 +41,18 @@ export default class CreateListingPageContent extends React.PureComponent {
   }
 
   onSubmit(values) {
-    // TODO remove temp hacky logic
-    delete values.place;
-    values.final_expiry = values.initial_expiry;
-    values[FORM_FIELD_FILES] = [
+    const duplicatedValues = Object.assign({}, values);
+    delete duplicatedValues.place;
+
+    duplicatedValues.final_expiry = values.initial_expiry;
+    duplicatedValues[FORM_FIELD_FILES] = [
       ...(values[FORM_FIELD_PHOTOS] || []).map(image => [image.data, FILE_TYPE_IMAGE]),
-      ...(values[FORM_FIELD_DISCLOSURES] || []).map(image => [image.data, FILE_TYPE_DISCLOSURES]),
-    ],
-    this.props.createListing(values);
+      ...(values[FORM_FIELD_DISCLOSURES] || []).map(image => [image.data, FILE_TYPE_OTHER]),
+    ];
+
+    debugger
+
+    return this.props.createListing(duplicatedValues);
   }
 
   onSubmitFail(errors) {
