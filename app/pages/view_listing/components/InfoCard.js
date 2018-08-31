@@ -50,9 +50,9 @@ export function UnstyledInfoCard({
       <Carousel
         images={images}
         height={300}
-        widthPercent={70}
+        widthPercent={images.length > 1 ? 70 : 100}
       />
-      <Spacing top={-4}>
+      <Spacing top={images.length ? -4 : 0}>
         <div {...css(styles.cardPadding)}>
           <Card>
             <Row nogutter>
