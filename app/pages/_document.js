@@ -6,6 +6,7 @@ import { APHRODITE_DATA_KEY, CURRENT_USER_DATA_KEY } from '../shared/constants';
 import { greys } from '../shared/styles/color';
 
 export default class MyDocument extends Document {
+  CLOUDFRONT_DOMAIN_NAME;
   static getInitialProps({ renderPage, req }) {
     const { html, css } = StyleSheetServer.renderStatic(() => renderPage());
 
@@ -20,7 +21,8 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <link rel="stylesheet" href={process.env.NODE_ENV === 'development' ? '/_next/static/style.css' : '/static/style.css'} />
+          <link rel="stylesheet" href={process.env.NODE_ENV === 'development' ? '/_next/static/style.css'
+            : process.env.CLOUDFRONT_DOMAIN_NAME.'/static/style.css'} />
           <style dangerouslySetInnerHTML={{ __html: `
             * {
               box-sizing: border-box;
