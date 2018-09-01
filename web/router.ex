@@ -31,7 +31,7 @@ defmodule Offerdate.Router do
     # restrict unauthenticated access for routes below
     pipe_through :authenticated
     resources "/users", UserController, only: [:index, :show]
-    resources "/listings", ListingController, only: [:new, :show, :create, :edit, :delete]
+    resources "/listings", ListingController, only: [:new, :show, :create, :edit, :delete, :update]
     resources "/offers", OfferController, only: [:new, :show, :create, :edit, :delete]
 
     get "/getAddressSuggestions", GoogleController, :get_address_suggestions

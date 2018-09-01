@@ -22,7 +22,7 @@ defmodule Offerdate.ListingController do
   end
 
   @apidoc """
-  @api {post} /listing/create Create new listing
+  @api {post} /listing Create new listing
   @apiName CreateListing
   @apiGroup Listing
 
@@ -68,7 +68,7 @@ defmodule Offerdate.ListingController do
   end
 
   @apidoc """
-  @api {post} /listing/update Update existing listing
+  @api {put} /listing/:id Update existing listing
   @apiName UpdateListing
   @apiGroup Listing
 
@@ -96,7 +96,7 @@ defmodule Offerdate.ListingController do
   end
 
   @apidoc """
-  @api {post} /listing/delete Update existing listing
+  @api {delete} /listing/:id Update existing listing
   @apiName DeleteListing
   @apiGroup Listing
 
