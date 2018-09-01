@@ -34,7 +34,9 @@ export function publishListing(id) {
 
     return put(`${LISTING_API}/${id}`, {
       body: {
-        status: LISTING_STATUS.ACTIVE,
+        listing: {
+          status: LISTING_STATUS.ACTIVE,
+        },
       },
     })
       .then(() => dispatch(publishSuccess()))
