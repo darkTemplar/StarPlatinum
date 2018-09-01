@@ -41,7 +41,7 @@ export default setPropTypes({
   mapElement: PropTypes.node.isRequired,
 })(compose(
   withProps({
-    googleMapURL: `https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.GOOGLE_MAPS_API_KEY}`,
+    googleMapURL: `https://maps.googleapis.com/maps/api/js?v=3&libraries=geometry,drawing,places&key=${process.env.GOOGLE_MAPS_API_KEY}`,
   }),
   withScriptjs,
   withGoogleMap,
