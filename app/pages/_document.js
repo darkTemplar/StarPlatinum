@@ -3,7 +3,8 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import React from 'react';
 
 import { APHRODITE_DATA_KEY, CURRENT_USER_DATA_KEY } from '../shared/constants';
-import { greys } from '../shared/styles/color';
+import { greys, core } from '../shared/styles/color';
+import { font } from '../shared/styles/size';
 
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage, req }) {
@@ -25,6 +26,41 @@ export default class MyDocument extends Document {
           <style dangerouslySetInnerHTML={{ __html: `
             * {
               box-sizing: border-box;
+            }
+
+            @font-face{
+              font-style: normal;
+              font-weight: normal;
+              font-family: ProximaNova-Reg;
+              src: url(/static/ProximaNova-Reg.ttf) format("truetype");
+            }
+
+            @font-face{
+              font-style: normal;
+              font-weight: normal;
+              font-family: ProximaNova-Bold;
+              src: url(/static/ProximaNova-Bold.ttf) format("truetype");
+            }
+
+            @font-face{
+              font-style:normal;
+              font-weight:normal;
+              font-family:ProximaNova-Sbold;
+              src: url(/static/ProximaNova-Sbold.ttf) format("truetype");
+            }
+
+            @font-face{
+              font-style: normal;
+              font-weight: normal;
+              font-family: ProximaNova-Xbold;
+              src: url(/static/ProximaNova-Xbold.ttf) format("truetype");
+            }
+
+            body {
+              font-size: ${font.medium},
+              color: ${core.black},
+              line-height:1.48;
+              font-family: "ProximaNova-Reg", "ProximaNova-Bold", "ProximaNova-Sbold", "ProximaNova-Xbold"
             }
           `}}
           />

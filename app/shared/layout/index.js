@@ -138,7 +138,7 @@ export class UnstyledLayout extends React.PureComponent {
 
     // todo, move font styles onto body
     return (
-      <div {...css(styles.base)}>
+      <div>
         <PageContainer>
           <Container fluid>
             <Row>
@@ -181,23 +181,9 @@ UnstyledLayout.defaultProps = defaultProps;
 
 export default withStyles(({
   unit,
-  font,
   color,
-  fontSource,
   responsive,
 }) => ({
-  base: {
-    fontSize: font.medium,
-    color: color.core.black,
-    lineHeight: 1.48,
-    fontFamily: [
-      fontSource.regular,
-      fontSource.bold,
-      fontSource.semiBold,
-      fontSource.extraBold,
-    ],
-  },
-
   fullWidth: {
     width: '100%',
   },
