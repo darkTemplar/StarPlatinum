@@ -7,7 +7,40 @@ defmodule Offerdate.ListingController do
   alias Offerdate.S3
   alias Offerdate.TimeUtils
 
+  
+  defp isSessionUserListing(conn, listing) do
+    user_id = get_session(conn, :user_id)
+    case listing.user_id == user_id do
+      true -> {:ok, listing}
+      false -> {:error, 403, "Not owner of listing"}
+    end
+  end
+
+  @apidoc """
+  @api {get} /listing/:id Show existing listing
+  @apiName ShowListing
+  @apiGroup Listing
+
+  @apiParam {Int} listing id.
+  """
   def show(conn, %{"id" => listing_id}) do
+    listing = Repo.get(Listing, String.to_integer(listing_id)) |> Repo.preload([:property, :user, :listing_documents])
+    geometry = GoogleController.get_geometry(listing.property.place_id)
+    # return list of tuples of listing doc urls and type
+    listing_documents = listing.listing_documents
+      |> Enum.map(fn x -> [x.url, x.type] end)
+    render(conn, "show.json", listing: listing, user: listing.user, 
+      property: listing.property, listing_documents: listing_documents, geometry: geometry)
+  end
+
+  @apidoc """
+  @api {get} /listing/:id/edit Edit existing listing
+  @apiName EditListing
+  @apiGroup Listing
+
+  @apiParam {Int} listing id.
+  """
+  def edit(conn, %{"id" => listing_id}) do
     listing = Repo.get(Listing, String.to_integer(listing_id)) |> Repo.preload([:property, :user, :listing_documents])
     geometry = GoogleController.get_geometry(listing.property.place_id)
     # return list of tuples of listing doc urls and type
