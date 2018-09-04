@@ -59,7 +59,7 @@ export default class CreateListingPageContent extends React.PureComponent {
       return Promise.resolve();
     }
 
-    return this.props.createListing(duplicatedValues);
+    return createListing(duplicatedValues);
   }
 
   onSubmitFail(errors) {
