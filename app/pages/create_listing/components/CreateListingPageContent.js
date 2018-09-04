@@ -3,16 +3,16 @@ import React from 'react';
 import Router from 'next/router';
 
 import {
-  FORM_FIELD_FILES,
-  FORM_FIELD_PHOTOS,
-  FORM_FIELD_DISCLOSURES,
   FILE_TYPE_OTHER,
   FILE_TYPE_IMAGE,
   FORM_FIELD_BATHROOMS,
-  FORM_FIELD_BEDROOMS
+  FORM_FIELD_BEDROOMS,
+  FORM_FIELD_FILES,
+  FORM_FIELD_PHOTOS,
+  FORM_FIELD_DISCLOSURES,
 } from '../constants/form';
 import CreateListingForm from './CreateListingForm';
-import SelectOptionShape from '../../../shared/shapes/SelectOptionShape';
+import ListingShape from '../shapes/ListingShape';
 import Spacing from '../../../shared/components/Spacing';
 import Text from '../../../shared/components/Text';
 import Title from '../../../shared/components/Title';
@@ -20,10 +20,12 @@ import Title from '../../../shared/components/Title';
 const propTypes = {
   createListing: PropTypes.func.isRequired,
   createdListingId: PropTypes.number,
+  listing: ListingShape,
 };
 
 const defaultProps = {
   createdListingId: null,
+  listing: null,
 };
 
 export default class CreateListingPageContent extends React.PureComponent {
@@ -50,6 +52,13 @@ export default class CreateListingPageContent extends React.PureComponent {
       ...(values[FORM_FIELD_DISCLOSURES] || []).map(image => [image.data, FILE_TYPE_OTHER]),
     ];
 
+    const { createListing, listing } = this.props;
+
+    if (listing) {
+      // editing
+      return Promise.resolve();
+    }
+
     return this.props.createListing(duplicatedValues);
   }
 
@@ -68,19 +77,30 @@ export default class CreateListingPageContent extends React.PureComponent {
   }
 
   render() {
+    const { listing } = this.props;
+
     return (
       <div>
-        <Spacing top={1} bottom={2}>
-          <Title level={1}>Let's Get Started</Title>
-          <Text muted>You'll be sharing disclosures and collecting offers in no time</Text>
-        </Spacing>
+        {!listing && (
+          <Spacing top={1} bottom={2}>
+            <Title level={1}>Let's Get Started</Title>
+            <Text muted>You'll be sharing disclosures and collecting offers in no time</Text>
+          </Spacing>
+        )}
+        {listing && (
+          <Spacing top={1} bottom={2}>
+            <Title level={1}>Edit listing</Title>
+          </Spacing>
+        )}
         <CreateListingForm
+          isEditMode={!!listing}
           onSubmit={this.onSubmit}
           onSubmitFail={this.onSubmitFail}
           initialValues={{
             shareDisclosure: true,
             [FORM_FIELD_BEDROOMS]: 1,
             [FORM_FIELD_BATHROOMS]: 1,
+            ...listing,
           }}
         />
       </div>

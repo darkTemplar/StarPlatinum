@@ -25,6 +25,9 @@ app.prepare()
     server.get('/listing/new', (req, res) => {
       app.render(req, res, '/create_listing');
     });
+    server.get('/listings/:listingId/edit', (req, res) => {
+      app.render(req, res, '/create_listing');
+    });
     server.get('/listings/:listingId', (req, res) => {
       app.render(req, res, '/view_listing');
     });
