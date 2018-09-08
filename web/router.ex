@@ -27,6 +27,7 @@ defmodule Offerdate.Router do
     post "/signup", UserController, :signup
     post "/login", SessionController, :login
     get "/getCurrentUser", UserController, :get_current_user
+    get "/getAddressSuggestions", GoogleController, :get_address_suggestions
 
     # restrict unauthenticated access for routes below
     pipe_through :authenticated
@@ -34,7 +35,6 @@ defmodule Offerdate.Router do
     resources "/listings", ListingController
     resources "/offers", OfferController, only: [:new, :show, :create, :edit, :delete]
 
-    get "/getAddressSuggestions", GoogleController, :get_address_suggestions
     delete "/logout", SessionController, :delete
   end
 
