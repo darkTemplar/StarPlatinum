@@ -37,7 +37,9 @@ export class UnstyledListingPreviewActions extends React.PureComponent {
 
   componentWillReceiveProps({ isPublishing, publishError }) {
     if (typeof window !== 'undefined' && this.props.isPublishing && !isPublishing && !publishError) {
-      window.location.reload();
+      const { listing: { id } } = this.props;
+
+      Router.push(`/my_listings?npl=${id}`, `/my-listings?npl=${id}`);
     }
   }
 

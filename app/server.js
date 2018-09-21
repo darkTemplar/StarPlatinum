@@ -31,6 +31,9 @@ app.prepare()
     server.get('/listings/:listingId', (req, res) => {
       app.render(req, res, '/view_listing');
     });
+    server.get('/my-listings', (req, res) => {
+      app.render(req, res, '/my_listings');
+    });
 
     server.get('*', (req, res) => {
       const parsedUrl = parse(req.url, true);
