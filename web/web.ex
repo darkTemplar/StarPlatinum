@@ -36,7 +36,7 @@ defmodule Offerdate.Web do
 
       import Offerdate.Router.Helpers
       import Offerdate.Gettext
-      import Offerdate.Auth, only: [authenticate_user: 2]
+      import Offerdate.Auth, only: [authenticate_user: 2, check_current_user: 2]
     end
   end
 

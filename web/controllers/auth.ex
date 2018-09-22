@@ -26,6 +26,19 @@ defmodule Offerdate.Auth do
     end
   end
 
+  def check_current_user(conn, _opts) do
+    request_user_id = conn.params[:id]
+    current_user = conn.assigns.current_user
+    if current_user && current_user.user_id == request_user_id do
+      conn
+    else
+      conn
+      |> put_status(401)
+      |> render(Offerdate.ErrorView, :"401", message: "You are not authorized to view this page")
+      |> halt()
+    end
+  end
+
   def get_current_user(conn) do
     conn.assigns[:current_user]
   end
