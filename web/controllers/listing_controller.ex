@@ -1,19 +1,20 @@
 defmodule Offerdate.ListingController do
   use Offerdate.Web, :controller
-  # plug(:authenticate_user when action in [:index, :show])
+  plug :check_current_user when action in [:show, :edit, :update, :delete]
   alias Offerdate.Auth
   alias Offerdate.Listing
   alias Offerdate.GoogleController
   alias Offerdate.S3
   alias Offerdate.TimeUtils
 
-  
-  defp isSessionUserListing(conn, listing) do
-    user_id = get_session(conn, :user_id)
-    case listing.user_id == user_id do
-      true -> {:ok, listing}
-      false -> {:error, 403, "Not owner of listing"}
-    end
+  def index(conn, _params) do
+    current_user_id = get_session(conn, :user_id)
+    listings = 
+      from(l in Listing, where: l.user_id == ^(current_user_id))
+      |> Repo.all()
+      |> Repo.preload([:property, :listing_documents])
+      properties = listings |> Enum.map(fn x -> x.property end)
+      render(conn, "index.json", %{listings: listings, properties: properties})
   end
 
   @apidoc """
