@@ -1,4 +1,5 @@
 import { forbidExtraProps } from 'airbnb-prop-types';
+import url from 'url';
 import PropTypes from 'prop-types';
 import React from 'react';
 import _omit from 'lodash/omit';
@@ -37,14 +38,21 @@ function filterResponse(response) {
 }
 
 export class UnstyledViewListing extends React.PureComponent {
-  static getInitialProps({ req, query }) {
+  static getInitialProps({ req, query, asPath = '' }) {
     if (req) {
       const { params: { listingId } } = req;
       return req.api.get(`${LISTING_API}/${listingId}`)
         .then(filterResponse);
     }
 
-    const { listingId } = query;
+    let { listingId } = query;
+
+    if (!listingId) {
+      const matchedListingIdParts = asPath.match(/listings\/(\d+)/i);
+
+      listingId = matchedListingIdParts[1];
+    }
+
     return get(`${LISTING_API}/${listingId}`)
       .then(filterResponse);
   }

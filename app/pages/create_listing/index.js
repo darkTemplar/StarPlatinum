@@ -5,7 +5,14 @@ import _get from 'lodash/get';
 import _omit from 'lodash/omit';
 
 import { CREATE_LISTING_PREF_API_ENDPOINT } from './constants/api';
-import { FORM_FIELD_PHOTOS, FORM_FIELD_DISCLOSURES, FORM_FIELD_GEO } from './constants/form';
+import {
+  FILE_TYPE_IMAGE,
+  FILE_TYPE_OTHER,
+  FORM_FIELD_DISCLOSURES,
+  FORM_FIELD_GEO,
+  FORM_FIELD_GEO_INPUT,
+  FORM_FIELD_PHOTOS,
+} from './constants/form';
 import { bootstrapData } from './actions/actionCreators';
 import { get } from '../../shared/utils/fetch';
 import BootstrapDataShape from './shapes/BootstrapDataShape';
@@ -35,9 +42,10 @@ function filterListingResponse(response) {
   return {
     listing: {
       ..._get(response, 'listing'),
-      [FORM_FIELD_PHOTOS]: [],
-      [FORM_FIELD_DISCLOSURES]: [],
+      [FORM_FIELD_PHOTOS]: _get(response, 'listing_documents', []).filter(doc => doc[1] === FILE_TYPE_IMAGE),
+      [FORM_FIELD_DISCLOSURES]: _get(response, 'listing_documents', []).filter(doc => doc[1] === FILE_TYPE_OTHER),
       [FORM_FIELD_GEO]: _get(response, 'property.place_id', ''),
+      [FORM_FIELD_GEO_INPUT]: _get(response, 'formatted_address', ''),
     },
   };
 }

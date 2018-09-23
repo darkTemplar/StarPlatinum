@@ -9,7 +9,7 @@ export const withFilePropTypes = {
   // name of file/image
   name: Types.string,
   // mime type of file
-  tyep: Types.string,
+  type: Types.string,
 };
 
 export default Shape(withFilePropTypes);

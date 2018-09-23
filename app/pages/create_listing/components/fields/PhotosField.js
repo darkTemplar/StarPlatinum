@@ -9,10 +9,16 @@ import Spacing from '../../../../shared/components/Spacing';
 import Text from '../../../../shared/components/Text';
 
 export function UploadPhotosInput(props) {
-  const { input, styles } = props;
+  const { input, styles, meta: { initial } } = props;
+
+  const initialFiles = (initial || []).map(data => ({ src: data[0] }));
 
   return (
-    <DropzoneController onChange={input.onChange} previewImages>
+    <DropzoneController
+      initialFiles={initialFiles}
+      onChange={input.onChange}
+      previewImages
+    >
       <div {...css(styles.center)}>
         <Spacing bottom={1}>
           <IllustrationPhotoIcon />
