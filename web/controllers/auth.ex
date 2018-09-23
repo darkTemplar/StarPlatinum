@@ -3,6 +3,8 @@ defmodule Offerdate.Auth do
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   import Phoenix.Controller
   alias Offerdate.User
+  alias Offerdate.Repo
+  alias Offerdate.Listing
   alias Offerdate.Router.Helpers
 
   def init(opts) do
@@ -26,17 +28,27 @@ defmodule Offerdate.Auth do
     end
   end
 
-  def check_current_user(conn, _opts) do
-    request_user_id = conn.params[:id]
+  def check_listing_user(conn, _opts) do
+    listing_id = conn.params["id"]
+    listing = Repo.get(Listing, String.to_integer(listing_id)) |> Repo.preload([:property, :user, :listing_documents])
     current_user = conn.assigns.current_user
-    if current_user && current_user.user_id == request_user_id do
-      conn
-    else
-      conn
-      |> put_status(401)
-      |> render(Offerdate.ErrorView, :"401", message: "You are not authorized to view this page")
-      |> halt()
+    case listing do
+      listing ->
+        if current_user && current_user.id == listing.user.id do
+          conn
+          |> assign(:listing, listing)
+        else
+          conn
+          |> put_status(401)
+          |> render(Offerdate.ErrorView, :"401", message: "You are not authorized to view this page")
+          |> halt()
+        end
+      nil ->
+        conn
+        |> put_status(404)
+        |> render(Offerdate.ErrorView, :"404", message: "Requested listing was not found")
     end
+    
   end
 
   def get_current_user(conn) do

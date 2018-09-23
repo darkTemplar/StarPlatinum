@@ -1,6 +1,6 @@
 defmodule Offerdate.ListingController do
   use Offerdate.Web, :controller
-  plug :check_current_user when action in [:show, :edit, :update, :delete]
+  plug :check_listing_user when action in [:show, :edit, :update, :delete]
   alias Offerdate.Auth
   alias Offerdate.Listing
   alias Offerdate.GoogleController
@@ -25,7 +25,7 @@ defmodule Offerdate.ListingController do
   @apiParam {Int} listing id.
   """
   def show(conn, %{"id" => listing_id}) do
-    listing = Repo.get(Listing, String.to_integer(listing_id)) |> Repo.preload([:property, :user, :listing_documents])
+    listing = conn.assigns.listing
     geometry = GoogleController.get_geometry(listing.property.place_id)
     # return list of tuples of listing doc urls and type
     listing_documents = listing.listing_documents
@@ -42,7 +42,7 @@ defmodule Offerdate.ListingController do
   @apiParam {Int} listing id.
   """
   def edit(conn, %{"id" => listing_id}) do
-    listing = Repo.get(Listing, String.to_integer(listing_id)) |> Repo.preload([:property, :user, :listing_documents])
+    listing = conn.assigns.listing
     geometry = GoogleController.get_geometry(listing.property.place_id)
     # return list of tuples of listing doc urls and type
     listing_documents = listing.listing_documents
@@ -110,8 +110,7 @@ defmodule Offerdate.ListingController do
   @apiParam {Map} listing listing parameters.
   """
   def update(conn, %{"id" => listing_id, "listing" => listing_params}) do
-    listing = Repo.get(Listing, String.to_integer(listing_id))
-      |> Repo.preload([:property, :user, :listing_documents], [force: true])
+    listing = conn.assigns.listing
     changeset = Listing.changeset(listing, listing_params)
 
     case Repo.update(changeset) do
