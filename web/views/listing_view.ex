@@ -16,7 +16,8 @@ defmodule Offerdate.ListingView do
   end
 
   def render("show.json", %{listing: listing, user: user, 
-    property: property, listing_documents: listing_documents, geometry: geometry}) do
+    property: property, listing_documents: listing_documents, 
+    geometry: geometry, formatted_address: formatted_address}) do
     %{
       status: :ok,
       listing: listing,
@@ -24,6 +25,7 @@ defmodule Offerdate.ListingView do
       property: property,
       listing_documents: listing_documents,
       geometry: geometry,
+      formatted_address: formatted_address,
       message: """
         Showing listing details.
       """

@@ -26,12 +26,13 @@ defmodule Offerdate.ListingController do
   """
   def show(conn, %{"id" => listing_id}) do
     listing = conn.assigns.listing
-    geometry = GoogleController.get_geometry(listing.property.place_id)
     # return list of tuples of listing doc urls and type
     listing_documents = listing.listing_documents
       |> Enum.map(fn x -> [x.url, x.type] end)
     render(conn, "show.json", listing: listing, user: listing.user, 
-      property: listing.property, listing_documents: listing_documents, geometry: geometry)
+      property: listing.property, listing_documents: listing_documents, 
+      geometry: get_in(conn.assigns, [:address, :geometry]),
+      formatted_address: get_in(conn.assigns, [:address, :formatted_address]))
   end
 
   @apidoc """
@@ -43,12 +44,13 @@ defmodule Offerdate.ListingController do
   """
   def edit(conn, %{"id" => listing_id}) do
     listing = conn.assigns.listing
-    geometry = GoogleController.get_geometry(listing.property.place_id)
     # return list of tuples of listing doc urls and type
     listing_documents = listing.listing_documents
       |> Enum.map(fn x -> [x.url, x.type] end)
     render(conn, "show.json", listing: listing, user: listing.user, 
-      property: listing.property, listing_documents: listing_documents, geometry: geometry)
+      property: listing.property, listing_documents: listing_documents,
+      geometry: get_in(conn.assigns, [:address, :geometry]),
+      formatted_address: get_in(conn.assigns, [:address, :formatted_address]))
   end
 
   def new(conn, _params) do
@@ -115,11 +117,12 @@ defmodule Offerdate.ListingController do
 
     case Repo.update(changeset) do
       {:ok, listing} ->
-        geometry = GoogleController.get_geometry(listing.property.place_id)
         listing_documents = listing.listing_documents
           |> Enum.map(fn x -> [x.url, x.type] end)
         render(conn, "show.json", listing: listing, user: listing.user, 
-      property: listing.property, listing_documents: listing_documents, geometry: geometry)
+          property: listing.property, listing_documents: listing_documents, 
+          geometry: get_in(conn.assigns, [:address, :geometry]),
+          formatted_address: get_in(conn.assigns, [:address, :formatted_address]))
 
       {:error, changeset} ->
         conn

@@ -2,6 +2,7 @@ defmodule Offerdate.Auth do
   import Plug.Conn
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   import Phoenix.Controller
+  alias Offerdate.GoogleController
   alias Offerdate.User
   alias Offerdate.Repo
   alias Offerdate.Listing
@@ -37,6 +38,7 @@ defmodule Offerdate.Auth do
         if current_user && current_user.id == listing.user.id do
           conn
           |> assign(:listing, listing)
+          |> assign(:address, GoogleController.get_address(listing.property.place_id))
         else
           conn
           |> put_status(401)
