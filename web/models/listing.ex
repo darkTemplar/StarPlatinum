@@ -14,7 +14,7 @@ defmodule Offerdate.Listing do
   @offer_expiration 7
   @disclosures 8
 
-  @derive {Poison.Encoder, only: [:id, :listing_price, :sale_price, :initial_expiry, :final_expiry, :beds, :baths, :area, :status]}
+  @derive {Poison.Encoder, only: [:id, :listing_price, :sale_price, :initial_expiry, :final_expiry, :beds, :baths, :area, :lot_size, :status, :preferences]}
   schema "listings" do
     field(:listing_price, :float)
     field(:sale_price, :float)
@@ -25,14 +25,16 @@ defmodule Offerdate.Listing do
     field(:beds, :integer)
     field(:baths, :integer)
     field(:area, :float)
+    field(:lot_size, :float)
     field(:status, :integer, default: 1)
+    field :preferences, :map
     has_many(:listing_documents, ListingDocument)
     has_many(:participants, Offerdate.Participant)
 
     timestamps()
   end
 
-  @allowed_fields ~w(listing_price sale_price user_id property_id initial_expiry final_expiry beds baths area status)
+  @allowed_fields ~w(listing_price sale_price user_id property_id initial_expiry final_expiry beds baths area lot_size status preferences)
 
   def changeset(%Listing{} = model, params \\ :invalid) do
     model

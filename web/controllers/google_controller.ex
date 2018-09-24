@@ -49,10 +49,14 @@ defmodule Offerdate.GoogleController do
     url = System.get_env("GOOGLE_PLACES_DETAILS_URL") <> "?" <> URI.encode_query(input_params)
     case HTTPoison.get(url) do
         {:ok, %{status_code: 200, body: body}} ->
-          Poison.decode!(body)
-          |> get_in(["result", "address_components"])
-          |> Enum.map(&GoogleController.parse_address_components/1)
-          |> Enum.reduce(%{}, fn (x, acc) -> Map.merge(x, acc) end)
+          resp = Poison.decode!(body)
+          address_components = resp
+            |> get_in(["result", "address_components"])
+            |> Enum.map(&GoogleController.parse_address_components/1)
+            |> Enum.reduce(%{}, fn (x, acc) -> Map.merge(x, acc) end)
+
+          formatted_address = get_in(resp, ["result", "formatted_address"])
+          address_components = Map.put(address_components, "formatted_address", formatted_address)
 
         {:ok, %{status_code: 404}} ->
           %{}

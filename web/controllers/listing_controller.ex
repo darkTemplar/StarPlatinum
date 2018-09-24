@@ -68,7 +68,7 @@ defmodule Offerdate.ListingController do
     # add current session user_id to params
     user_id = get_session(conn, :user_id)
     listing_params = Map.put(listing_params, "user_id", user_id)
-    # add in structured address params from google place details api
+    # add in structured address params + formatted address from google place details api
     address_params = GoogleController.get_place_details(listing_params["place_id"])
     # convert supplied unix time stamps to naive datetime structs
     time_params = %{
