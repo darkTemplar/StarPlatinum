@@ -29,10 +29,9 @@ class BrowseListings extends React.PureComponent {
   }
 
   render() {
-    console.log(this.props.listings);
-
     return (
       <div>
+        {this.props.listings.map(listing => listing.id)}
       </div>
     );
   }
