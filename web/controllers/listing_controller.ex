@@ -54,7 +54,10 @@ defmodule Offerdate.ListingController do
   end
 
   def new(conn, _params) do
-    render(conn, "new.json", agent_preferences: Listing.get_preferences())
+    prefs = [Listing.price(), Listing.escrow_period(), Listing.escrow_title_fee(), 
+      Listing.contingencies(), Listing.financing(), Listing.property_condition(),
+      Listing.offer_expiration(), Listing.disclosures()]
+    render(conn, "new.json", agent_preferences: prefs)
   end
 
   @apidoc """

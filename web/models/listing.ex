@@ -5,14 +5,14 @@ defmodule Offerdate.Listing do
   alias Offerdate.Property
   alias Offerdate.ListingDocument
 
-  @price 1
-  @escrow_period 2
-  @escrow_title_fee 3
-  @contingencies 4
-  @financing 5
-  @property_condition 6
-  @offer_expiration 7
-  @disclosures 8
+  @price ["Price", 1]
+  @escrow_period ["Escrow Period", 2]
+  @escrow_title_fee ["Escrow Title Fee", 3]
+  @contingencies ["Contingencies", 4]
+  @financing ["Financing", 5]
+  @property_condition ["Property Condition", 6]
+  @offer_expiration ["Offer Expiration", 7]
+  @disclosures ["Disclosures", 8]
 
   @derive {Poison.Encoder, only: [:id, :listing_price, :sale_price, :initial_expiry, :final_expiry, :beds, :baths, :area, :lot_size, :status, :preferences]}
   schema "listings" do
@@ -78,15 +78,19 @@ defmodule Offerdate.Listing do
     |> Repo.insert()
   end
 
-  def get_preferences() do
-    [
-      ["Price", @price],
-      ["Escrow Period", @escrow_period],
-      ["Escrow and Title Fee", @escrow_title_fee],
-      ["Contingencies", @contingencies],
-      ["Financing", @financing],
-      ["Offer Expiration Duration", @offer_expiration],
-      ["Disclosures", @disclosures],
-    ]
-  end
+  def price(), do: @price
+
+  def escrow_period(), do: @escrow_period
+
+  def escrow_title_fee(), do: @escrow_title_fee
+
+  def contingencies(), do: @contingencies
+
+  def financing(), do: @financing
+
+  def property_condition(), do: @property_condition
+
+  def offer_expiration(), do: @offer_expiration
+
+  def disclosures(), do: @disclosures
 end
