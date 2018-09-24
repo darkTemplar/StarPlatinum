@@ -42,11 +42,12 @@ defmodule Offerdate.ListingView do
     }
   end
 
-  def render("index.json", %{listings: listings, properties: properties}) do
+  def render("index.json", %{listings: listings, properties: properties, listing_documents: listing_documents}) do
     %{
       status: :ok,
       listings: listings,
       properties: properties,
+      listing_documents: listing_documents,
       message: """
         Listings for agent.
       """

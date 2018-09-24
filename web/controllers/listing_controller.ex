@@ -14,7 +14,10 @@ defmodule Offerdate.ListingController do
       |> Repo.all()
       |> Repo.preload([:property, :listing_documents])
       properties = listings |> Enum.map(fn x -> x.property end)
-      render(conn, "index.json", %{listings: listings, properties: properties})
+      listing_documents = listings
+        |> Enum.map(fn x -> x.listing_documents end) 
+        |> Enum.map(fn x -> Enum.map(x, fn y -> [y.url, y.type] end) end)
+      render(conn, "index.json", %{listings: listings, properties: properties, listing_documents: listing_documents})
   end
 
   @apidoc """
