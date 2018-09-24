@@ -5,7 +5,10 @@ import _get from 'lodash/get';
 
 import { NAVBAR_ITEMS } from '../../shared/layout';
 import { get } from '../../shared/utils/fetch';
+import BrowseListingsComponent from './components/BrowseListings';
 import ListingShape from '../view_listing/shapes/ListingShape';
+import Spacing from '../../shared/components/Spacing';
+import Title from '../../shared/components/Title';
 import withPage from '../../shared/page/withPage';
 
 function filterResponse(response) {
@@ -29,9 +32,16 @@ class BrowseListings extends React.PureComponent {
   }
 
   render() {
+    const { listings } = this.props;
+
     return (
       <div>
-        {this.props.listings.map(listing => listing.id)}
+        <Spacing top={1} bottom={2}>
+          <Title level={1}>Browse Properties</Title>
+        </Spacing>
+        <BrowseListingsComponent
+          listings={listings}
+        />
       </div>
     );
   }
