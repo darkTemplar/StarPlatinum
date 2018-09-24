@@ -41,6 +41,7 @@ export default withStyles(({ unit, color }) => ({
   navbarItem: {
     textAlign: 'center',
     padding: 2 * unit,
+    borderRight: '3px solid transparent',
   },
 
   active: {

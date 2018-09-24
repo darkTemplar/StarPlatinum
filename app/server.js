@@ -31,6 +31,9 @@ app.prepare()
     server.get('/listings/:listingId', (req, res) => {
       app.render(req, res, '/view_listing');
     });
+    server.get('/listings', (req, res) => {
+      app.render(req, res, '/browse_listings');
+    });
     server.get('/my-listings', (req, res) => {
       app.render(req, res, '/my_listings');
     });

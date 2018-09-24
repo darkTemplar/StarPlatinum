@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import url from 'url';
 
+import { NAVBAR_ITEMS } from '../../shared/layout';
 import NewlyPublishListingModal from './components/NewlyPublishListingModal';
 import withPage from '../../shared/page/withPage';
 
@@ -48,4 +49,4 @@ MyListings.propTypes = propTypes;
 MyListings.defaultProps = defaultProps;
 
 export default withPage(MyListings, {
-});
+}, NAVBAR_ITEMS.MY_LISTINGS);

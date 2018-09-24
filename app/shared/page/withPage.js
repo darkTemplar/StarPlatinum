@@ -3,7 +3,7 @@ import _omit from 'lodash/omit';
 
 import PageContentWithReduxAndAuth from './PageContentWithReduxAndAuth';
 
-export default function withPage(WrappedComponent, reducers) {
+export default function withPage(WrappedComponent, reducers, navId = null) {
   class WithPage extends React.PureComponent {
     static async getInitialProps(...args) {
       const props = PageContentWithReduxAndAuth.getInitialProps.apply(PageContentWithReduxAndAuth, args);
@@ -23,7 +23,7 @@ export default function withPage(WrappedComponent, reducers) {
       } = this.props;
 
       return (
-        <PageContentWithReduxAndAuth reducers={reducers} {...rest}>
+        <PageContentWithReduxAndAuth reducers={reducers} {...rest} navId={navId}>
           <WrappedComponent {..._omit(rest, ['user'])} />
         </PageContentWithReduxAndAuth>
       );

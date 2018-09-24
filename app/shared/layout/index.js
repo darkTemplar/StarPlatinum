@@ -24,7 +24,17 @@ import WatchlistsIcon from '../components/icons/WatchlistsIcon';
 
 export const MODAL_SLOT_DOCUMENT_ID = 'modal-slot';
 
+export const NAVBAR_ITEMS = {
+  CREATE_LISTING: 'nav-listing-create',
+  MY_LISTINGS: 'nav-my-listings',
+  CREATE_OFFER: 'nav-offer-create',
+  MY_OFFERS: 'nav-my-offers',
+  WATCHLISTS: 'nav-watchlists',
+  ALL_LISTINGS: 'nav-browse-properties',
+};
+
 const propTypes = {
+  currentNavId: PropTypes.oneOf(Object.values(NAVBAR_ITEMS)),
   isNavExpanded: PropTypes.bool,
   currentUser: UserShape,
   children: PropTypes.node,
@@ -35,54 +45,58 @@ const defaultProps = {
   isNavExpanded: false,
   currentUser: null,
   children: null,
+  currentNavId: null,
 };
 
 const STATIC_SIGNED_IN_NAVBAR_ITEMS = [
   {
-    id: 'nav-listing-create',
+    id: NAVBAR_ITEMS.CREATE_LISTING,
     icon: ListPropertyIcon,
     label: 'List a Property',
     url: '/create_listing',
     as: '/listing/new',
   },
   {
-    id: 'nav-my-listings',
+    id: NAVBAR_ITEMS.MY_LISTINGS,
     icon: MyListingsIcon,
     label: 'My Listings',
-    url: '/',
+    url: '/my_listings',
+    as: '/my-listings',
   },
   {
-    id: 'nav-offer-create',
+    id: NAVBAR_ITEMS.CREATE_OFFER,
     icon: CreateOfferIcon,
     label: 'Make an Offer',
     url: '/',
   },
   {
-    id: 'nav-my-offers',
+    id: NAVBAR_ITEMS.MY_OFFERS,
     icon: MyOffersIcon,
     label: 'My Offers',
     url: '/',
   },
   {
-    id: 'nav-watchlists',
+    id: NAVBAR_ITEMS.WATCHLISTS,
     icon: WatchlistsIcon,
     label: 'Watchlists',
-    url: '/',
+    url: '/browse_listings',
+    as: '/listings',
   },
   {
-    id: 'nav-browse-properties',
+    id: NAVBAR_ITEMS.ALL_LISTINGS,
     icon: BrowsePropertiesIcon,
     label: 'Browse Properties',
-    url: '/',
+    url: '/browse_listings',
+    as: '/listings',
   },
 ];
 
 const STATIC_SIGNED_OUT_NAVBAR_ITEMS = [
   {
-    id: 'nav-browse-properties',
+    id: NAVBAR_ITEMS.ALL_LISTINGS,
     icon: BrowsePropertiesIcon,
     label: 'Browse Properties',
-    url: '/',
+    url: '/listings',
   },
 ];
 
@@ -92,7 +106,6 @@ function getNavbarItems(currentUser = null) {
 
   return items.map((item, idx) => ({
     ...item,
-    active: idx === 0,
   }));
 }
 
@@ -134,9 +147,9 @@ export class UnstyledLayout extends React.PureComponent {
       currentUser,
       children,
       styles,
+      currentNavId,
     } = this.props;
 
-    // todo, move font styles onto body
     return (
       <div>
         <PageContainer>
@@ -148,13 +161,13 @@ export class UnstyledLayout extends React.PureComponent {
               <div {...css(styles.fullWidth)}>
                 {isNavExpanded && (
                   <div {...css(styles.navbarContainerMobile)}>
-                    <Navbar navbarItems={getNavbarItems(currentUser)} />
+                    <Navbar navbarItems={getNavbarItems(currentUser)} currentNavId={currentNavId} />
                   </div>
                 )}
                 <div {...css(styles.webContentTable)}>
                   <div {...css(styles.webContentTableRow)}>
                     <div {...css(styles.navbarContainer)}>
-                      <Navbar navbarItems={getNavbarItems(currentUser)} />
+                      <Navbar navbarItems={getNavbarItems(currentUser)} currentNavId={currentNavId} />
                     </div>
                     <div {...css(styles.contentContainer)}>
                       {children}

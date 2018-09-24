@@ -13,6 +13,7 @@ import {
   FORM_FIELD_GEO_INPUT,
   FORM_FIELD_PHOTOS,
 } from './constants/form';
+import { NAVBAR_ITEMS } from '../../shared/layout';
 import { bootstrapData } from './actions/actionCreators';
 import { get } from '../../shared/utils/fetch';
 import BootstrapDataShape from './shapes/BootstrapDataShape';
@@ -112,4 +113,4 @@ export default withPage(CreateListing, {
   geocomplete: geocompleteReducer,
   createListingBootstrap: createListingBootstrapReducer,
   createListing: createListingReducer,
-});
+}, NAVBAR_ITEMS.CREATE_LISTING);
