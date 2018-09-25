@@ -28,6 +28,9 @@ defmodule Offerdate.ListingController do
   @apiParam {Int} listing id.
   """
   def show(conn, %{"id" => listing_id}) do
+    prefs = [Listing.price(), Listing.escrow_period(), Listing.escrow_title_fee(), 
+      Listing.contingencies(), Listing.financing(), Listing.property_condition(),
+      Listing.offer_expiration(), Listing.disclosures()]
     listing = conn.assigns.listing
     # return list of tuples of listing doc urls and type
     listing_documents = listing.listing_documents
@@ -35,7 +38,8 @@ defmodule Offerdate.ListingController do
     render(conn, "show.json", listing: listing, user: listing.user, 
       property: listing.property, listing_documents: listing_documents, 
       geometry: get_in(conn.assigns, [:address, :geometry]),
-      formatted_address: get_in(conn.assigns, [:address, :formatted_address]))
+      formatted_address: get_in(conn.assigns, [:address, :formatted_address]),
+      agent_preferences: prefs)
   end
 
   @apidoc """
@@ -50,10 +54,14 @@ defmodule Offerdate.ListingController do
     # return list of tuples of listing doc urls and type
     listing_documents = listing.listing_documents
       |> Enum.map(fn x -> [x.url, x.type] end)
+    prefs = [Listing.price(), Listing.escrow_period(), Listing.escrow_title_fee(), 
+      Listing.contingencies(), Listing.financing(), Listing.property_condition(),
+      Listing.offer_expiration(), Listing.disclosures()]  
     render(conn, "show.json", listing: listing, user: listing.user, 
       property: listing.property, listing_documents: listing_documents,
       geometry: get_in(conn.assigns, [:address, :geometry]),
-      formatted_address: get_in(conn.assigns, [:address, :formatted_address]))
+      formatted_address: get_in(conn.assigns, [:address, :formatted_address]),
+      agent_preferences: prefs)
   end
 
   def new(conn, _params) do
@@ -118,6 +126,9 @@ defmodule Offerdate.ListingController do
   @apiParam {Map} listing listing parameters.
   """
   def update(conn, %{"id" => listing_id, "listing" => listing_params}) do
+    prefs = [Listing.price(), Listing.escrow_period(), Listing.escrow_title_fee(), 
+      Listing.contingencies(), Listing.financing(), Listing.property_condition(),
+      Listing.offer_expiration(), Listing.disclosures()]
     listing = conn.assigns.listing
     changeset = Listing.changeset(listing, listing_params)
 
@@ -128,7 +139,8 @@ defmodule Offerdate.ListingController do
         render(conn, "show.json", listing: listing, user: listing.user, 
           property: listing.property, listing_documents: listing_documents, 
           geometry: get_in(conn.assigns, [:address, :geometry]),
-          formatted_address: get_in(conn.assigns, [:address, :formatted_address]))
+          formatted_address: get_in(conn.assigns, [:address, :formatted_address]),
+          agent_preferences: prefs)
 
       {:error, changeset} ->
         conn
