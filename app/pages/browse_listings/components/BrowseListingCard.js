@@ -39,10 +39,10 @@ export function UnstyledBrowseListingCard({
     <Card>
       <div {...css(styles.contentContainer)}>
         <Row>
-          <Col nogutter sm={12} md={3}>
+          <Col sm={12} md={3}>
             <ListingImage imageSrc={images[0] ? images[0][0] : null} />
           </Col>
-          <Col nogutter sm={12} md={9}>
+          <Col sm={12} md={9}>
             <div {...css(styles.listingInfoContainer)}>
               <ListingInfo
                 listing={listing}

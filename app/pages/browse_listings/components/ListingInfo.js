@@ -38,7 +38,7 @@ export default function ListingInfo({
         </Title>
       </Spacing>
       <Row>
-        <Col md={6} sm={12}>
+        <Col lg={3} md={6} sm={12}>
           <Text size="xl">
             {formatCurrency(listPrice, {
               maximumFractionDigits: 0,
