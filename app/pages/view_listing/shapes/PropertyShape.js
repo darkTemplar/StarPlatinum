@@ -10,4 +10,5 @@ export default Shape({
   state: Types.string,
   street_number: Types.string,
   unit_number: Types.string,
+  formatted_address: Types.string,
 });

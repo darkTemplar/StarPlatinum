@@ -7,6 +7,7 @@ import { NAVBAR_ITEMS } from '../../shared/layout';
 import { get } from '../../shared/utils/fetch';
 import BrowseListingsComponent from './components/BrowseListings';
 import ListingShape from '../view_listing/shapes/ListingShape';
+import PropertyShape from '../view_listing/shapes/PropertyShape';
 import Spacing from '../../shared/components/Spacing';
 import Title from '../../shared/components/Title';
 import withPage from '../../shared/page/withPage';
@@ -14,12 +15,22 @@ import withPage from '../../shared/page/withPage';
 function filterResponse(response) {
   return {
     listings: _get(response, 'listings', []),
+    listingDocuments: _get(response, 'listing_documents', []),
+    properties: _get(response, 'properties', []),
   };
 }
 
 const propTypes = forbidExtraProps({
   listings: PropTypes.arrayOf(ListingShape),
+  listingDocuments: PropTypes.arrayOf(PropTypes.array),
+  properties: PropTypes.arrayOf(PropertyShape),
 });
+
+const defaultProps = {
+  listings: [],
+  listingDocuments: [],
+  properties: [],
+};
 
 class BrowseListings extends React.PureComponent {
   static getInitialProps({ req }) {
@@ -32,7 +43,7 @@ class BrowseListings extends React.PureComponent {
   }
 
   render() {
-    const { listings } = this.props;
+    const { listings, listingDocuments, properties } = this.props;
 
     return (
       <div>
@@ -41,6 +52,8 @@ class BrowseListings extends React.PureComponent {
         </Spacing>
         <BrowseListingsComponent
           listings={listings}
+          properties={properties}
+          listingDocuments={listingDocuments}
         />
       </div>
     );
@@ -48,6 +61,7 @@ class BrowseListings extends React.PureComponent {
 }
 
 BrowseListings.propTypes = propTypes;
+BrowseListings.defaultProps = defaultProps;
 
 export default withPage(BrowseListings, {
 }, NAVBAR_ITEMS.ALL_LISTINGS);

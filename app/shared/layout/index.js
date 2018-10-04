@@ -133,6 +133,10 @@ export class UnstyledLayout extends React.PureComponent {
     Router.onRouteChangeComplete = this.onRouteChangeComplete;
   }
 
+  componentWillUnmount() {
+    this.context.store.dispatch(hideLoading());
+  }
+
   onRouteChangeStart() {
     this.context.store.dispatch(showLoading());
   }
