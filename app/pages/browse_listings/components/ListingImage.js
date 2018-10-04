@@ -18,7 +18,7 @@ export default function ListingImage({
   const finalSource = imageSrc || 'placeholder';
 
   return (
-    <Image src={finalSource} />
+    <Image src={finalSource} alt="image for listing" />
   );
 }
 
