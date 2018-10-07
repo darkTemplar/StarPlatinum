@@ -5,6 +5,7 @@ import React from 'react';
 import BrowseListingCard from './BrowseListingCard';
 import ListingShape from '../../view_listing/shapes/ListingShape';
 import PropertyShape from '../../view_listing/shapes/PropertyShape';
+import Spacing from '../../../shared/components/Spacing';
 
 const propTypes = forbidExtraProps({
   listings: PropTypes.arrayOf(ListingShape),
@@ -27,12 +28,14 @@ export default function BrowseListings({
     <div>
       {/* filters */}
       {listings.map((listing, idx) => (
-        <BrowseListingCard
-          key={listing.id}
-          listing={listing}
-          listingDocuments={listingDocuments[idx] || null}
-          property={properties[idx] || null}
-        />
+        <Spacing bottom={idx !== listings.length - 1 ? 2 : 0}>
+          <BrowseListingCard
+            key={listing.id}
+            listing={listing}
+            listingDocuments={listingDocuments[idx] || null}
+            property={properties[idx] || null}
+          />
+        </Spacing>
       ))}
       {/* pagination */}
     </div>

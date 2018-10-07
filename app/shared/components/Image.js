@@ -20,26 +20,56 @@ const defaultProps = {
   imageContentType: 'image/jpeg',
 };
 
-export function UnstyledImage({
-  alt,
-  width,
-  height,
-  src,
-  imageContentType,
-  base64,
-  styles,
-}) {
-  const imageSource = base64 ? `data:${imageContentType};base64, ${src}` : src;
+export class UnstyledImage extends React.PureComponent {
+  constructor(props) {
+    super(props);
 
-  return (
-    <img
-      alt={alt}
-      src={imageSource}
-      width={width}
-      height={height}
-      {...css(styles.image)}
-    />
-  );
+    this.state = {
+      imageSource: null,
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        imageSource: this.getImageSource(),
+      });
+    });
+  }
+
+  getImageSource() {
+    const { src, base64, imageContentType } = this.props;
+    return base64 ? `data:${imageContentType};base64, ${src}` : src;
+  }
+
+  render() {
+    const {
+      alt,
+      width,
+      height,
+      styles,
+    } = this.props;
+
+    const {
+      imageSource,
+    } = this.state;
+
+    if (!imageSource) {
+      return (
+        <div {...css({ width, height, })} />
+      );
+    }
+
+    return (
+      <img
+        alt={alt}
+        src={imageSource}
+        width={width}
+        height={height}
+        {...css(styles.image)}
+      />
+    );
+  }
 }
 
 UnstyledImage.propTypes = propTypes;
