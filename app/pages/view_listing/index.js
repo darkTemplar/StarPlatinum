@@ -30,6 +30,8 @@ const propTypes = forbidExtraProps({
   property: PropertyShape.isRequired,
   listing_documents: PropTypes.arrayOf(PropTypes.array).isRequired,
   geometry: GeometryShape.isRequired,
+  agent_preferences: PropTypes.arrayOf(PropTypes.array),
+  formatted_address: PropTypes.string.isRequired,
   ...withStylesPropTypes,
 });
 

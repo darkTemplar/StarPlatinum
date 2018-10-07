@@ -20,7 +20,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  primary: true,
+  primary: false,
   secondary: false,
   type: 'button',
   size: 'md',
